@@ -4,11 +4,13 @@ public class Categorie {
 
 	private int noCategorie;
 	private String libelle;
+	private ArticleVendu categorieArticle;
 	
-	public Categorie(int noCategorie, String libelle) {
+	public Categorie(int noCategorie, String libelle, ArticleVendu categorieArticle) {
 		super();
 		this.noCategorie = noCategorie;
 		this.libelle = libelle;
+		this.categorieArticle = categorieArticle;
 	}
 
 	public int getNoCategorie() {
@@ -26,6 +28,16 @@ public class Categorie {
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
+
+	public ArticleVendu getCategorieArticle() {
+		return categorieArticle;
+	}
+
+	public void setCategorieArticle(ArticleVendu categorieArticle) {
+		this.categorieArticle = categorieArticle;
+	}
+	
+	
 	
 	
 	

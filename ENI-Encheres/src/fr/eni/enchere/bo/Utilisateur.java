@@ -14,10 +14,14 @@ public class Utilisateur {
 	private String motDePasse;
 	private int credit;
 	private boolean administrateur;
+	private ArticleVendu vend;
+	private ArticleVendu achete;
+	private Enchere enrechit;
 	
 	
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
+			String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur,
+			ArticleVendu vend, ArticleVendu achete, Enchere enrechit) {
 		super();
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
@@ -31,6 +35,9 @@ public class Utilisateur {
 		this.motDePasse = motDePasse;
 		this.credit = credit;
 		this.administrateur = administrateur;
+		this.vend = vend;
+		this.achete = achete;
+		this.enrechit = enrechit;
 	}
 
 
@@ -152,6 +159,45 @@ public class Utilisateur {
 	public void setAdministrateur(boolean administrateur) {
 		this.administrateur = administrateur;
 	}
+
+
+	public ArticleVendu getVend() {
+		return vend;
+	}
+
+
+	public void setVend(ArticleVendu vend) {
+		this.vend = vend;
+	}
+
+
+	public ArticleVendu getAchete() {
+		return achete;
+	}
+
+
+	public void setAchete(ArticleVendu achete) {
+		this.achete = achete;
+	}
+
+
+	public Enchere getEnrechit() {
+		return enrechit;
+	}
+
+
+	public void setEnrechit(Enchere enrechit) {
+		this.enrechit = enrechit;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
