@@ -7,8 +7,8 @@
 		type="javax.sql.DataSource"
 		
 		url="jdbc:sqlserver://10.27.137.5;databasename=TROCENCHERE"
-		username=""
-		password=""
+		username="util"
+		password="123Mdp123"
 		
 		maxTotal="100"
 		maxIdle="30"
