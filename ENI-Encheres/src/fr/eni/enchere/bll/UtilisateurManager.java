@@ -42,5 +42,9 @@ public class UtilisateurManager {
 		return this.utilDAO.selectByUser(pseudo, mdp);
 	}
 	
+	public Utilisateur selectionnerUtilisateurByEmailPseudo(String pseudo, String email) throws BusinessException {
+		return this.utilDAO.selectByPseudoAndMail(pseudo, email);
+	}
+	
 	
 }

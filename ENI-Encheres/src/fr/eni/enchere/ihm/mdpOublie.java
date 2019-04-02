@@ -1,11 +1,10 @@
 package fr.eni.enchere.ihm;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Properties;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,16 +15,15 @@ import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.Utilisateur;
 
 /**
- * Servlet implementation class seConnecter
+ * Servlet implementation class mdpOublie
  */
-@WebServlet("/seConnecter")
-public class seConnecter extends HttpServlet {
+public class mdpOublie extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public seConnecter() {
+    public mdpOublie() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,7 +32,7 @@ public class seConnecter extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/ForgotPassword.jsp");
 		rd.forward(request, response);
 	}
 
@@ -42,45 +40,37 @@ public class seConnecter extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		UtilisateurManager utilisateurManager = new UtilisateurManager();
+UtilisateurManager utilisateurManager = new UtilisateurManager();
 		
-		if (request.getParameter("identifiant")!=null &&
-			request.getParameter("motdepasse")!=null)
+		if (request.getParameter("mail")!=null &&
+			request.getParameter("pseudo")!=null)
 		{
-			String identifiant = request.getParameter("identifiant");
-			String mdp = request.getParameter("motdepasse");
+			String mail = request.getParameter("mail");
+			String pseudo = request.getParameter("pseudo");
 			
 			try
 			{
 				Utilisateur util = new Utilisateur();
-				util = utilisateurManager.selectionnerUtilisateur(identifiant, mdp);
+				util = utilisateurManager.selectionnerUtilisateurByEmailPseudo(pseudo, mail);
 				
-				if(util.getPseudo() == null || util.getMotDePasse() == null)
+				if(util.getPseudo() == null || util.getEmail() == null)
 				{
-					System.out.println(identifiant + " " + mdp);
-					System.out.println(util.getPseudo() + " " + util.getMotDePasse());
-					request.setAttribute("error", "Nom de compte ou mot de passe incorrect !");
-					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
+					request.setAttribute("error", "Pseudo ou mail incorrect !");
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/ForgotPassword.jsp");
 					rd.forward(request, response);
 				}
 				else
 				{
-					if(util.getPseudo().equals(identifiant) && util.getMotDePasse().equals(mdp))
-					{
-						
-						
-						HttpSession session = request.getSession();
-				        session.setAttribute("identifiant", util.getPseudo());
-				        session.setAttribute("motdepasse", util.getMotDePasse());
-				        request.setAttribute("congret", "Bienvenue " + util.getPseudo() + " !");
-				        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
+					if(util.getPseudo().equals(pseudo) && util.getEmail().equals(mail))
+					{						
+				        request.setAttribute("congret", "Votre mot de passe : " + util.getMotDePasse());
+				        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/ForgotPassword.jsp");
 						rd.forward(request, response);
 					}
 					else
 					{
-						request.setAttribute("error", "Nom de compte ou mot de passe incorrect !");
-						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
+						request.setAttribute("error", "Pseudo ou mail incorrect !");
+						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/ForgotPassword.jsp");
 						rd.forward(request, response);
 					}
 				}
