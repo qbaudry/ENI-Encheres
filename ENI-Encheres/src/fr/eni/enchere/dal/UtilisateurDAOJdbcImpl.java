@@ -14,6 +14,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private static final String INSERT_UTILISATEUR = "insert into UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	private static final String SELECT_ACCOUNT = "select * FROM UTILISATEURS WHERE pseudo = (?) AND mot_de_passe = (?) ;";
+	private static final String SELECT_ACCOUNT_BY_EMAIL = "select * FROM UTILISATEURS WHERE pseudo = (?) AND email = (?) ;";
 
 	@Override
 	public void insert(Utilisateur util) throws BusinessException {
@@ -82,6 +83,52 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				util.setNom(rs.getString("nom"));
 				util.setPrenom(rs.getString("prenom"));
 				util.setEmail(rs.getString("email"));
+				util.setTelephone(rs.getString("telephone"));
+				util.setRue(rs.getString("rue"));
+				util.setCodePostal(rs.getString("code_postal"));
+				util.setVille(rs.getString("ville"));
+				util.setCredit(rs.getInt("credit"));
+				util.setAdministrateur(rs.getBoolean("administrateur"));
+				
+
+				premiereLigne=false;
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_ECHEC);
+			throw businessException;
+		}
+		/*
+		if(util.getPseudo() == null || util.getMotDePasse() == null)
+		{
+			BusinessException businessException = new BusinessException();	
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_INEXISTANT);
+			throw businessException;
+		}
+		*/
+		return util;
+	}
+
+	@Override
+	public Utilisateur selectByPseudoAndMail(String pseudo, String email) throws BusinessException {
+		Utilisateur util = new Utilisateur();
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ACCOUNT_BY_EMAIL);
+			pstmt.setString(1, pseudo);
+			pstmt.setString(2, email);
+			ResultSet rs = pstmt.executeQuery();
+			boolean premiereLigne=true;
+			while(rs.next())
+			{
+				util.setPseudo(rs.getString("pseudo"));
+				util.setEmail(rs.getString("email"));
+				util.setMotDePasse(rs.getString("mot_de_passe"));
+				util.setNom(rs.getString("nom"));
+				util.setPrenom(rs.getString("prenom"));
 				util.setTelephone(rs.getString("telephone"));
 				util.setRue(rs.getString("rue"));
 				util.setCodePostal(rs.getString("code_postal"));

@@ -4,4 +4,14 @@
   <welcome-file-list>
     <welcome-file>/WEB-INF/index.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>mdpOublie</display-name>
+    <servlet-name>mdpOublie</servlet-name>
+    <servlet-class>fr.eni.enchere.ihm.mdpOublie</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>mdpOublie</servlet-name>
+    <url-pattern>/mdpOublie</url-pattern>
+  </servlet-mapping>
 </web-app>
