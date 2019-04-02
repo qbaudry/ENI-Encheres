@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Utilisateur;
-import fr.eni.gestionenchere.BusinessException;
 
 public class CategorieDaoJdbcImpl implements CategorieDAO {
 	private static final String INSERT = "insert into CATEGORIES values(?)";

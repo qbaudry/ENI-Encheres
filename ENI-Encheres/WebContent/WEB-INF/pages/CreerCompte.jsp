@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="fr.eni.enchere.messages.LecteurMessage" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <jsp:include page="/WEB-INF/includes/Header.jsp"></jsp:include>
@@ -33,7 +34,7 @@
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="telephone">Téléphone :</label>
-				    	<input type="text" class="form-control" id="telephone" name="telephone" placeholder="Téléphone" required>
+				    	<input type="text" pattern="\d{10}" class="form-control" id="telephone" name="telephone" placeholder="Téléphone" required>
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="rue">Rue :</label>
@@ -71,6 +72,16 @@
 				</div>
 			</div>
 		</form>
+		<c:if erreur="${!empty listeCodesErreur}">
+			<div class="alert alert-danger" role="alert">
+			  <strong>Erreur !</strong>
+			  <ul>
+			  	<c:forEach var="code" items="${listeCodesErreur}">
+			  		<li>${LecteurMessage.getMessageErreur(code)}</li>
+			  	</c:forEach>
+			  </ul>
+			</div>
+		</c:if>
 	</div>
 </body>
 </html>

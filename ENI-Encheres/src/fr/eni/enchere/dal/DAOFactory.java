@@ -7,7 +7,6 @@ public abstract class DAOFactory {
 		
 	}*/
 	
-	
 	public static UtilisateurDAO getUtilisateurDAO()
 	{
 		return new UtilisateurDAOJdbcImpl();	
@@ -18,4 +17,3 @@ public abstract class DAOFactory {
 		return new CategorieDaoJdbcImpl();	
 	}
 }
-	

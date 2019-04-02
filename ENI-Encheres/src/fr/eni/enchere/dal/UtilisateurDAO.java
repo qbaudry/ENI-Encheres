@@ -1,7 +1,7 @@
 package fr.eni.enchere.dal;
 
+import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bo.Utilisateur;
-import fr.eni.gestionenchere.BusinessException;
 
 
 
