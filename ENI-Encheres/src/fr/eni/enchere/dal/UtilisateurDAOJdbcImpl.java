@@ -77,11 +77,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			boolean premiereLigne=true;
 			while(rs.next())
 			{
-				
-					util.setPseudo(rs.getString("pseudo"));
-					util.setMotDePasse(rs.getString("mot_de_passe"));
-					premiereLigne=false;
-				}
+				util.setPseudo(rs.getString("pseudo"));
+				util.setMotDePasse(rs.getString("mot_de_passe"));
+				premiereLigne=false;
 			}
 		}
 		catch(Exception e)
@@ -91,12 +89,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_ECHEC);
 			throw businessException;
 		}
-		if(util.getNoUtilisateur()==0)
+		/*
+		if(util.getPseudo() == null || util.getMotDePasse() == null)
 		{
 			BusinessException businessException = new BusinessException();	
 			businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_INEXISTANT);
 			throw businessException;
 		}
+		*/
 		return util;
 	}
 }
