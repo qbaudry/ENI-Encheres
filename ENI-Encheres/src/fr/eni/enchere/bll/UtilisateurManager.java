@@ -46,5 +46,9 @@ public class UtilisateurManager {
 		return this.utilDAO.selectByPseudoAndMail(pseudo, email);
 	}
 	
+	public Utilisateur selectionnerUtilisateurById(int id) throws BusinessException {
+		return this.utilDAO.selectByID(id);
+	}
+	
 	
 }

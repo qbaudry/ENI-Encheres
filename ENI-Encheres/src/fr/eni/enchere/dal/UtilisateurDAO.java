@@ -10,4 +10,5 @@ public interface UtilisateurDAO {
 	public void insert(Utilisateur util) throws BusinessException;
 	public Utilisateur selectByUser(String pseudo, String mdp) throws BusinessException;
 	public Utilisateur selectByPseudoAndMail(String pseudo, String email) throws BusinessException;
+	public Utilisateur selectByID(int id) throws BusinessException;
 }
