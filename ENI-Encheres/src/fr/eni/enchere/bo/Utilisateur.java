@@ -54,6 +54,13 @@ public class Utilisateur {
 		this.credit = 0;
 		this.administrateur = false;
 	}
+	
+	public Utilisateur(String pseudo, String motDePasse) {
+		super();
+		this.pseudo = pseudo;
+		this.motDePasse = motDePasse;
+
+	}
 
 	public int getNoUtilisateur() {
 		return noUtilisateur;
