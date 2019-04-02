@@ -1,11 +1,11 @@
 package fr.eni.enchere.bll;
 
-import java.util.List;
 
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.UtilisateurDAO;
 import fr.eni.gestionenchere.BusinessException;
+
 
 
 
@@ -18,17 +18,14 @@ public class UtilisateurManager {
 	
 	
 
-	public void ajouterUtilisateur(int noUtil, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur) throws BusinessException
+	public void ajouterUtilisateur(Utilisateur util) throws BusinessException
 	{
-		
-		
 		BusinessException businessException = new BusinessException();
-		credit = 0;
-		administrateur = false;
-		Utilisateur util = new Utilisateur(noUtil ,pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
-		
 		this.utilDAO.insert(util);
-		
+	}
+	
+	public Utilisateur selectionnerUtilisateur(String pseudo,String password) throws BusinessException {
+		return this.utilDAO.selectByUser(pseudo, password);
 	}
 	
 }
