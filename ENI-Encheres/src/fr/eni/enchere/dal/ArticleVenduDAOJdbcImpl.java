@@ -188,6 +188,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 						article.setAcheteur(acheteur);
 						article.setVendeur(vendeur);
 						article.setLieuRetrait(ret);
+						article.setCategorieArticle(categorie);
 						
 						listArticleVendu.add(article);
 					}
