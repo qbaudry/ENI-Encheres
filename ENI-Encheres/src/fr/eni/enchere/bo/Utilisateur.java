@@ -62,6 +62,12 @@ public class Utilisateur {
 
 	}
 
+	
+	
+	public Utilisateur() {
+		super();
+	}
+	
 	public int getNoUtilisateur() {
 		return noUtilisateur;
 	}

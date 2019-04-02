@@ -24,8 +24,8 @@ public class UtilisateurManager {
 		this.utilDAO.insert(util);
 	}
 	
-	public Utilisateur selectionnerUtilisateur(String pseudo,String password) throws BusinessException {
-		return this.utilDAO.selectByUser(pseudo, password);
+	public Utilisateur selectionnerUtilisateur(String pseudo) throws BusinessException {
+		return this.utilDAO.selectByUser(pseudo);
 	}
 	
 }

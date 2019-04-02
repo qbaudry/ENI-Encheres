@@ -8,6 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import fr.eni.enchere.bll.UtilisateurManager;
+import fr.eni.enchere.bo.Utilisateur;
+import fr.eni.gestionenchere.BusinessException;
 
 /**
  * Servlet implementation class seConnecter
@@ -36,8 +41,37 @@ public class seConnecter extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+
+		UtilisateurManager utilisateurManager = new UtilisateurManager();
+		
+		if (request.getParameter("identifiant")!=null &&
+			request.getParameter("motdepasse")!=null)
+		{
+			String identifiant = request.getParameter("identifiant");
+			String mdp = request.getParameter("motdepasse");
+			
+			try
+			{
+				
+				Utilisateur util = utilisateurManager.selectionnerUtilisateur(identifiant);
+				request.setAttribute(identifiant, util.getPseudo());
+				System.out.println(identifiant + " " + mdp);
+				System.out.println(util.getPseudo() + " " + util.getMotDePasse());
+				
+				HttpSession session = request.getSession();
+
+		        session.setAttribute("identifiant", identifiant);
+		        session.setAttribute("motdepasse", mdp);
+				
+			} catch(BusinessException e)
+			{
+				e.printStackTrace();
+				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+			}
+			
+		} else {
+			System.out.println("Formulaire non rempli entièrement");
+		}
 	}
 
 }

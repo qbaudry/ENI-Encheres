@@ -10,11 +10,13 @@ import fr.eni.gestionenchere.BusinessException;
 
 
 
+
+
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	
 	private static final String INSERT_UTILISATEUR = "insert into UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-	private static final String SELECT_ACCOUNT = "select * FROM UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ?;";
+	private static final String SELECT_ACCOUNT = "select * FROM UTILISATEURS WHERE pseudo = ?;";
 
 
 	@Override
@@ -70,23 +72,31 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 
 	@Override
-	public Utilisateur selectByUser(String pseudo, String password) throws BusinessException {
-		Utilisateur util = new Utilisateur(pseudo, password);
+	public Utilisateur selectByUser(String pseudo) throws BusinessException {
+		Utilisateur util = new Utilisateur();
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
-			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ACCOUNT);
-			pstmt.setInt(1, util.getNoUtilisateur());
-			ResultSet rs = pstmt.executeQuery();
-			boolean premiereLigne=true;
-			while(rs.next())
+			try
 			{
-				if(premiereLigne)
+				cnx.setAutoCommit(false);
+				PreparedStatement pstmt;
+				ResultSet rs;
+				if(util.getNoUtilisateur()!=0)
 				{
-					util.setPseudo(rs.getString("pseudo"));
-					util.setMotDePasse(rs.getString("mot_de_passe "));
-					premiereLigne=false;
+					pstmt = cnx.prepareStatement(SELECT_ACCOUNT);
+					pstmt.setString(1, util.getPseudo());
+					//pstmt.setString(2, util.getMotDePasse());
+					pstmt.executeUpdate();
+					pstmt.close();
 				}
-
+				
+				cnx.commit();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				cnx.rollback();
+				throw e;
 			}
 		}
 		catch(Exception e)
@@ -95,14 +105,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			BusinessException businessException = new BusinessException();
 			throw businessException;
 		}
-		if(util.getNoUtilisateur()==0)
-		{
-			BusinessException businessException = new BusinessException();			
-			throw businessException;
-		}
-		
 		return util;
 	}
+
+
 
 }
 
