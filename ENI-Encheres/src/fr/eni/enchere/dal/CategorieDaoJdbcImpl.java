@@ -1,3 +1,4 @@
+
 package fr.eni.enchere.dal;
 
 import java.sql.Connection;
@@ -6,11 +7,11 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Utilisateur;
-import fr.eni.gestionenchere.BusinessException;
 
-public class CategorieDAOJdbcImpl implements CategorieDAO {
+public class CategorieDaoJdbcImpl implements CategorieDAO {
 	private static final String INSERT = "insert into CATEGORIES values(?)";
 	private static final String UPDATE = "update CATEGORIES set libelle=? where no_categorie = ?";
 	private static final String DELETE = "delete from CATEGORIES where no_categorie = ?";

@@ -4,18 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-
+import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bo.Utilisateur;
-import fr.eni.gestionenchere.BusinessException;
+import fr.eni.enchere.dal.CodesResultatDAL;
 
 
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
-	
 	private static final String INSERT_UTILISATEUR = "insert into UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-	private static final String SELECT_ACCOUNT = "select * FROM UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ?;";
-
+	private static final String SELECT_ACCOUNT = "select * FROM UTILISATEURS WHERE pseudo = (?) AND mot_de_passe = (?) ;";
 
 	@Override
 	public void insert(Utilisateur util) throws BusinessException {
@@ -49,7 +47,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 					rs.close();
 					pstmt.close();
 				}
-				
 				cnx.commit();
 			}
 			catch(Exception e)
@@ -63,58 +60,54 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		{
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
 			throw businessException;
 		}
-		
 	}
 
-
 	@Override
-	public Utilisateur selectByUser(String pseudo, String password) throws BusinessException {
-		Utilisateur util = new Utilisateur(pseudo, password);
+	public Utilisateur selectByUser(String pseudo, String mdp) throws BusinessException {
+		Utilisateur util = new Utilisateur();
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ACCOUNT);
-			pstmt.setInt(1, util.getNoUtilisateur());
+			pstmt.setString(1, pseudo);
+			pstmt.setString(2, mdp);
 			ResultSet rs = pstmt.executeQuery();
 			boolean premiereLigne=true;
 			while(rs.next())
 			{
-				if(premiereLigne)
-				{
-					util.setPseudo(rs.getString("pseudo"));
-					util.setMotDePasse(rs.getString("mot_de_passe "));
-					premiereLigne=false;
-				}
+				util.setPseudo(rs.getString("pseudo"));
+				util.setMotDePasse(rs.getString("mot_de_passe"));
+				util.setNom(rs.getString("nom"));
+				util.setPrenom(rs.getString("prenom"));
+				util.setEmail(rs.getString("email"));
+				util.setTelephone(rs.getString("telephone"));
+				util.setRue(rs.getString("rue"));
+				util.setCodePostal(rs.getString("code_postal"));
+				util.setVille(rs.getString("ville"));
+				util.setCredit(rs.getInt("credit"));
+				util.setAdministrateur(rs.getBoolean("administrateur"));
+				
 
+				premiereLigne=false;
 			}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_ECHEC);
 			throw businessException;
 		}
-		if(util.getNoUtilisateur()==0)
+		/*
+		if(util.getPseudo() == null || util.getMotDePasse() == null)
 		{
-			BusinessException businessException = new BusinessException();			
+			BusinessException businessException = new BusinessException();	
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_INEXISTANT);
 			throw businessException;
 		}
-		
+		*/
 		return util;
 	}
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
