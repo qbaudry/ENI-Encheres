@@ -40,7 +40,7 @@ public class Utilisateur {
 		this.enrechit = enrechit;
 	}
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
+			String rue, String codePostal, String ville, String motDePasse) {
 		super();
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
@@ -52,8 +52,8 @@ public class Utilisateur {
 		this.codePostal = codePostal;
 		this.ville = ville;
 		this.motDePasse = motDePasse;
-		this.credit = credit;
-		this.administrateur = administrateur;
+		this.credit = 0;
+		this.administrateur = false;
 	}
 
 	public int getNoUtilisateur() {
