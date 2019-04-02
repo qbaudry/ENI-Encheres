@@ -11,7 +11,7 @@ import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Utilisateur;
 
-public class CategorieDaoJdbcImpl implements CategorieDAO {
+public class CategorieDAOJdbcImpl implements CategorieDAO {
 	private static final String INSERT = "insert into CATEGORIES values(?)";
 	private static final String UPDATE = "update CATEGORIES set libelle=? where no_categorie = ?";
 	private static final String DELETE = "delete from CATEGORIES where no_categorie = ?";

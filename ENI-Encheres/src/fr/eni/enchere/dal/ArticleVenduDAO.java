@@ -3,7 +3,7 @@ package fr.eni.enchere.dal;
 import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
-import fr.eni.gestionenchere.BusinessException;
+import fr.eni.enchere.BusinessException;
 
 public interface ArticleVenduDAO {
 

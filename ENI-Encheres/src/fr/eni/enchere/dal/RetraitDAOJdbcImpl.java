@@ -8,7 +8,7 @@ import java.util.List;
 
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Retrait;
-import fr.eni.gestionenchere.BusinessException;
+import fr.eni.enchere.BusinessException;
 
 public class RetraitDAOJdbcImpl implements RetraitDAO {
 	private static final String INSERT = "insert into RETRAIT values(?,?,?)";

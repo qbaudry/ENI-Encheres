@@ -10,7 +10,7 @@ import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.bo.Utilisateur;
-import fr.eni.gestionenchere.BusinessException;
+import fr.eni.enchere.BusinessException;
 
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String INSERT = "INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_acheteur,no_vendeur,no_categorie) values (?,?,?,?,?,?,?,?,?)";
