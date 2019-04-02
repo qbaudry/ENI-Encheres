@@ -18,11 +18,9 @@ public class UtilisateurManager {
 	
 	
 
-	public void ajouterUtilisateur(int noUtil, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse) throws BusinessException
+	public void ajouterUtilisateur(Utilisateur util) throws BusinessException
 	{
 		BusinessException businessException = new BusinessException();
-		Utilisateur util = new Utilisateur(noUtil ,pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
-		
 		this.utilDAO.insert(util);
 	}
 	
