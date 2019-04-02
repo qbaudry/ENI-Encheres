@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.enchere.bo.Utilisateur;
+import fr.eni.gestionenchere.BusinessException;
 
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {

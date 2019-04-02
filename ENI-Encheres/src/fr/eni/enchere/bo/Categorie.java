@@ -7,10 +7,13 @@ public class Categorie {
 	private ArticleVendu categorieArticle;
 	
 	public Categorie(int noCategorie, String libelle, ArticleVendu categorieArticle) {
-		super();
 		this.noCategorie = noCategorie;
 		this.libelle = libelle;
 		this.categorieArticle = categorieArticle;
+	}
+	public Categorie(int noCategorie, String libelle) {
+		this.noCategorie = noCategorie;
+		this.libelle = libelle;
 	}
 
 	public int getNoCategorie() {
