@@ -27,13 +27,13 @@
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" required>
 				    	<label for="nom">Email :</label>
-				    	<input type="email" class="form-control" id="nom" name="nom" placeholder="Email" required>
+				    	<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="telephone">Téléphone :</label>
-				    	<input type="number" class="form-control" id="telephone" name="telephone" placeholder="Téléphone" required>
+				    	<input type="text" class="form-control" id="telephone" name="telephone" placeholder="Téléphone" required>
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="rue">Rue :</label>

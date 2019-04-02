@@ -8,13 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-<<<<<<< HEAD
 import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.Utilisateur;
+import fr.eni.gestionenchere.BusinessException;
 
-=======
->>>>>>> branch 'master' of https://github.com/qbaudry/ENI-Encheres.git
 /**
  * Servlet implementation class creerCompte
  */
@@ -42,7 +39,6 @@ public class creerCompte extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-<<<<<<< HEAD
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
 		
 		if (request.getParameter("pseudo")!=null &&
@@ -70,10 +66,8 @@ public class creerCompte extends HttpServlet {
 			try
 			{
 				Utilisateur nouveauCompte = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codepostal, ville, motdepasse);
-				
-				listeCourseManager.decocherListe(idListeCourse);
-			}
-			catch(BusinessException e)
+				utilisateurManager.ajouterUtilisateur(nouveauCompte);
+			} catch(BusinessException e)
 			{
 				e.printStackTrace();
 				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
@@ -82,11 +76,8 @@ public class creerCompte extends HttpServlet {
 		} else {
 			System.out.println("Formulaire non rempli entièrement");
 		}
-=======
-		// TODO Auto-generated method stub
-		
-		doGet(request, response);
->>>>>>> branch 'master' of https://github.com/qbaudry/ENI-Encheres.git
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/CreerCompte.jsp");
+		rd.forward(request, response);
 	}
 
 }
