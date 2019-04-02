@@ -67,6 +67,8 @@ public class creerCompte extends HttpServlet {
 			{
 				Utilisateur nouveauCompte = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codepostal, ville, motdepasse);
 				utilisateurManager.ajouterUtilisateur(nouveauCompte);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
+				rd.forward(request, response);
 			} catch(BusinessException e)
 			{
 				e.printStackTrace();
@@ -76,8 +78,7 @@ public class creerCompte extends HttpServlet {
 		} else {
 			System.out.println("Formulaire non rempli entièrement");
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/CreerCompte.jsp");
-		rd.forward(request, response);
+		
 	}
 
 }

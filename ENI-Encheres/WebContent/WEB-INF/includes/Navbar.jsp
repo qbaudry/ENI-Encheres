@@ -1,8 +1,12 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand font-weight-bold" href="#">ENI-Enchères</a>
+  <a class="navbar-brand font-weight-bold" href="${pageContext.request.contextPath}">
+    <i class="fas fa-balance-scale pr-1"></i>
+    ENI-Enchères
+  </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+  
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
   	<span class="m-auto"></span>
     <ul class="navbar-nav">

@@ -7,7 +7,12 @@
 <body>
 	<%@ include file="./includes/Navbar.jsp" %>
 	<div class="container">
-		<h1>Page d'accueil</h1>
+		<div class="container">
+		<div class="alert alert-dark mt-5" role="alert">
+			<h1>Page d'accueil</h1>
+			<hr>
+			<p>Bienvenue sur ENI-Enchères !</p>
+		</div>
 	</div>
 </body>
 </html>

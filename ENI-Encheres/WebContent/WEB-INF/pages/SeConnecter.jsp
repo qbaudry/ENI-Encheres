@@ -21,16 +21,16 @@
 			</div>
 			<hr>
 			<div class="row pb-3">
-				<div class="col-6">
+				<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 			    	<button type="button" class="btn btn-block btn-success">Connexion</button>
+						<div class="form-check py-3 mx-3">
+					    <input type="checkbox" class="form-check-input" id="sesouvenir">
+						<label class="form-check-label" for="sesouvenir">Se souvenir de moi</label>
+					</div>
 				</div>
-				<div class="col-6">
+				<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 					<a class="btn btn-block btn-warning">Mot de passe oublié</a>
 				</div>
-			</div>
-			<div class="form-check pb-3">
-			    <input type="checkbox" class="form-check-input" id="sesouvenir">
-				<label class="form-check-label" for="sesouvenir">Se souvenir de moi</label>
 			</div>
 			<a class="btn btn-block btn-success" href="${pageContext.request.contextPath}/creerCompte">Créer un compte</a>
 		</div>
