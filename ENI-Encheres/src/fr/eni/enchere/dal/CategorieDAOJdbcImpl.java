@@ -16,7 +16,7 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 	private static final String UPDATE = "update CATEGORIES set libelle=? where no_categorie = ?";
 	private static final String DELETE = "delete from CATEGORIES where no_categorie = ?";
 	private static final String SELECT = "select * from CATEGORIES where no_categorie = ?";
-	private static final String LISTER = "select * from CATEGORIES";
+	private static final String LISTER = "select * from CATEGORIES"; 
 	public void save(Categorie c) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection()){
 			try{
