@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.enchere.bll.UtilisateurManager;
+import fr.eni.enchere.bo.Utilisateur;
 
 /**
  * Servlet implementation class creerCompte
@@ -39,27 +40,44 @@ public class creerCompte extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
-		/*if(request.getParameter("id_article")!=null)
+		
+		if (request.getParameter("pseudo")!=null &&
+			request.getParameter("nom")!=null &&
+			request.getParameter("prenom")!=null &&
+			request.getParameter("email")!=null &&
+			request.getParameter("telephone")!=null &&
+			request.getParameter("rue")!=null &&
+			request.getParameter("codepostal")!=null &&
+			request.getParameter("ville")!=null &&
+			request.getParameter("motdepasse")!=null &&
+			request.getParameter("motdepasse2")!=null)
 		{
+			String pseudo = request.getParameter("pseudo");
+			String nom = request.getParameter("nom");
+			String prenom = request.getParameter("prenom");
+			String email = request.getParameter("email");
+			String telephone = request.getParameter("telephone");
+			String rue = request.getParameter("rue");
+			String codepostal = request.getParameter("codepostal");
+			String ville = request.getParameter("ville");
+			String motdepasse = request.getParameter("motdepasse");
+			String motdepasse2 = request.getParameter("motdepasse2");
+			
 			try
 			{
-				int idArticle = Integer.parseInt(request.getParameter("id_article"));
-				if(request.getParameter("coche")!=null)
-				{
-					listeCourseManager.cocherArticle(idArticle);
-				}
-				else
-				{
-					listeCourseManager.decocherArticle(idArticle);
-				}
+				Utilisateur nouveauCompte = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codepostal, ville, motdepasse);
+				
+				listeCourseManager.decocherListe(idListeCourse);
 			}
 			catch(BusinessException e)
 			{
 				e.printStackTrace();
 				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 			}
+			
+		} else {
+			System.out.println("Formulaire non rempli entièrement");
 		}
-	}*/
 	}
 
 }

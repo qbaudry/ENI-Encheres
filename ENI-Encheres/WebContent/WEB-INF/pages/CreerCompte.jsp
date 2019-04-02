@@ -13,51 +13,51 @@
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="pseudo">Pseudo :</label>
-				    	<input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="Pseudo">
+				    	<input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="Pseudo" required>
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="nom">Nom :</label>
-				    	<input type="text" class="form-control" id="nom" name="nom" placeholder="Nom">
+				    	<input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" required>
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="prenom">Prénom :</label>
-				    	<input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom">
+				    	<input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom" required>
 					</div>
-					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" required>
 				    	<label for="nom">Email :</label>
-				    	<input type="email" class="form-control" id="nom" name="nom" placeholder="Email">
+				    	<input type="email" class="form-control" id="nom" name="nom" placeholder="Email" required>
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="telephone">Téléphone :</label>
-				    	<input type="number" class="form-control" id="telephone" name="telephone" placeholder="Téléphone">
+				    	<input type="number" class="form-control" id="telephone" name="telephone" placeholder="Téléphone" required>
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="rue">Rue :</label>
-				    	<input type="text" class="form-control" id="rue" name="rue" placeholder="Rue">
+				    	<input type="text" class="form-control" id="rue" name="rue" placeholder="Rue" required>
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="codepostal">Code postal :</label>
-				    	<input type="text" class="form-control" id="codepostal" name="codepostal" placeholder="Code postal">
+				    	<input type="text" class="form-control" id="codepostal" name="codepostal" placeholder="Code postal" required>
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="ville">Ville :</label>
-				    	<input type="text" class="form-control" id="ville" name="ville" placeholder="Ville">
+				    	<input type="text" class="form-control" id="ville" name="ville" placeholder="Ville" required>
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="motdepasse">Mot de passe :</label>
-				    	<input type="password" class="form-control" id="motdepasse" name="motdepasse" placeholder="Mot de passe">
+				    	<input type="password" class="form-control" id="motdepasse" name="motdepasse" placeholder="Mot de passe" required>
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="motdepasse2">Confirmation :</label>
-				    	<input type="password" class="form-control" id="motdepasse2" name="motdepasse2" placeholder="Confirmation du mot de passe">
+				    	<input type="password" class="form-control" id="motdepasse2" name="motdepasse2" placeholder="Confirmation du mot de passe" required>
 					</div>
 				</div>
 				<hr>
