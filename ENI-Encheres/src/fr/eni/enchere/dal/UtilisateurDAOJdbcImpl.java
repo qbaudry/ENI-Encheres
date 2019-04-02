@@ -13,7 +13,7 @@ import fr.eni.enchere.dal.CodesResultatDAL;
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private static final String INSERT_UTILISATEUR = "insert into UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-	private static final String SELECT_ACCOUNT = "select * FROM UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ?;";
+	private static final String SELECT_ACCOUNT = "select * FROM UTILISATEURS WHERE pseudo = (?) AND mot_de_passe = (?) ;";
 
 	@Override
 	public void insert(Utilisateur util) throws BusinessException {
@@ -66,20 +66,20 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public Utilisateur selectByUser(String pseudo, String password) throws BusinessException {
-		Utilisateur util = new Utilisateur(pseudo, password);
+	public Utilisateur selectByUser(String pseudo, String mdp) throws BusinessException {
+		Utilisateur util = new Utilisateur();
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ACCOUNT);
-			pstmt.setInt(1, util.getNoUtilisateur());
+			pstmt.setString(1, pseudo);
+			pstmt.setString(2, mdp);
 			ResultSet rs = pstmt.executeQuery();
 			boolean premiereLigne=true;
 			while(rs.next())
 			{
-				if(premiereLigne)
-				{
+				
 					util.setPseudo(rs.getString("pseudo"));
-					util.setMotDePasse(rs.getString("mot_de_passe "));
+					util.setMotDePasse(rs.getString("mot_de_passe"));
 					premiereLigne=false;
 				}
 			}

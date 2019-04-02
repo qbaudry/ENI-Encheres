@@ -38,8 +38,8 @@ public class UtilisateurManager {
 		} 
 	}
 	
-	public Utilisateur selectionnerUtilisateur(String pseudo,String password) throws BusinessException {
-		return this.utilDAO.selectByUser(pseudo, password);
+	public Utilisateur selectionnerUtilisateur(String pseudo, String mdp) throws BusinessException {
+		return this.utilDAO.selectByUser(pseudo, mdp);
 	}
 	
 	
