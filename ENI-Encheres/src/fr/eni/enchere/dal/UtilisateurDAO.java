@@ -8,6 +8,6 @@ import fr.eni.gestionenchere.BusinessException;
 public interface UtilisateurDAO {
 	
 	public void insert(Utilisateur util) throws BusinessException;
-	public Utilisateur selectByUser(String pseudo) throws BusinessException;
+	public Utilisateur selectByUser(String pseudo, String mdp) throws BusinessException;
 
 }

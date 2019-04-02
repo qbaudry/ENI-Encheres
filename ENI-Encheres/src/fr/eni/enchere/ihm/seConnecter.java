@@ -1,6 +1,7 @@
 package fr.eni.enchere.ihm;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -52,16 +53,30 @@ public class seConnecter extends HttpServlet {
 			
 			try
 			{
+				Utilisateur util = new Utilisateur();
+				util = utilisateurManager.selectionnerUtilisateur(identifiant, mdp);
 				
-				Utilisateur util = utilisateurManager.selectionnerUtilisateur(identifiant);
-				request.setAttribute(identifiant, util.getPseudo());
-				System.out.println(identifiant + " " + mdp);
-				System.out.println(util.getPseudo() + " " + util.getMotDePasse());
 				
-				HttpSession session = request.getSession();
+				if(util.getPseudo() == identifiant && util.getMotDePasse() == mdp)
+				{
+					
+					
+					HttpSession session = request.getSession();
 
-		        session.setAttribute("identifiant", identifiant);
-		        session.setAttribute("motdepasse", mdp);
+			        session.setAttribute("identifiant", identifiant);
+			        session.setAttribute("motdepasse", mdp);
+			        
+			        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
+					rd.forward(request, response);
+				}
+				else
+				{
+					
+			        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
+					rd.forward(request, response);
+				}
+				
+				
 				
 			} catch(BusinessException e)
 			{

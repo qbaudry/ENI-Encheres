@@ -12,11 +12,12 @@ import fr.eni.gestionenchere.BusinessException;
 
 
 
+
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	
 	private static final String INSERT_UTILISATEUR = "insert into UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-	private static final String SELECT_ACCOUNT = "select * FROM UTILISATEURS WHERE pseudo = ?;";
+	private static final String SELECT_ACCOUNT = "select * FROM UTILISATEURS WHERE pseudo = (?) AND mot_de_passe = (?) ;";
 
 
 	@Override
@@ -72,43 +73,37 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 
 	@Override
-	public Utilisateur selectByUser(String pseudo) throws BusinessException {
+	public Utilisateur selectByUser(String pseudo, String mdp) throws BusinessException {
 		Utilisateur util = new Utilisateur();
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
-			try
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ACCOUNT);
+			pstmt.setString(1, pseudo);
+			pstmt.setString(2, mdp);
+			ResultSet rs = pstmt.executeQuery();
+			boolean premiereLigne=true;
+			while(rs.next())
 			{
-				cnx.setAutoCommit(false);
-				PreparedStatement pstmt;
-				ResultSet rs;
-				if(util.getNoUtilisateur()!=0)
-				{
-					pstmt = cnx.prepareStatement(SELECT_ACCOUNT);
-					pstmt.setString(1, util.getPseudo());
-					//pstmt.setString(2, util.getMotDePasse());
-					pstmt.executeUpdate();
-					pstmt.close();
-				}
 				
-				cnx.commit();
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-				cnx.rollback();
-				throw e;
+					util.setPseudo(rs.getString("pseudo"));
+					util.setMotDePasse(rs.getString("mot_de_passe"));
+					premiereLigne=false;
+				
+				
 			}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
+			//businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ECHEC);
 			throw businessException;
 		}
+		
+		
 		return util;
+
 	}
-
-
 
 }
 
