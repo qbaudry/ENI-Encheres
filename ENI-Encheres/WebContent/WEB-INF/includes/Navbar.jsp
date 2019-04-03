@@ -15,7 +15,7 @@
 	        <a class="nav-link" href="${pageContext.request.contextPath}/listeEncheres">Enchères</a>
 	      </li>
 	      <li class="nav-item">      
-	        <a class="nav-link" href="${pageContext.request.contextPath}/seConnecter">Vendre un article</a>
+	        <a class="nav-link" href="${pageContext.request.contextPath}/ajoutArticle">Vendre un article</a>
 	      </li>
 	      <li class="nav-item">      
 	        <a class="nav-link" href="${pageContext.request.contextPath}/Profil">Mon profil</a>

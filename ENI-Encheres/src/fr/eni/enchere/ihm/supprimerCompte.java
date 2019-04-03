@@ -45,8 +45,6 @@ public class supprimerCompte extends HttpServlet {
 			utilisateurManager.deleteUser(util.getNoUtilisateur());
 			
 			session.invalidate();
-			request.setAttribute("supress", "Suppression en cours...");
-			response.setIntHeader("Refresh", 2);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
 			rd.forward(request, response);
 			
