@@ -126,7 +126,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 						{
 							Categorie categorie = catDAO.select(rs.getInt("no_categorie"));
 							Retrait ret = retDAO.select(rs.getInt("retrait"));
-							Utilisateur acheteur = utilDAO.selectByID(rs.getInt("no_acheteur"));
 							Utilisateur vendeur = utilDAO.selectByID(rs.getInt("no_vendeur"));
 							article = new ArticleVendu();
 							article.setNo_article(rs.getInt("no_article"));
@@ -138,6 +137,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 							article.setPrix_vente(rs.getInt("prix_vente"));
 							article.setVendeur(vendeur);
 							article.setLieuRetrait(ret);
+							article.setCategorieArticle(categorie);
 							premiereLigne=false;
 						}
 					}
@@ -172,7 +172,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 						ArticleVendu article = null;
 						Categorie categorie = catDAO.select(rs.getInt("no_categorie"));
 						Retrait ret = retDAO.select(rs.getInt("retrait"));
-						Utilisateur acheteur = utilDAO.selectByID(rs.getInt("no_acheteur"));
 						Utilisateur vendeur = utilDAO.selectByID(rs.getInt("no_vendeur"));
 						article = new ArticleVendu();
 						article.setNo_article(rs.getInt("no_article"));
@@ -185,7 +184,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 						article.setVendeur(vendeur);
 						article.setLieuRetrait(ret);
 						article.setCategorieArticle(categorie);
-						
 						listArticleVendu.add(article);
 					}
 					rs.close();
