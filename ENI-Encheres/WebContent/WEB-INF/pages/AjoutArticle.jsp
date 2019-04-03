@@ -62,7 +62,23 @@
 										class="form-control" name="fin" id="fin">
 								</div>
 
-
+								<div class="card">
+									<div class="card-header">Retrait</div>
+									<div class="card-body">
+										<div class="form-group col-12">
+											<label for="rue">Rue :</label> <input type="text"
+												class="form-control" name="rue" id="rue" placeholder="Rue">
+										</div>
+										<div class="form-group col-12">
+											<label for="cp">Code Postal :</label> <input type="text"
+												class="form-control" name="cp" id="cp" placeholder="Code Postal">
+										</div>
+										<div class="form-group col-12">
+											<label for="rue">Ville :</label> <input type="text"
+												class="form-control" name="ville" id="ville" placeholder="Ville">
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
