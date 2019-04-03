@@ -4,4 +4,34 @@
   <welcome-file-list>
     <welcome-file>/WEB-INF/index.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>mdpOublie</display-name>
+    <servlet-name>mdpOublie</servlet-name>
+    <servlet-class>fr.eni.enchere.ihm.mdpOublie</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>mdpOublie</servlet-name>
+    <url-pattern>/mdpOublie</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>seDeconnecter</display-name>
+    <servlet-name>seDeconnecter</servlet-name>
+    <servlet-class>fr.eni.enchere.ihm.seDeconnecter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>seDeconnecter</servlet-name>
+    <url-pattern>/seDeconnecter</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Profil</display-name>
+    <servlet-name>Profil</servlet-name>
+    <servlet-class>fr.eni.enchere.ihm.Profil</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Profil</servlet-name>
+    <url-pattern>/Profil</url-pattern>
+  </servlet-mapping>
 </web-app>

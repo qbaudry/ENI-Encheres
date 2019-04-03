@@ -24,5 +24,17 @@ public class UtilisateurManager {
 		return this.utilDAO.selectByUser(pseudo, mdp);
 	}
 	
+	public Utilisateur selectionnerUtilisateurByEmailPseudo(String pseudo, String email) throws BusinessException {
+		return this.utilDAO.selectByPseudoAndMail(pseudo, email);
+	}
+	
+	public Utilisateur selectionnerUtilisateurById(int id) throws BusinessException {
+		return this.utilDAO.selectByID(id);
+	}
+	
+	public Utilisateur UpdateUtilisateurById(String pseudo, String nom, String prenom, String email, String telephone, String rue, String cp, String ville, String pwd, int id) throws BusinessException {
+		return this.utilDAO.updateByID( pseudo,  nom,  prenom,  email,  telephone,  rue,  cp,  ville,  pwd,  id);
+	}
+	
 	
 }

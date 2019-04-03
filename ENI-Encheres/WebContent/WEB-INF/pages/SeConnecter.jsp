@@ -11,6 +11,13 @@
 			<div class="alert alert-dark mt-5" role="alert">
 				<h1>Se connecter</h1>
 				<hr>
+				<% if(request.getAttribute("error") != null) {%>
+   				 <div class="alert alert-danger"><%=request.getAttribute("error")%></div>
+				<%}%>
+				<% if(request.getAttribute("congret") != null) {%>
+   				 <div class="alert alert-success"><%=request.getAttribute("congret")%></div>
+				<%}%>
+				<br>
 				<div class="row">
 					<div class="form-group col-12">
 				    	<label for="identifiant">Identifiant :</label>
@@ -31,12 +38,13 @@
 						</div>
 					</div>
 					<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						<a class="btn btn-block btn-warning">Mot de passe oublié</a>
+						<a class="btn btn-block btn-warning" href="${pageContext.request.contextPath}/mdpOublie">Mot de passe oublié</a>
 					</div>
 				</div>
 				<a class="btn btn-block btn-success" href="${pageContext.request.contextPath}/creerCompte">Créer un compte</a>
 			</div>
 		</form>
+		
 	</div>
 
 </body>

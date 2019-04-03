@@ -56,7 +56,7 @@ public class seConnecter extends HttpServlet {
 				Utilisateur util = new Utilisateur();
 				util = utilisateurManager.selectionnerUtilisateur(identifiant, mdp);
 				
-				if(util.getPseudo() == identifiant && util.getMotDePasse() == mdp)
+				if(util.getPseudo() == null || util.getMotDePasse() == null)
 				{
 					HttpSession session = request.getSession();
 
@@ -64,6 +64,10 @@ public class seConnecter extends HttpServlet {
 			        session.setAttribute("motdepasse", mdp);
 			        
 			        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
+					System.out.println(identifiant + " " + mdp);
+					System.out.println(util.getPseudo() + " " + util.getMotDePasse());
+					request.setAttribute("error", "Nom de compte ou mot de passe incorrect !");
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
 					rd.forward(request, response);
 				}
 				else

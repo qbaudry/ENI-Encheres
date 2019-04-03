@@ -11,19 +11,19 @@ public class ArticleVendu {
 	    private Timestamp date_fin_encheres;
 	    private int prix_initial;
 	    private int prix_vente ;
-	    private int no_utilisateur;
-	    private int no_categorie;
-	    private Utilisateur achete;
-	    private Utilisateur vend;
+	    private Utilisateur vendeur;
 	    private Enchere concerne;
 	    private Categorie categorieArticle;
 	    private Retrait lieuRetrait;
 	    
+	    public ArticleVendu() {
+	    	
+	    }
+	    
 		public ArticleVendu(int no_article, String nom_article, String description, Timestamp date_debut_encheres,
-				Timestamp date_fin_encheres, int prix_initial, int prix_vente, int no_utilisateur, int no_categorie,
-				Utilisateur achete, Utilisateur vend, Enchere concerne, Categorie categorieArticle,
+				Timestamp date_fin_encheres, int prix_initial, int prix_vente,
+				Utilisateur vend, Enchere concerne, Categorie categorieArticle,
 				Retrait lieuRetrait) {
-			super();
 			this.no_article = no_article;
 			this.nom_article = nom_article;
 			this.description = description;
@@ -31,10 +31,7 @@ public class ArticleVendu {
 			this.date_fin_encheres = date_fin_encheres;
 			this.prix_initial = prix_initial;
 			this.prix_vente = prix_vente;
-			this.no_utilisateur = no_utilisateur;
-			this.no_categorie = no_categorie;
-			this.achete = achete;
-			this.vend = vend;
+			this.vendeur = vend;
 			this.concerne = concerne;
 			this.categorieArticle = categorieArticle;
 			this.lieuRetrait = lieuRetrait;
@@ -96,38 +93,6 @@ public class ArticleVendu {
 			this.prix_vente = prix_vente;
 		}
 
-		public int getNo_utilisateur() {
-			return no_utilisateur;
-		}
-
-		public void setNo_utilisateur(int no_utilisateur) {
-			this.no_utilisateur = no_utilisateur;
-		}
-
-		public int getNo_categorie() {
-			return no_categorie;
-		}
-
-		public void setNo_categorie(int no_categorie) {
-			this.no_categorie = no_categorie;
-		}
-
-		public Utilisateur getAchete() {
-			return achete;
-		}
-
-		public void setAchete(Utilisateur achete) {
-			this.achete = achete;
-		}
-
-		public Utilisateur getVend() {
-			return vend;
-		}
-
-		public void setVend(Utilisateur vend) {
-			this.vend = vend;
-		}
-
 		public Enchere getConcerne() {
 			return concerne;
 		}
@@ -150,6 +115,14 @@ public class ArticleVendu {
 
 		public void setLieuRetrait(Retrait lieuRetrait) {
 			this.lieuRetrait = lieuRetrait;
+		}
+
+		public Utilisateur getVendeur() {
+			return vendeur;
+		}
+
+		public void setVendeur(Utilisateur vendeur) {
+			this.vendeur = vendeur;
 		}
 		
 		
