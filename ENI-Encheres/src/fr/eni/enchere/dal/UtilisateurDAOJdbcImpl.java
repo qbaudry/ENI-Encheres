@@ -171,7 +171,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		Utilisateur util = new Utilisateur();
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
-			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ACCOUNT_BY_EMAIL);
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ACCOUNT_BY_ID);
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
 			boolean premiereLigne=true;
