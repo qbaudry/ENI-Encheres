@@ -18,9 +18,9 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String DELETE = "delete from ARTICLES_VENDUS where no_article = ?";
 	private static final String SELECT = "select * from ARTICLES_VENDUS where no_article = ?";
 	private static final String LISTER = "select * from ARTICLES_VENDUS";
-	private CategorieDAO catDAO = DAOFactory.getCategorieDAO();
-	private UtilisateurDAO utilDAO = DAOFactory.getUtilisateurDAO();
-	private RetraitDAO retDAO = DAOFactory.getRetraitDAO();
+	private static CategorieDAO catDAO = DAOFactory.getCategorieDAO();
+	private static UtilisateurDAO utilDAO = DAOFactory.getUtilisateurDAO();
+	private static RetraitDAO retDAO = DAOFactory.getRetraitDAO();
 	
 	@Override
 	public void save(ArticleVendu article) throws BusinessException {
