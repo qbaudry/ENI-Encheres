@@ -14,4 +14,24 @@
     <servlet-name>mdpOublie</servlet-name>
     <url-pattern>/mdpOublie</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>seDeconnecter</display-name>
+    <servlet-name>seDeconnecter</servlet-name>
+    <servlet-class>fr.eni.enchere.ihm.seDeconnecter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>seDeconnecter</servlet-name>
+    <url-pattern>/seDeconnecter</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Profil</display-name>
+    <servlet-name>Profil</servlet-name>
+    <servlet-class>fr.eni.enchere.ihm.Profil</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Profil</servlet-name>
+    <url-pattern>/Profil</url-pattern>
+  </servlet-mapping>
 </web-app>
