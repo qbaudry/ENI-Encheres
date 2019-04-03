@@ -18,9 +18,10 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String DELETE = "delete from ARTICLES_VENDUS where no_article = ?";
 	private static final String SELECT = "select * from ARTICLES_VENDUS where no_article = ?";
 	private static final String LISTER = "select * from ARTICLES_VENDUS";
+	private static final String DELETEBYUSER = "delete from ARTICLES_VENDUS where no_vendeur = ?";
+	private static final String SELECTBYUSER = "select * from ARTICLES_VENDUS where no_vendeur = ?";
 	private static CategorieDAO catDAO = DAOFactory.getCategorieDAO();
 	private static UtilisateurDAO utilDAO = DAOFactory.getUtilisateurDAO();
-	private static RetraitDAO retDAO = DAOFactory.getRetraitDAO();
 	
 	@Override
 	public void save(ArticleVendu article) throws BusinessException {
@@ -85,6 +86,11 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				PreparedStatement pstmt;
 				ResultSet rs;
 				if(article.getNo_article()!=0){
+					try {
+						DAOFactory.getRetraitDAO().delete(DAOFactory.getRetraitDAO().select(article.getNo_article()));
+					}catch(Error e){
+						System.out.println("pas de retrait lié");
+					}
 					pstmt = cnx.prepareStatement(DELETE, PreparedStatement.RETURN_GENERATED_KEYS);
 					pstmt.setInt(1, article.getNo_article());
 					pstmt.executeUpdate();
@@ -199,6 +205,55 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			throw businessException;
 		}
 		return listArticleVendu;
+	}
+	
+	public ArticleVendu selectByVendeur(Utilisateur usr) throws BusinessException {
+		ArticleVendu article = null;
+		try(Connection cnx = ConnectionProvider.getConnection()){
+			try{
+				cnx.setAutoCommit(false);
+				PreparedStatement pstmt;
+				ResultSet rs;
+				if(usr.getNoUtilisateur() !=0){
+					pstmt = cnx.prepareStatement(SELECTBYUSER);
+					pstmt.setInt(1, usr.getNoUtilisateur());
+					rs = pstmt.executeQuery();
+					boolean premiereLigne = true;
+					while(rs.next())
+					{
+						if(premiereLigne)
+						{
+							Categorie categorie = catDAO.select(rs.getInt("no_categorie"));
+//							Retrait ret = retDAO.select(rs.getInt("retrait"));
+							Utilisateur vendeur = utilDAO.selectByID(rs.getInt("no_vendeur"));
+							article = new ArticleVendu();
+							article.setNo_article(rs.getInt("no_article"));
+							article.setNom_article(rs.getString("nom_article"));
+							article.setDescription(rs.getString("description"));
+							article.setDate_debut_encheres(rs.getTimestamp("date_debut_encheres"));
+							article.setDate_fin_encheres(rs.getTimestamp("date_fin_encheres"));
+							article.setPrix_initial(rs.getInt("prix_initial"));
+							article.setPrix_vente(rs.getInt("prix_vente"));
+							article.setVendeur(vendeur);
+//							article.setLieuRetrait(ret);
+							article.setCategorieArticle(categorie);
+							premiereLigne=false;
+						}
+					}
+					rs.close();
+					pstmt.close();
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+				cnx.rollback();
+				throw e;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			throw businessException;
+		}
+		return article;
 	}
 
 }
