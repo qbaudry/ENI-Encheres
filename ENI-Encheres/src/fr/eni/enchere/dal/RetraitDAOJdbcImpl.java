@@ -10,39 +10,32 @@ import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.BusinessException;
 
 public class RetraitDAOJdbcImpl implements RetraitDAO {
-	private static final String INSERT = "insert into RETRAIT values(?,?,?)";
-	private static final String UPDATE = "update RETRAIT set rue=?,code_postal=?,ville=? where no_article = ?";
-	private static final String DELETE = "delete from RETRAIT where no_article = ?";
-	private static final String SELECT = "select * from RETRAIT where no_article = ?";
-	private static final String LISTER = "select * from RETRAIT";
+	private static final String INSERT = "insert into RETRAITS(no_article,rue,code_postal,ville) values(?,?,?,?)";
+	private static final String UPDATE = "update RETRAITS set rue=?,code_postal=?,ville=? where no_article = ?";
+	private static final String DELETE = "delete from RETRAITS where no_article = ?";
+	private static final String SELECT = "select * from RETRAITS where no_article = ?";
+	private static final String LISTER = "select * from RETRAITS";
 	@Override
 	public void save(Retrait r) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection()){
 			try{
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
-				ResultSet rs;
-				if(r.getNoArticle()==0){
-					pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
-					pstmt.setString(1, r.getRue());
-					pstmt.setString(1, r.getCode_postal());
-					pstmt.setString(1, r.getVille());
+				if(this.select(r.getNoArticle())==null){
+					pstmt = cnx.prepareStatement(INSERT);
+					pstmt.setInt(1, r.getNoArticle());
+					pstmt.setString(2, r.getRue());
+					pstmt.setString(3, r.getCode_postal());
+					pstmt.setString(4, r.getVille());
 					pstmt.executeUpdate();
-					rs = pstmt.getGeneratedKeys();
-					if(rs.next()){
-						r.setNoArticle(rs.getInt(1));
-					}
-					rs.close();
 					pstmt.close();
 				}else {
-					pstmt = cnx.prepareStatement(UPDATE, PreparedStatement.RETURN_GENERATED_KEYS);
+					pstmt = cnx.prepareStatement(UPDATE);
 					pstmt.setString(1, r.getRue());
-					pstmt.setString(1, r.getCode_postal());
-					pstmt.setString(1, r.getVille());
+					pstmt.setString(2, r.getCode_postal());
+					pstmt.setString(3, r.getVille());
 					pstmt.setInt(4, r.getNoArticle());
 					pstmt.executeUpdate();
-					rs = pstmt.getGeneratedKeys();
-					rs.close();
 					pstmt.close();
 				}
 				
@@ -98,22 +91,20 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
 				ResultSet rs;
-				if(id !=0){
-					pstmt = cnx.prepareStatement(SELECT);
-					pstmt.setInt(1, id);
-					rs = pstmt.executeQuery();
-					boolean premiereLigne = true;
-					while(rs.next())
+				pstmt = cnx.prepareStatement(SELECT);
+				pstmt.setInt(1, id);
+				rs = pstmt.executeQuery();
+				boolean premiereLigne = true;
+				while(rs.next())
+				{
+					if(premiereLigne)
 					{
-						if(premiereLigne)
-						{
-							ret = new Retrait(rs.getInt("no_article"),rs.getString("rue"),rs.getString("code_postal"),rs.getString("ville"));
-							premiereLigne=false;
-						}
+						ret = new Retrait(rs.getInt("no_article"),rs.getString("rue"),rs.getString("code_postal"),rs.getString("ville"));
+						premiereLigne=false;
 					}
-					rs.close();
-					pstmt.close();
 				}
+				rs.close();
+				pstmt.close();
 			}catch(Exception e){
 				e.printStackTrace();
 				cnx.rollback();
