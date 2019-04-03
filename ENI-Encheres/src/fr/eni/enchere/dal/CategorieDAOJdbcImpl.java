@@ -128,7 +128,7 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 					rs = pstmt.executeQuery();
 					while(rs.next())
 					{
-						listCateg.add( new Categorie(rs.getInt("no_categorie"),rs.getString("libelle")));
+						listCateg.add(new Categorie(rs.getInt("no_categorie"),rs.getString("libelle")));
 					}
 					rs.close();
 					pstmt.close();

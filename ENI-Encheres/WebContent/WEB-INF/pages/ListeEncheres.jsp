@@ -21,11 +21,13 @@
 				    	<label class="input-group-text" for="inputGroupSelect">Catégorie</label>
 				  	</div>
 				  	<select class="custom-select" id="inputGroupSelect">
-					    <option selected>Choose...</option>
-					    <option value="1">One</option>
-					    <option value="2">Two</option>
-					    <option value="3">Three</option>
-					</select>
+				  		<option value="toutes" selected>Toutes</option>
+						<c:if test="${categories.size()>0}">
+							<c:forEach var="categorie" items="${categories}">
+						    	<option value="${categorie.noCategorie}">${categorie.libelle}</option>
+					      	</c:forEach>
+				        </c:if>
+			        </select>
 				</div>
 				<div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
 					<button type="submit" class="btn btn-block btn-primary">Rechercher</button>
@@ -52,6 +54,16 @@
 				</div>
 			</div>
 		</div>
+		<c:if test="${!empty listeCodesErreur}">
+			<div class="alert alert-danger" role="alert">
+			  <strong>Erreur !</strong>
+			  <ul>
+			  	<c:forEach var="code" items="${listeCodesErreur}">
+			  		<li>${LecteurMessage.getMessageErreur(code)}</li>
+			  	</c:forEach>
+			  </ul>
+			</div>
+		</c:if>
 	</div>
 </body>
 </html>

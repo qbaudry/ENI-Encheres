@@ -28,10 +28,10 @@
 				    	<label for="nom">Nom :</label>
 				    	<c:choose>
     						<c:when test="${!empty formulaire}">
-								<input type="text" class="form-control" id=""nom"" name="nom" placeholder="Nom" value="${formulaire.nom}" required>
+								<input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" value="${formulaire.nom}" required>
 							</c:when>
 					        <c:otherwise>
-					        	<input type="text" class="form-control" id=""nom"" name=""nom"" placeholder="Nom" required>
+					        	<input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" required>
 					        </c:otherwise>
 					    </c:choose>
 					</div>

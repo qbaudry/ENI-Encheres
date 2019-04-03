@@ -1,6 +1,8 @@
 package fr.eni.enchere.ihm;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import fr.eni.enchere.bll.CategorieManager;
+import fr.eni.enchere.bo.Categorie;
+import fr.eni.enchere.BusinessException;
 
 /**
  * Servlet implementation class listesEncheres
@@ -28,6 +34,19 @@ public class listeEncheres extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		CategorieManager categorieManager = new CategorieManager();
+		
+		List<Categorie> listeCategories = new ArrayList<>();
+		List<Integer> listeCodesErreur = new ArrayList<>();
+		
+		try {
+			listeCategories = categorieManager.lister();
+			request.setAttribute("categories", listeCategories);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
+		}
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/ListeEncheres.jsp");
 		rd.forward(request, response);
 	}

@@ -103,7 +103,6 @@ public class creerCompte extends HttpServlet {
 		String ville = request.getParameter("ville");
 		String motdepasse = request.getParameter("motdepasse");
 		String motdepasse2 = request.getParameter("motdepasse2");
-		System.out.println(pseudo+nom+prenom+email+telephone+rue+codepostal+ville+motdepasse+motdepasse2);
 		if (pseudo == null || nom == null || prenom == null || email == null || telephone == null || rue == null
 				|| codepostal == null || ville == null || motdepasse == null || motdepasse2 == null) {
 			listeCodesErreur.add(CodesResultatServlets.FORMULAIRE_INSCIPTION_SAISIE_OBLIGATOIRE);
