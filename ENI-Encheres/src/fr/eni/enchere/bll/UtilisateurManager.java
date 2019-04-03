@@ -32,8 +32,12 @@ public class UtilisateurManager {
 		return this.utilDAO.selectByID(id);
 	}
 	
-	public Utilisateur UpdateUtilisateurById(String pseudo, String nom, String prenom, String email, String telephone, String rue, String cp, String ville, String pwd, int id) throws BusinessException {
-		return this.utilDAO.updateByID( pseudo,  nom,  prenom,  email,  telephone,  rue,  cp,  ville,  pwd,  id);
+	public void UpdateUtilisateurById(Utilisateur util) throws BusinessException {
+		this.utilDAO.updateByID(util);
+	}
+	
+	public void deleteUser(int id) throws BusinessException {
+		this.utilDAO.deleteUser(id);
 	}
 	
 	
