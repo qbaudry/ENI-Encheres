@@ -12,7 +12,7 @@
 	  	<span class="m-auto"></span>
 	    <ul class="navbar-nav">   
 	      <li class="nav-item">      
-	        <a class="nav-link" href="${pageContext.request.contextPath}/seConnecter">Enchères</a>
+	        <a class="nav-link" href="${pageContext.request.contextPath}/listeEncheres">Enchères</a>
 	      </li>
 	      <li class="nav-item">      
 	        <a class="nav-link" href="${pageContext.request.contextPath}/seConnecter">Vendre un article</a>

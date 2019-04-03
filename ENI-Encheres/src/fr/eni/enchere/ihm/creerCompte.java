@@ -82,12 +82,10 @@ public class creerCompte extends HttpServlet {
 				utilisateurManager.ajouterUtilisateur(nouveauCompte);
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
 				rd.forward(request, response);
-				System.out.println("Utilisateur ajouté");
 			} catch (BusinessException e) {
 				e.printStackTrace();
 				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 				request.setAttribute("formulaire", nouveauCompte);
-				System.out.println("Utilisateur non ajouté");
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/CreerCompte.jsp");
 				rd.forward(request, response);
 			}
@@ -105,6 +103,7 @@ public class creerCompte extends HttpServlet {
 		String ville = request.getParameter("ville");
 		String motdepasse = request.getParameter("motdepasse");
 		String motdepasse2 = request.getParameter("motdepasse2");
+		System.out.println(pseudo+nom+prenom+email+telephone+rue+codepostal+ville+motdepasse+motdepasse2);
 		if (pseudo == null || nom == null || prenom == null || email == null || telephone == null || rue == null
 				|| codepostal == null || ville == null || motdepasse == null || motdepasse2 == null) {
 			listeCodesErreur.add(CodesResultatServlets.FORMULAIRE_INSCIPTION_SAISIE_OBLIGATOIRE);

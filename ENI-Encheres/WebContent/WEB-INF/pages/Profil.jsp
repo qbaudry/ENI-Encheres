@@ -61,10 +61,7 @@
 					</div>
 				</div>
 				<hr>
-				<div class="row">
-					<div class="col-6">
-				    	<button type="submit" class="btn btn-block btn-success">Modifier</button>
-					</div>
+				    <button type="submit" class="btn btn-block btn-success">Modifier</button>
 				</div>
 			</div>
 		</form>
