@@ -29,19 +29,25 @@
 					</div>
 				</div>
 				<hr>
-				<div class="row pb-3">
+				<div class="row">
 					<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<button type="submit" class="btn btn-block btn-success">Connexion</button>
-							<div class="form-check py-3 mx-3">
-						    <input type="checkbox" class="form-check-input" id="sesouvenir">
-							<label class="form-check-label" for="sesouvenir">Se souvenir de moi</label>
+						<div class="input-group mb-3">
+						  <div class="input-group-prepend">
+						    <div class="input-group-text">
+						      <input type="checkbox" id="sesouvenir">
+						    </div>
+						  </div>
+						  <input type="text" class="form-control" value="Se souvenir de moi" disabled>
 						</div>
 					</div>
 					<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 						<a class="btn btn-block btn-warning" href="${pageContext.request.contextPath}/mdpOublie">Mot de passe oublié</a>
 					</div>
 				</div>
-				<a class="btn btn-block btn-success" href="${pageContext.request.contextPath}/creerCompte">Créer un compte</a>
+				<div class="pt-3 pt-sm-3 pt-md-0 pt-lg-0 pt-xl-0">
+					<a class="btn btn-block btn-success" href="${pageContext.request.contextPath}/creerCompte">Créer un compte</a>
+				</div>
 			</div>
 		</form>
 		
