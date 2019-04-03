@@ -58,12 +58,6 @@ public class seConnecter extends HttpServlet {
 				
 				if(util.getPseudo() == null || util.getMotDePasse() == null)
 				{
-					HttpSession session = request.getSession();
-
-			        session.setAttribute("identifiant", identifiant);
-			        session.setAttribute("motdepasse", mdp);
-			        
-			        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
 					System.out.println(identifiant + " " + mdp);
 					System.out.println(util.getPseudo() + " " + util.getMotDePasse());
 					request.setAttribute("error", "Nom de compte ou mot de passe incorrect !");
@@ -72,17 +66,41 @@ public class seConnecter extends HttpServlet {
 				}
 				else
 				{
-			        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
-					rd.forward(request, response);
+					if(util.getPseudo().equals(identifiant) && util.getMotDePasse().equals(mdp))
+					{
+						
+						
+						HttpSession session = request.getSession();
+				        session.setAttribute("identifiant", util.getPseudo());
+				        session.setAttribute("motdepasse", util.getMotDePasse());
+				        request.setAttribute("congret", "Bienvenue " + util.getPseudo() + " !");
+				        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
+						rd.forward(request, response);
+					}
+					else
+					{
+						request.setAttribute("error", "Nom de compte ou mot de passe incorrect !");
+						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
+						rd.forward(request, response);
+					}
 				}
+				
+				
+
+				
+				
+				
 			} catch(BusinessException e)
 			{
-				e.printStackTrace();
-				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+				
+				request.setAttribute("error", "Nom de compte ou mot de passe incorrect !");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
+				rd.forward(request, response);
+				
 			}
 			
 		} else {
-			System.out.println("Formulaire non rempli entiÃ¨rement");
+			System.out.println("Formulaire non rempli entièrement");
 		}
 	}
 
