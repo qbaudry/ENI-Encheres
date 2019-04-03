@@ -68,8 +68,6 @@ public class seConnecter extends HttpServlet {
 				{
 					if(util.getPseudo().equals(identifiant) && util.getMotDePasse().equals(mdp))
 					{
-						
-						
 						HttpSession session = request.getSession();
 				        session.setAttribute("identifiant", util.getPseudo());
 				        session.setAttribute("motdepasse", util.getMotDePasse());
@@ -84,24 +82,14 @@ public class seConnecter extends HttpServlet {
 						rd.forward(request, response);
 					}
 				}
-				
-				
-
-				
-				
-				
 			} catch(BusinessException e)
 			{
-				
 				request.setAttribute("error", "Nom de compte ou mot de passe incorrect !");
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
 				rd.forward(request, response);
-				
 			}
-			
 		} else {
-			System.out.println("Formulaire non rempli entièrement");
+			System.out.println("Formulaire non rempli entiï¿½rement");
 		}
 	}
-
 }

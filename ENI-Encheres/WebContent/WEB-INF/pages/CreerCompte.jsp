@@ -12,130 +12,121 @@
 			<div class="alert alert-dark mt-5" role="alert">
 				<h1>Mon Profil</h1>
 				<hr>
-				<c:choose>
-		    		<c:when test="${!empty formulaire}">
-				        <div class="row">
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						    	<label for="pseudo">Pseudo :</label>
+		        <div class="row">
+					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+				    	<label for="pseudo">Pseudo :</label>
+				    	<c:choose>
+    						<c:when test="${!empty formulaire}">
 								<input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="Pseudo" value="${formulaire.pseudo}" required>
-							</div>
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						    	<label for="nom">Nom :</label>
-						    	<input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" value="${formulaire.nom}" required>
-							</div>
-						</div>
-						<div class="row">
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						    	<label for="prenom">Prénom :</label>
-						    	<input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom" value="${formulaire.prenom}" required>
-							</div>
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" required>
-						    	<label for="nom">Email :</label>
-						    	<input type="email" class="form-control" id="email" name="email" placeholder="Email" value="${formulaire.email}" required>
-							</div>
-						</div>
-						<div class="row">
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						    	<label for="telephone">Téléphone :</label>
-						    	<input type="text" pattern="\d{10}" class="form-control" id="telephone" name="telephone" placeholder="Téléphone" value="${formulaire.telephone}" required>
-							</div>
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						    	<label for="rue">Rue :</label>
-						    	<input type="text" class="form-control" id="rue" name="rue" placeholder="Rue" value="${formulaire.rue}" required>
-							</div>
-						</div>
-						<div class="row">
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						    	<label for="codepostal">Code postal :</label>
-						    	<input type="text" pattern="\d{5}" class="form-control" id="codepostal" name="codepostal" placeholder="Code postal" value="${formulaire.codePostal}" required>
-							</div>
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						    	<label for="ville">Ville :</label>
-						    	<input type="text" class="form-control" id="ville" name="ville" placeholder="Ville" value="${formulaire.ville}" required>
-							</div>
-						</div>
-						<div class="row">
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						    	<label for="motdepasse">Mot de passe :</label>
-						    	<input type="password" class="form-control" id="motdepasse" name="motdepasse" placeholder="Mot de passe" required>
-							</div>
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						    	<label for="motdepasse2">Confirmation :</label>
-						    	<input type="password" class="form-control" id="motdepasse2" name="motdepasse2" placeholder="Confirmation du mot de passe" required>
-							</div>
-						</div>
-						<hr>
-						<div class="row">
-							<div class="col-6">
-						    	<button type="submit" class="btn btn-block btn-success">Creer</button>
-							</div>
-							<div class="col-6">
-						    	<a class="btn btn-block btn-danger" href="${pageContext.request.contextPath}/seConnecter">Annuler</a>
-							</div>
-						</div>
-			        </c:when>
-			        <c:otherwise>
-			        	<div class="row">
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						    	<label for="pseudo">Pseudo :</label>
-								<input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="Pseudo" required>
-							</div>
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						    	<label for="nom">Nom :</label>
-						    	<input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" required>
-							</div>
-						</div>
-						<div class="row">
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						    	<label for="prenom">Prénom :</label>
-						    	<input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom" required>
-							</div>
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" required>
-						    	<label for="nom">Email :</label>
-						    	<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-							</div>
-						</div>
-						<div class="row">
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						    	<label for="telephone">Téléphone :</label>
-						    	<input type="text" pattern="\d{10}" class="form-control" id="telephone" name="telephone" placeholder="Téléphone" required>
-							</div>
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						    	<label for="rue">Rue :</label>
-						    	<input type="text" class="form-control" id="rue" name="rue" placeholder="Rue" required>
-							</div>
-						</div>
-						<div class="row">
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						    	<label for="codepostal">Code postal :</label>
-						    	<input type="text" pattern="\d{5}" class="form-control" id="codepostal" name="codepostal" placeholder="Code postal" required>
-							</div>
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						    	<label for="ville">Ville :</label>
-						    	<input type="text" class="form-control" id="ville" name="ville" placeholder="Ville" required>
-							</div>
-						</div>
-						<div class="row">
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						    	<label for="motdepasse">Mot de passe :</label>
-						    	<input type="password" class="form-control" id="motdepasse" name="motdepasse" placeholder="Mot de passe" required>
-							</div>
-							<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						    	<label for="motdepasse2">Confirmation :</label>
-						    	<input type="password" class="form-control" id="motdepasse2" name="motdepasse2" placeholder="Confirmation du mot de passe" required>
-							</div>
-						</div>
-						<hr>
-						<div class="row">
-							<div class="col-6">
-						    	<button type="submit" class="btn btn-block btn-success">Creer</button>
-							</div>
-							<div class="col-6">
-						    	<a class="btn btn-block btn-danger" href="${pageContext.request.contextPath}/seConnecter">Annuler</a>
-							</div>
-						</div>
-			        </c:otherwise>
-		        </c:choose>
+							</c:when>
+					        <c:otherwise>
+					        	<input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="Pseudo" required>
+					        </c:otherwise>
+					    </c:choose>
+					</div>
+					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+				    	<label for="nom">Nom :</label>
+				    	<c:choose>
+    						<c:when test="${!empty formulaire}">
+								<input type="text" class="form-control" id=""nom"" name="nom" placeholder="Nom" value="${formulaire.nom}" required>
+							</c:when>
+					        <c:otherwise>
+					        	<input type="text" class="form-control" id=""nom"" name=""nom"" placeholder="Nom" required>
+					        </c:otherwise>
+					    </c:choose>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+				    	<label for="prenom">Prénom :</label>
+				    	<c:choose>
+    						<c:when test="${!empty formulaire}">
+								<input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom" value="${formulaire.prenom}" required>
+							</c:when>
+					        <c:otherwise>
+					        	<input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom" required>
+					        </c:otherwise>
+					    </c:choose>
+					</div>
+					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" required>
+				    	<label for="nom">Email :</label>
+				    	<c:choose>
+    						<c:when test="${!empty formulaire}">
+								<input type="email" class="form-control" id="email" name="email" placeholder="Email" value="${formulaire.email}" required>
+							</c:when>
+					        <c:otherwise>
+					        	<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+					        </c:otherwise>
+					    </c:choose>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+				    	<label for="telephone">Téléphone :</label>
+				    	<c:choose>
+    						<c:when test="${!empty formulaire}">
+								<input type="text" pattern="\d{10}" class="form-control" id="telephone" name="telephone" placeholder="Téléphone" value="${formulaire.telephone}" required>
+							</c:when>
+					        <c:otherwise>
+					        	<input type="text" pattern="\d{10}" class="form-control" id="telephone" name="telephone" placeholder="Téléphone" required>
+					        </c:otherwise>
+					    </c:choose>
+					</div>
+					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+				    	<label for="rue">Rue :</label>
+				    	<c:choose>
+    						<c:when test="${!empty formulaire}">
+								<input type="text" class="form-control" id="rue" name="rue" placeholder="Rue" value="${formulaire.rue}" required>
+							</c:when>
+					        <c:otherwise>
+					        	<input type="text" class="form-control" id="rue" name="rue" placeholder="Rue" required>
+					        </c:otherwise>
+					    </c:choose>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+				    	<label for="codepostal">Code postal :</label>
+				    	<c:choose>
+    						<c:when test="${!empty formulaire}">
+								<input type="text" pattern="\d{5}" class="form-control" id="codepostal" name="codepostal" placeholder="Code postal" value="${formulaire.codePostal}" required>
+							</c:when>
+					        <c:otherwise>
+					        	<input type="text" pattern="\d{5}" class="form-control" id="codepostal" name="codepostal" placeholder="Code postal" required>
+					        </c:otherwise>
+					    </c:choose>
+					</div>
+					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+				    	<label for="ville">Ville :</label>
+				    	<c:choose>
+    						<c:when test="${!empty formulaire}">
+								<input type="text" class="form-control" id="ville" name="ville" placeholder="Ville" value="${formulaire.ville}" required>
+							</c:when>
+					        <c:otherwise>
+					        	<input type="text" class="form-control" id="ville" name="ville" placeholder="Ville" required>
+					        </c:otherwise>
+					    </c:choose>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+				    	<label for="motdepasse">Mot de passe :</label>
+				    	<input type="password" class="form-control" id="motdepasse" name="motdepasse" placeholder="Mot de passe" required>
+					</div>
+					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+				    	<label for="motdepasse2">Confirmation :</label>
+				    	<input type="password" class="form-control" id="motdepasse2" name="motdepasse2" placeholder="Confirmation du mot de passe" required>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-6">
+				    	<button type="submit" class="btn btn-block btn-success">Creer</button>
+					</div>
+					<div class="col-6">
+				    	<a class="btn btn-block btn-danger" href="${pageContext.request.contextPath}/seConnecter">Annuler</a>
+					</div>
+				</div>
 			</div>
 		</form>
 		<c:if test="${!empty listeCodesErreur}">
