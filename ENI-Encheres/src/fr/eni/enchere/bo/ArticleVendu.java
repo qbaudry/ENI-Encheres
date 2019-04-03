@@ -14,7 +14,6 @@ public class ArticleVendu {
 	    private Utilisateur vendeur;
 	    private Enchere concerne;
 	    private Categorie categorieArticle;
-	    private Retrait lieuRetrait;
 	    
 	    public ArticleVendu() {
 	    	
@@ -22,8 +21,7 @@ public class ArticleVendu {
 	    
 		public ArticleVendu(int no_article, String nom_article, String description, Timestamp date_debut_encheres,
 				Timestamp date_fin_encheres, int prix_initial, int prix_vente,
-				Utilisateur vend, Enchere concerne, Categorie categorieArticle,
-				Retrait lieuRetrait) {
+				Utilisateur vend, Enchere concerne, Categorie categorieArticle) {
 			this.no_article = no_article;
 			this.nom_article = nom_article;
 			this.description = description;
@@ -34,7 +32,6 @@ public class ArticleVendu {
 			this.vendeur = vend;
 			this.concerne = concerne;
 			this.categorieArticle = categorieArticle;
-			this.lieuRetrait = lieuRetrait;
 		}
 
 		public int getNo_article() {
@@ -107,14 +104,6 @@ public class ArticleVendu {
 
 		public void setCategorieArticle(Categorie categorieArticle) {
 			this.categorieArticle = categorieArticle;
-		}
-
-		public Retrait getLieuRetrait() {
-			return lieuRetrait;
-		}
-
-		public void setLieuRetrait(Retrait lieuRetrait) {
-			this.lieuRetrait = lieuRetrait;
 		}
 
 		public Utilisateur getVendeur() {

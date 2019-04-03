@@ -15,13 +15,13 @@ import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.bo.Utilisateur;
 
 public class EnchereDAOJdbcImpl implements EnchereDAO {
-	private static final String INSERT = "insert into ENCHERE (no_utilisateur,no_article,date_enchere,montant_enchere values(?,?,?,?)";
-	private static final String UPDATE = "update ENCHERE set date_enchere=?,montant_enchere=? where no_article = ? AND no_uilisateur=?";
-	private static final String DELETE = "delete from ENCHERE where no_article = ? AND no_uilisateur=?";
-	private static final String SELECT = "select * from ENCHERE where no_article = ? AND no_uilisateur=?";
-	private static final String SELECTBYUSER = "select * from ENCHERE where no_uilisateur=?";
-	private static final String SELECTBYARTICLE = "select * from ENCHERE where no_article = ?";
-	private static final String LISTER = "select * from ENCHERE";
+	private static final String INSERT = "insert into ENCHERES (no_utilisateur,no_article,date_enchere,montant_enchere) values(?,?,?,?)";
+	private static final String UPDATE = "update ENCHERES set date_enchere=?,montant_enchere=? where no_article = ? AND no_utilisateur=?";
+	private static final String DELETE = "delete from ENCHERES where no_article = ? AND no_utilisateur=?";
+	private static final String SELECT = "select * from ENCHERES where no_article = ? AND no_utilisateur=?";
+	private static final String SELECTBYUSER = "select * from ENCHERES where no_utilisateur=?";
+	private static final String SELECTBYARTICLE = "select * from ENCHERES where no_article = ?";
+	private static final String LISTER = "select * from ENCHERES";
 	private static UtilisateurDAO utilDAO = DAOFactory.getUtilisateurDAO();
 	private static ArticleVenduDAO artDAO = DAOFactory.getArticleDAO();
 	@Override
@@ -111,8 +111,8 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				pstmt.setInt(2, u.getNoUtilisateur());
 				rs = pstmt.executeQuery();
 				if(rs.next()){
-					if(rs.getTimestamp("date_fin_encheres")!= null && rs.getInt("montant_enchere")!= 0) {
-						ench = new Enchere(u,rs.getTimestamp("date_fin_encheres"),rs.getInt("montant_enchere"),art);
+					if(rs.getTimestamp("date_enchere")!= null && rs.getInt("montant_enchere")!= 0) {
+						ench = new Enchere(u,rs.getTimestamp("date_enchere"),rs.getInt("montant_enchere"),art);
 					}
 				}
 				rs.close();
@@ -144,7 +144,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 					{
 						ArticleVendu art = artDAO.select(rs.getInt("no_article"));
 						Utilisateur u = utilDAO.selectByID(rs.getInt("no_utilisateur"));
-						listEnchere.add(new Enchere(u,rs.getTimestamp("date_fin_encheres"),rs.getInt("montant_enchere"),art));
+						listEnchere.add(new Enchere(u,rs.getTimestamp("date_enchere"),rs.getInt("montant_enchere"),art));
 					}
 					rs.close();
 					pstmt.close();
@@ -169,12 +169,13 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
 				ResultSet rs;
-					pstmt = cnx.prepareStatement(LISTER);
+					pstmt = cnx.prepareStatement(SELECTBYUSER);
+					pstmt.setInt(1, u.getNoUtilisateur());
 					rs = pstmt.executeQuery();
 					while(rs.next())
 					{
 						ArticleVendu art = artDAO.select(rs.getInt("no_article"));
-						listEnchere.add(new Enchere(u,rs.getTimestamp("date_fin_encheres"),rs.getInt("montant_enchere"),art));
+						listEnchere.add(new Enchere(u,rs.getTimestamp("date_enchere"),rs.getInt("montant_enchere"),art));
 					}
 					rs.close();
 					pstmt.close();
@@ -199,12 +200,13 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
 				ResultSet rs;
-					pstmt = cnx.prepareStatement(LISTER);
+					pstmt = cnx.prepareStatement(SELECTBYARTICLE);
+					pstmt.setInt(1, art.getNo_article());
 					rs = pstmt.executeQuery();
 					while(rs.next())
 					{
 						Utilisateur u = utilDAO.selectByID(rs.getInt("no_utilisateur"));
-						listEnchere.add(new Enchere(u,rs.getTimestamp("date_fin_encheres"),rs.getInt("montant_enchere"),art));
+						listEnchere.add(new Enchere(u,rs.getTimestamp("date_enchere"),rs.getInt("montant_enchere"),art));
 					}
 					rs.close();
 					pstmt.close();

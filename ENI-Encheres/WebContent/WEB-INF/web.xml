@@ -34,4 +34,24 @@
     <servlet-name>Profil</servlet-name>
     <url-pattern>/Profil</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>supprimerCompte</display-name>
+    <servlet-name>supprimerCompte</servlet-name>
+    <servlet-class>fr.eni.enchere.ihm.supprimerCompte</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>supprimerCompte</servlet-name>
+    <url-pattern>/supprimerCompte</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ajoutArticle</display-name>
+    <servlet-name>ajoutArticle</servlet-name>
+    <servlet-class>fr.eni.enchere.ihm.ajoutArticle</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ajoutArticle</servlet-name>
+    <url-pattern>/ajoutArticle</url-pattern>
+  </servlet-mapping>
 </web-app>
