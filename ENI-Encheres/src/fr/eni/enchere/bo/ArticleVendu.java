@@ -14,6 +14,7 @@ public class ArticleVendu {
 	    private Utilisateur vendeur;
 	    private Enchere concerne;
 	    private Categorie categorieArticle;
+	    private String photo;
 	    
 	    public ArticleVendu() {
 	    	
@@ -112,6 +113,14 @@ public class ArticleVendu {
 
 		public void setVendeur(Utilisateur vendeur) {
 			this.vendeur = vendeur;
+		}
+
+		public String getPhoto() {
+			return photo;
+		}
+
+		public void setPhoto(String photo) {
+			this.photo = photo;
 		}
 		
 		
