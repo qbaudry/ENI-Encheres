@@ -56,11 +56,8 @@ public class seConnecter extends HttpServlet {
 				Utilisateur util = new Utilisateur();
 				util = utilisateurManager.selectionnerUtilisateur(identifiant, mdp);
 				
-				
 				if(util.getPseudo() == identifiant && util.getMotDePasse() == mdp)
 				{
-					
-					
 					HttpSession session = request.getSession();
 
 			        session.setAttribute("identifiant", identifiant);
@@ -71,13 +68,9 @@ public class seConnecter extends HttpServlet {
 				}
 				else
 				{
-					
 			        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
 					rd.forward(request, response);
 				}
-				
-				
-				
 			} catch(BusinessException e)
 			{
 				e.printStackTrace();

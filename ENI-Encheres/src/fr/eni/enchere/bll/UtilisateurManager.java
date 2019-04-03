@@ -17,25 +17,7 @@ public class UtilisateurManager {
 
 	public void ajouterUtilisateur(Utilisateur util) throws BusinessException
 	{
-		BusinessException businessException = new BusinessException();
-		this.validerEmailUtilisateur(util.getEmail(), businessException);
-		
-		if(!businessException.hasErreurs())
-		{
-			this.utilDAO.insert(util);
-		}
-		else
-		{
-			throw businessException;
-		}
-	}
-	
-	private void validerEmailUtilisateur(String email, BusinessException businessException) {
-		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-		Pattern pat = Pattern.compile(emailRegex);
-		if (pat.matcher(email).matches()) {
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_EMAIL_INSCRIPTION);
-		} 
+		this.utilDAO.insert(util);
 	}
 	
 	public Utilisateur selectionnerUtilisateur(String pseudo, String mdp) throws BusinessException {
