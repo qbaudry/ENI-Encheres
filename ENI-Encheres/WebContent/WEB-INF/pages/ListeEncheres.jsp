@@ -35,23 +35,28 @@
 			</div>
 			<hr>
 			<div class="row">
-				<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 pb-3">
-					<div class="card">
-						<div class="row no-gutters">
-					    	<div class="col-md-4 px-3 my-auto">
-					      		<img src="https://via.placeholder.com/150" class="card-img" alt="...">
-					    	</div>
-					    	<div class="col-md-8">
-					      		<div class="card-body">
-						        	<h5 class="card-title">Nom du produits</h5>
-						        	<p class="card-text">Prix : XXX points<br>
-						        		Fin de l'enchère : JJ/MM/AAAA</p>
-						        	<p class="card-text">Vendeur : jojo44</p>
-					      		</div>
-					    	</div>
+				<c:if test="${articles.size()>0}">
+					<c:forEach var="article" items="${articles}">
+				    	<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 pb-3">
+							<div class="card">
+								<div class="row no-gutters">
+							    	<div class="col-md-4 px-3 my-auto">
+							      		<img src="https://via.placeholder.com/150" class="card-img" alt="...">
+							    	</div>
+							    	<div class="col-md-8">
+							      		<div class="card-body">
+								        	<h5 class="card-title">${article.nom_article}</h5>
+								        	<p class="card-text">Prix : ${article.prix_initial} points<br>
+								        		Fin de l'enchère : ${article.date_fin_encheres}</p>
+								        	<p class="card-text">Vendeur : ${article.vendeur.pseudo}</p>
+							      		</div>
+							    	</div>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
+			      	</c:forEach>
+		        </c:if>
+				
 			</div>
 		</div>
 		<c:if test="${!empty listeCodesErreur}">

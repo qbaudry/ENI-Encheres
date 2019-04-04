@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.enchere.bll.ArticleVenduManager;
 import fr.eni.enchere.bll.CategorieManager;
+import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.BusinessException;
 
@@ -35,13 +37,25 @@ public class listeEncheres extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CategorieManager categorieManager = new CategorieManager();
+		ArticleVenduManager articleManager = new ArticleVenduManager();
 		
+		List<ArticleVendu> listeEncheres = new ArrayList<>();
 		List<Categorie> listeCategories = new ArrayList<>();
 		List<Integer> listeCodesErreur = new ArrayList<>();
+		
+		
 		
 		try {
 			listeCategories = categorieManager.lister();
 			request.setAttribute("categories", listeCategories);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
+		}
+		
+		try {
+			listeEncheres = articleManager.lister();
+			request.setAttribute("articles", listeEncheres);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 			request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
