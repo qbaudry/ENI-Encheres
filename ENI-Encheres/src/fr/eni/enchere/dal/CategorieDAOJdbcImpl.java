@@ -16,6 +16,7 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 	private static final String UPDATE = "update CATEGORIES set libelle=? where no_categorie = ?";
 	private static final String DELETE = "delete from CATEGORIES where no_categorie = ?";
 	private static final String SELECT = "select * from CATEGORIES where no_categorie = ?";
+	private static final String SELECT_BY_NOM = "select * from CATEGORIES where libelle = ?";
 	private static final String LISTER = "select * from CATEGORIES"; 
 	public void save(Categorie c) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection()){
@@ -143,5 +144,41 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 			throw businessException;
 		}
 		return listCateg;
+	}
+	@Override
+	public Categorie selectbylibelle(String lib) throws BusinessException {
+		Categorie c = null;
+		try(Connection cnx = ConnectionProvider.getConnection()){
+			try{
+				cnx.setAutoCommit(false);
+				PreparedStatement pstmt;
+				ResultSet rs;
+				if(lib != null){
+					pstmt = cnx.prepareStatement(SELECT_BY_NOM);
+					pstmt.setString(1, lib);
+					rs = pstmt.executeQuery();
+					boolean premiereLigne = true;
+					while(rs.next())
+					{
+						if(premiereLigne)
+						{
+							c = new Categorie(rs.getInt("no_categorie"),rs.getString("libelle"));
+							premiereLigne=false;
+						}
+					}
+					rs.close();
+					pstmt.close();
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+				cnx.rollback();
+				throw e;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			throw businessException;
+		}
+		return c;
 	}
 }

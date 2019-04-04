@@ -15,7 +15,8 @@ public class Retrait {
 		this.ville = ville;
 	}
 
-	
+	public Retrait() {
+	}
 
 	public int getNoArticle() {
 		return noArticle;

@@ -15,6 +15,10 @@ public class Categorie {
 		this.noCategorie = noCategorie;
 		this.libelle = libelle;
 	}
+	
+	public Categorie() {
+		
+	}
 
 	public int getNoCategorie() {
 		return noCategorie;

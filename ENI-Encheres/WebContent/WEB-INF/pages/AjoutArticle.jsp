@@ -22,7 +22,7 @@
 						<div class="row">
 							<div class="form-group col-12">
 								<label for="identifiant">Article :</label> <input type="text"
-									class="form-control" name="identifiant" id="identifiant"
+									class="form-control" name="article" id="article"
 									placeholder="Nom de l'article">
 							</div>
 							<div class="form-group col-12">
@@ -31,7 +31,7 @@
 							</div>
 							<div class="form-group col-12 col-lg-6 col-xl-6">
 								<label for="motdepasse">Catégorie :</label> <select
-									class="custom-select" id="inputGroupSelect">
+									class="custom-select" id="inputGroupSelect" name="categorie">
 									<c:if test="${categories.size()>0}">
 										<c:forEach var="categorie" items="${categories}">
 											<option value="${categorie.noCategorie}">${categorie.libelle}</option>
@@ -43,7 +43,7 @@
 								<label for="image">Photo de l'article :</label>
 								<div class="custom-file">
 									<input type="file" class="custom-file-input" id="image"
-										accept="image/png, image/jpeg"> <label
+										accept="image/png, image/jpeg" name="image"> <label
 										class="custom-file-label" for="image">Télécharger...</label>
 								</div>
 							</div>
