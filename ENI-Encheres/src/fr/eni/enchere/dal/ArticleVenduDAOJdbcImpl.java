@@ -89,7 +89,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 					try {
 						DAOFactory.getRetraitDAO().delete(DAOFactory.getRetraitDAO().select(article.getNo_article()));
 					}catch(Error e){
-						System.out.println("pas de retrait lié");
+						System.out.println("pas de retrait liï¿½");
 					}
 					pstmt = cnx.prepareStatement(DELETE, PreparedStatement.RETURN_GENERATED_KEYS);
 					pstmt.setInt(1, article.getNo_article());

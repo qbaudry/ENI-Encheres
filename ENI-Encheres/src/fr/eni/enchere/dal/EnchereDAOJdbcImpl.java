@@ -21,7 +21,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private static final String SELECT = "select * from ENCHERES where no_article = ? AND no_utilisateur=?";
 	private static final String SELECTBYUSER = "select * from ENCHERES where no_utilisateur=?";
 	private static final String SELECTBYARTICLE = "select * from ENCHERES where no_article = ?";
-	private static final String SELECTMAXBYARTICLE = "select MAX(montant_enchere),date_enchere from ENCHERES where no_article = ?";
+	private static final String SELECTMAXBYARTICLE = "select MAX(montant_enchere),date_enchere from ENCHERES where no_article = ? group by  ENCHERES.date_enchere ";
 	private static final String LISTER = "select * from ENCHERES";
 	private static UtilisateurDAO utilDAO = DAOFactory.getUtilisateurDAO();
 	private static ArticleVenduDAO artDAO = DAOFactory.getArticleDAO();

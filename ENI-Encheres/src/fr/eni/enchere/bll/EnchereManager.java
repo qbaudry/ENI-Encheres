@@ -3,31 +3,33 @@ package fr.eni.enchere.bll;
 import java.util.List;
 
 import fr.eni.enchere.BusinessException;
-import fr.eni.enchere.bo.Categorie;
+import fr.eni.enchere.bo.ArticleVendu;
+import fr.eni.enchere.bo.Enchere;
+import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.DAOFactory;
-import fr.eni.enchere.dal.CategorieDAO;
+import fr.eni.enchere.dal.EnchereDAO;
 
 public class EnchereManager {
-	private CategorieDAO categDAO;
+	private EnchereDAO enchereDAO;
 	
 	public EnchereManager() {
-		this.categDAO=DAOFactory.getCategorieDAO();
+		this.enchereDAO=DAOFactory.getEnchereDAO();
 	}
 
-	public void save(Categorie categ) throws BusinessException
+	public void save(Enchere enchere) throws BusinessException
 	{
-		this.categDAO.save(categ);
+		this.enchereDAO.save(enchere);
 	}
 	
-	public void delete(Categorie categ) throws BusinessException {
-		this.categDAO.delete(categ);
+	public void delete(Enchere enchere) throws BusinessException {
+		this.enchereDAO.delete(enchere);
 	}
 	
-	public Categorie select(int id) throws BusinessException {
-		return this.categDAO.select(id);
+	public Enchere select(Utilisateur u,ArticleVendu art) throws BusinessException {
+		return this.enchereDAO.select(u, art);
 	}
 	
-	public List<Categorie> lister() throws BusinessException {
-		return this.categDAO.lister();
+	public List<Enchere> lister() throws BusinessException {
+		return this.enchereDAO.lister();
 	}
 }
