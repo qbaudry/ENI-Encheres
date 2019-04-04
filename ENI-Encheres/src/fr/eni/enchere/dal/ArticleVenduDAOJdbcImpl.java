@@ -3,6 +3,7 @@ package fr.eni.enchere.dal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	@Override
 	public void save(ArticleVendu article) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection()){
-			try{
+			
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
 				ResultSet rs;
@@ -68,12 +69,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				}
 				
 				cnx.commit();
-			}catch(Exception e){
-				e.printStackTrace();
-				cnx.rollback();
-				throw e;
-			}
-		}catch(Exception e){
+			
+		}catch(SQLException e){
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			throw businessException;
