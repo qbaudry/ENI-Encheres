@@ -6,7 +6,7 @@
 <html>
 <jsp:include page="/WEB-INF/includes/Header.jsp"></jsp:include>
 <body>
-	<%@ include file="../includes/Navbar.jsp" %>
+	<jsp:include page="../includes/Navbar.jsp"></jsp:include>
 	<div class="container">
 		<form method="post" action="${pageContext.request.contextPath}/creerCompte">
 			<div class="alert alert-dark mt-5" role="alert">

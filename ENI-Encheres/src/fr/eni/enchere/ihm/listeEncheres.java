@@ -1,6 +1,7 @@
 package fr.eni.enchere.ihm;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.sun.jmx.snmp.Timestamp;
 
 import fr.eni.enchere.bll.ArticleVenduManager;
 import fr.eni.enchere.bll.CategorieManager;
@@ -50,9 +53,9 @@ public class listeEncheres extends HttpServlet {
 			e.printStackTrace();
 			request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 		}
-		
 		try {
 			listeEncheres = articleManager.lister();
+			
 			request.setAttribute("articles", listeEncheres);
 		} catch (BusinessException e) {
 			e.printStackTrace();
@@ -61,6 +64,11 @@ public class listeEncheres extends HttpServlet {
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/ListeEncheres.jsp");
 		rd.forward(request, response);
+	}
+	
+	public String convertDate(Timestamp t) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		return(sdf.format(t));
 	}
 
 	/**

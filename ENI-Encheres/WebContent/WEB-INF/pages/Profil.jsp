@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="fr.eni.enchere.messages.LecteurMessage" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <jsp:include page="/WEB-INF/includes/Header.jsp"></jsp:include>
 <body>
-	<%@ include file="../includes/Navbar.jsp" %>
+	<jsp:include page="../includes/Navbar.jsp"></jsp:include>
 	<div class="container">
 		<form method="post" action="${pageContext.request.contextPath}/Profil">
 			<div class="alert alert-dark mt-5" role="alert">

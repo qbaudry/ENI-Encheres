@@ -2,11 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ page import="fr.eni.enchere.messages.LecteurMessage" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <jsp:include page="/WEB-INF/includes/Header.jsp"></jsp:include>
 <body>
-	<%@ include file="../includes/Navbar.jsp" %>
+	<jsp:include page="../includes/Navbar.jsp"></jsp:include>
 	<div class="container">
 		<div class="alert alert-dark mt-5" role="alert">
 			<h1>Listes des encheres</h1>
@@ -46,8 +47,15 @@
 							    	<div class="col-md-8">
 							      		<div class="card-body">
 								        	<h5 class="card-title">${article.nom_article}</h5>
-								        	<p class="card-text">Prix : ${article.prix_initial} points<br>
-								        		Fin de l'enchère : ${article.date_fin_encheres}</p>
+								        	<c:choose>
+					    						<c:when test="${article.concerne != null}">
+													<p class="card-text">Prix : ${article.concerne.montant_enchere} points
+												</c:when>
+										        <c:otherwise>
+										        	<p class="card-text">Prix : ${article.prix_initial} points
+										        </c:otherwise>
+										    </c:choose>
+								        	<br>Fin de l'enchère : <fmt:formatDate value="${article.date_fin_encheres}" pattern="dd/MM/yyyy HH:mm"/></p>
 								        	<p class="card-text">Vendeur : ${article.vendeur.pseudo}</p>
 							      		</div>
 							    	</div>
