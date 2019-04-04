@@ -24,58 +24,54 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static CategorieDAO catDAO = DAOFactory.getCategorieDAO();
 	private static UtilisateurDAO utilDAO = DAOFactory.getUtilisateurDAO();
 	private static EnchereDAO enchDAO = DAOFactory.getEnchereDAO();
-	
+
 	@Override
 	public void save(ArticleVendu article) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection()){
-			
-				cnx.setAutoCommit(false);
-				PreparedStatement pstmt;
-				ResultSet rs;
-				if(article.getNo_article()==0){
-					pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
-					pstmt.setString(1, article.getNom_article());
-					pstmt.setString(2, article.getDescription());
-					pstmt.setTimestamp(3, article.getDate_debut_encheres());
-					pstmt.setTimestamp(4, article.getDate_fin_encheres());
-					pstmt.setInt(5, article.getPrix_initial());
-					pstmt.setInt(6, article.getPrix_vente());
-					pstmt.setInt(7, article.getVendeur().getNoUtilisateur());
-					pstmt.setInt(8, article.getCategorieArticle().getNoCategorie());
-					pstmt.setString(9, article.getPhoto());
-					pstmt.executeUpdate();
-					rs = pstmt.getGeneratedKeys();
-					if(rs.next()){
-						article.setNo_article(rs.getInt(1));
-					}
-					rs.close();
-					pstmt.close();
-				}else {
-					pstmt = cnx.prepareStatement(UPDATE, PreparedStatement.RETURN_GENERATED_KEYS);
-					pstmt.setString(1, article.getNom_article());
-					pstmt.setString(2, article.getDescription());
-					pstmt.setTimestamp(3, article.getDate_debut_encheres());
-					pstmt.setTimestamp(4, article.getDate_fin_encheres());
-					pstmt.setInt(5, article.getPrix_initial());
-					pstmt.setInt(6, article.getPrix_vente());
-					pstmt.setInt(7, article.getVendeur().getNoUtilisateur());
-					pstmt.setInt(8, article.getCategorieArticle().getNoCategorie());
-					pstmt.setString(9, article.getPhoto());
-					pstmt.setInt(10, article.getNo_article());
-					pstmt.executeUpdate();
-					rs = pstmt.getGeneratedKeys();
-					rs.close();
-					pstmt.close();
+			cnx.setAutoCommit(false);
+			PreparedStatement pstmt;
+			ResultSet rs;
+			if(article.getNo_article()==0){
+				pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+				pstmt.setString(1, article.getNom_article());
+				pstmt.setString(2, article.getDescription());
+				pstmt.setTimestamp(3, article.getDate_debut_encheres());
+				pstmt.setTimestamp(4, article.getDate_fin_encheres());
+				pstmt.setInt(5, article.getPrix_initial());
+				pstmt.setInt(6, article.getPrix_vente());
+				pstmt.setInt(7, article.getVendeur().getNoUtilisateur());
+				pstmt.setInt(8, article.getCategorieArticle().getNoCategorie());
+				pstmt.setString(9, article.getPhoto());
+				pstmt.executeUpdate();
+				rs = pstmt.getGeneratedKeys();
+				if(rs.next()){
+					article.setNo_article(rs.getInt(1));
 				}
-				
-				cnx.commit();
-			
+				rs.close();
+				pstmt.close();
+			}else {
+				pstmt = cnx.prepareStatement(UPDATE, PreparedStatement.RETURN_GENERATED_KEYS);
+				pstmt.setString(1, article.getNom_article());
+				pstmt.setString(2, article.getDescription());
+				pstmt.setTimestamp(3, article.getDate_debut_encheres());
+				pstmt.setTimestamp(4, article.getDate_fin_encheres());
+				pstmt.setInt(5, article.getPrix_initial());
+				pstmt.setInt(6, article.getPrix_vente());
+				pstmt.setInt(7, article.getVendeur().getNoUtilisateur());
+				pstmt.setInt(8, article.getCategorieArticle().getNoCategorie());
+				pstmt.setString(9, article.getPhoto());
+				pstmt.setInt(10, article.getNo_article());
+				pstmt.executeUpdate();
+				rs = pstmt.getGeneratedKeys();
+				rs.close();
+				pstmt.close();
+			}
+			cnx.commit();
 		}catch(SQLException e){
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			throw businessException;
 		}
-
 	}
 
 	@Override
@@ -84,7 +80,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			try{
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
-				ResultSet rs;
 				if(article.getNo_article()!=0){
 					try {
 						DAOFactory.getRetraitDAO().delete(DAOFactory.getRetraitDAO().select(article.getNo_article()));
@@ -94,11 +89,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 					pstmt = cnx.prepareStatement(DELETE, PreparedStatement.RETURN_GENERATED_KEYS);
 					pstmt.setInt(1, article.getNo_article());
 					pstmt.executeUpdate();
-					rs = pstmt.getGeneratedKeys();
-					rs.close();
 					pstmt.close();
 				}
-				
 				cnx.commit();
 			}catch(Exception e){
 				e.printStackTrace();
@@ -131,7 +123,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 						if(premiereLigne)
 						{
 							Categorie categorie = catDAO.select(rs.getInt("no_categorie"));
-//							Retrait ret = retDAO.select(rs.getInt("retrait"));
 							Utilisateur vendeur = utilDAO.selectByID(rs.getInt("no_vendeur"));
 							article = new ArticleVendu();
 							article.setNo_article(rs.getInt("no_article"));
@@ -144,7 +135,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 							article.setPhoto(rs.getString("photo"));
 							article.setVendeur(vendeur);
 							article.setConcerne(enchDAO.selectMaxByArticle(article));
-//							article.setLieuRetrait(ret);
 							article.setCategorieArticle(categorie);
 							premiereLigne=false;
 						}
@@ -173,31 +163,29 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
 				ResultSet rs;
-					pstmt = cnx.prepareStatement(LISTER);
-					rs = pstmt.executeQuery();
-					while(rs.next())
-					{
-						ArticleVendu article = null;
-						Categorie categorie = catDAO.select(rs.getInt("no_categorie"));
-//						Retrait ret = retDAO.select(rs.getInt("retrait"));
-						Utilisateur vendeur = utilDAO.selectByID(rs.getInt("no_vendeur"));
-						article = new ArticleVendu();
-						article.setNo_article(rs.getInt("no_article"));
-						article.setNom_article(rs.getString("nom_article"));
-						article.setDescription(rs.getString("description"));
-						article.setDate_debut_encheres(rs.getTimestamp("date_debut_encheres"));
-						article.setDate_fin_encheres(rs.getTimestamp("date_fin_encheres"));
-						article.setPrix_initial(rs.getInt("prix_initial"));
-						article.setPrix_vente(rs.getInt("prix_vente"));
-						article.setPhoto(rs.getString("photo"));
-						article.setVendeur(vendeur);
-//						article.setLieuRetrait(ret);
-						article.setCategorieArticle(categorie);
-						article.setConcerne(enchDAO.selectMaxByArticle(article));
-						listArticleVendu.add(article);
-					}
-					rs.close();
-					pstmt.close();
+				pstmt = cnx.prepareStatement(LISTER);
+				rs = pstmt.executeQuery();
+				while(rs.next())
+				{
+					ArticleVendu article = null;
+					Categorie categorie = catDAO.select(rs.getInt("no_categorie"));
+					Utilisateur vendeur = utilDAO.selectByID(rs.getInt("no_vendeur"));
+					article = new ArticleVendu();
+					article.setNo_article(rs.getInt("no_article"));
+					article.setNom_article(rs.getString("nom_article"));
+					article.setDescription(rs.getString("description"));
+					article.setDate_debut_encheres(rs.getTimestamp("date_debut_encheres"));
+					article.setDate_fin_encheres(rs.getTimestamp("date_fin_encheres"));
+					article.setPrix_initial(rs.getInt("prix_initial"));
+					article.setPrix_vente(rs.getInt("prix_vente"));
+					article.setPhoto(rs.getString("photo"));
+					article.setVendeur(vendeur);
+					article.setCategorieArticle(categorie);
+					article.setConcerne(enchDAO.selectMaxByArticle(article));
+					listArticleVendu.add(article);
+				}
+				rs.close();
+				pstmt.close();
 			}catch(Exception e){
 				e.printStackTrace();
 				cnx.rollback();
@@ -210,7 +198,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		}
 		return listArticleVendu;
 	}
-	
+
 	public List<ArticleVendu> selectByVendeur(Utilisateur usr) throws BusinessException {
 		ArrayList<ArticleVendu> listArticleVendu = new ArrayList<ArticleVendu>();
 		try(Connection cnx = ConnectionProvider.getConnection()){
@@ -225,7 +213,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 					while(rs.next())
 					{
 						Categorie categorie = catDAO.select(rs.getInt("no_categorie"));
-//							Retrait ret = retDAO.select(rs.getInt("retrait"));
 						Utilisateur vendeur = utilDAO.selectByID(rs.getInt("no_vendeur"));
 						ArticleVendu article = new ArticleVendu();
 						article.setNo_article(rs.getInt("no_article"));
@@ -237,10 +224,10 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 						article.setPrix_vente(rs.getInt("prix_vente"));
 						article.setPhoto(rs.getString("photo"));
 						article.setVendeur(vendeur);
-//							article.setLieuRetrait(ret);
 						article.setCategorieArticle(categorie);
 						article.setConcerne(enchDAO.selectMaxByArticle(article));
 						listArticleVendu.add(article);
+						
 					}
 					rs.close();
 					pstmt.close();
@@ -271,8 +258,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 					boolean premiereLigne = true;
 					while(rs.next())
 					{
-						if(premiereLigne)
-						{
 							Categorie categorie = catDAO.select(rs.getInt("no_categorie"));
 							Utilisateur vendeur = utilDAO.selectByID(rs.getInt("no_vendeur"));
 							ArticleVendu article = new ArticleVendu();
@@ -286,9 +271,11 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 							article.setVendeur(vendeur);
 							article.setCategorieArticle(categorie);
 							article.setPhoto(rs.getString("photo"));
-							//article.setConcerne(enchDAO.selectMaxByArticle(article));
+							article.setConcerne(enchDAO.selectMaxByArticle(article));
+							//System.out.println("+1");
 							premiereLigne=false;
-						}
+							listArticleVendu.add(article);
+
 					}
 					rs.close();
 					pstmt.close();
