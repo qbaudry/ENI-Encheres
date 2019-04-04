@@ -11,84 +11,121 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.Utilisateur;
-import fr.eni.enchere.ihm.CodesResultatServlets;
 
 /**
- * Servlet implementation class creerCompte
+ * Servlet implementation class Profil
  */
-@WebServlet("/creerCompte")
-public class creerCompte extends HttpServlet {
+@WebServlet("/monProfil")
+public class monProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public monProfil() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public creerCompte() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/CreerCompte.jsp");
-		rd.forward(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		HttpSession session = request.getSession();
+		String login = (String) session.getAttribute("identifiant");
+        String mdp = (String) session.getAttribute("motdepasse");
+        
+        if(login == null && mdp == null)
+        {
+        	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+			rd.forward(request, response);
+        }
+        else
+        {
+        	UtilisateurManager utilisateurManager = new UtilisateurManager();
+            
+            Utilisateur util = new Utilisateur();
+    		try {
+    			util = utilisateurManager.selectionnerUtilisateur(login, mdp);
+    			request.setAttribute("formulaire", util);
+    			
+    			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/Profil.jsp");
+    			rd.forward(request, response);
+    		} catch (BusinessException e) {
+    			e.printStackTrace();
+    		}
+        }
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		List<Integer> listeCodesErreur = new ArrayList<>();
 		
 		lireParametreFormulaire(request, listeCodesErreur);
 		validerEmailUtilisateur(request, listeCodesErreur);
 		validerTelephoneUtilisateur(request, listeCodesErreur);
 		validerCodePostalUtilisateur(request, listeCodesErreur);
-		validerMotDePasseUtilisateur(request, listeCodesErreur);
 		
 		System.out.println("listeCodesErreur : " + listeCodesErreur);
 		
-		Utilisateur nouveauCompte = new Utilisateur(request.getParameter("pseudo"), request.getParameter("nom"), 
-				request.getParameter("prenom"), request.getParameter("email"), request.getParameter("telephone"),
-				request.getParameter("rue"), request.getParameter("codepostal"), request.getParameter("ville"),
-				request.getParameter("motdepasse"));
+		UtilisateurManager utilisateurManager = new UtilisateurManager();
 		
-		if(listeCodesErreur.size()>0)
+		HttpSession session = request.getSession();
+		String login = (String) session.getAttribute("identifiant");
+	    String mdp = (String) session.getAttribute("motdepasse");
+	    
+	    Utilisateur util = new Utilisateur();
+		try {
+			util = utilisateurManager.selectionnerUtilisateur(login, mdp);
+		} catch (BusinessException e1) {
+			e1.printStackTrace();
+		}
+	    
+	    if(listeCodesErreur.size()>0)
 		{
 			System.out.println("erreur : " + listeCodesErreur);
 			request.setAttribute("listeCodesErreur", listeCodesErreur);
-			request.setAttribute("formulaire", nouveauCompte);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/CreerCompte.jsp");
+			request.setAttribute("formulaire", util);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/Profil.jsp");
 			rd.forward(request, response);
 		}
 		else
 		{
-			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			try {
-				utilisateurManager.ajouterUtilisateur(nouveauCompte);
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
+				Utilisateur modifCompte = new Utilisateur(util.getNoUtilisateur(), request.getParameter("pseudo"),
+						request.getParameter("nom"), request.getParameter("prenom"), request.getParameter("email"),
+						request.getParameter("telephone"), request.getParameter("rue"), request.getParameter("codepostal"),
+						request.getParameter("ville"), request.getParameter("motdepasse"));
+				
+				utilisateurManager.UpdateUtilisateurById(modifCompte);
+				
+				//request.setAttribute("congret", "Enregistrement en cours...");
+				session.setAttribute("identifiant", modifCompte.getPseudo());
+				session.setAttribute("motdepasse", modifCompte.getMotDePasse());
+				
+				RequestDispatcher rd = request.getRequestDispatcher("/listeEncheres");
+				//response.setIntHeader("Refresh", 2);
 				rd.forward(request, response);
+				
 			} catch (BusinessException e) {
 				e.printStackTrace();
 				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
-				request.setAttribute("formulaire", nouveauCompte);
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/CreerCompte.jsp");
+				request.setAttribute("formulaire", util);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/Profil.jsp");
 				rd.forward(request, response);
 			}
 		}
 	}
-	
+
 	private void lireParametreFormulaire(HttpServletRequest request, List<Integer> listeCodesErreur) {
 		String pseudo = request.getParameter("pseudo");
 		String nom = request.getParameter("nom");
@@ -99,9 +136,9 @@ public class creerCompte extends HttpServlet {
 		String codepostal = request.getParameter("codepostal");
 		String ville = request.getParameter("ville");
 		String motdepasse = request.getParameter("motdepasse");
-		String motdepasse2 = request.getParameter("motdepasse2");
+		String credit = request.getParameter("credit");
 		if (pseudo == null || nom == null || prenom == null || email == null || telephone == null || rue == null
-				|| codepostal == null || ville == null || motdepasse == null || motdepasse2 == null) {
+				|| codepostal == null || ville == null || motdepasse == null || credit == null) {
 			listeCodesErreur.add(CodesResultatServlets.FORMULAIRE_INSCIPTION_SAISIE_OBLIGATOIRE);
 		}
 	}
@@ -132,14 +169,6 @@ public class creerCompte extends HttpServlet {
 			listeCodesErreur.add(CodesResultatServlets.CODE_POSTAL_INSCIPTION_SAISIE_OBLIGATOIRE);
 		}
 	}
-	
-	private void validerMotDePasseUtilisateur(HttpServletRequest request, List<Integer> listeCodesErreur) {
-		String motdepasse = request.getParameter("motdepasse");
-		String motdepasse2 = request.getParameter("motdepasse2");
-		System.out.println(motdepasse);
-		System.out.println(motdepasse2);
-		if (!motdepasse.equals(motdepasse2)) {
-			listeCodesErreur.add(CodesResultatServlets.MOT_DE_PASSE_INSCIPTION_SAISIE_OBLIGATOIRE);
-		}
-	}
 }
+
+
