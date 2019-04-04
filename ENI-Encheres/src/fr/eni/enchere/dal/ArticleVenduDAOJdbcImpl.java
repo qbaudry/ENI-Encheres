@@ -289,7 +289,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 							article.setVendeur(vendeur);
 							article.setCategorieArticle(categorie);
 							article.setPhoto(rs.getString("photo"));
-							article.setConcerne(enchDAO.selectMaxByArticle(article));
+							//article.setConcerne(enchDAO.selectMaxByArticle(article));
 							premiereLigne=false;
 						}
 					}
