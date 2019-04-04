@@ -13,8 +13,8 @@ import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.BusinessException;
 
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
-	private static final String INSERT = "INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_vendeur,no_categorie) values (?,?,?,?,?,?,?,?)";
-	private static final String UPDATE = "update ARTICLES_VENDUS set nom_article=?, description=?,date_debut_encheres=?,date_fin_encheres=?,prix_initial=?,prix_vente=?,no_vendeur=?,no_categorie=? where no_article = ?";
+	private static final String INSERT = "INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_vendeur,no_categorie,photo) values (?,?,?,?,?,?,?,?,?)";
+	private static final String UPDATE = "update ARTICLES_VENDUS set nom_article=?, description=?,date_debut_encheres=?,date_fin_encheres=?,prix_initial=?,prix_vente=?,no_vendeur=?,no_categorie=?,photo=? where no_article = ?";
 	private static final String DELETE = "delete from ARTICLES_VENDUS where no_article = ?";
 	private static final String SELECT = "select * from ARTICLES_VENDUS where no_article = ?";
 	private static final String LISTER = "select * from ARTICLES_VENDUS";
@@ -40,6 +40,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 					pstmt.setInt(6, article.getPrix_vente());
 					pstmt.setInt(7, article.getVendeur().getNoUtilisateur());
 					pstmt.setInt(8, article.getCategorieArticle().getNoCategorie());
+					pstmt.setString(9, article.getPhoto());
 					pstmt.executeUpdate();
 					rs = pstmt.getGeneratedKeys();
 					if(rs.next()){
@@ -57,7 +58,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 					pstmt.setInt(6, article.getPrix_vente());
 					pstmt.setInt(7, article.getVendeur().getNoUtilisateur());
 					pstmt.setInt(8, article.getCategorieArticle().getNoCategorie());
-					pstmt.setInt(9, article.getNo_article());
+					pstmt.setString(9, article.getPhoto());
+					pstmt.setInt(10, article.getNo_article());
 					pstmt.executeUpdate();
 					rs = pstmt.getGeneratedKeys();
 					rs.close();
@@ -141,6 +143,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 							article.setDate_fin_encheres(rs.getTimestamp("date_fin_encheres"));
 							article.setPrix_initial(rs.getInt("prix_initial"));
 							article.setPrix_vente(rs.getInt("prix_vente"));
+							article.setPhoto(rs.getString("photo"));
 							article.setVendeur(vendeur);
 //							article.setLieuRetrait(ret);
 							article.setCategorieArticle(categorie);
@@ -187,6 +190,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 						article.setDate_fin_encheres(rs.getTimestamp("date_fin_encheres"));
 						article.setPrix_initial(rs.getInt("prix_initial"));
 						article.setPrix_vente(rs.getInt("prix_vente"));
+						article.setPhoto(rs.getString("photo"));
 						article.setVendeur(vendeur);
 //						article.setLieuRetrait(ret);
 						article.setCategorieArticle(categorie);
@@ -231,6 +235,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 						article.setDate_fin_encheres(rs.getTimestamp("date_fin_encheres"));
 						article.setPrix_initial(rs.getInt("prix_initial"));
 						article.setPrix_vente(rs.getInt("prix_vente"));
+						article.setPhoto(rs.getString("photo"));
 						article.setVendeur(vendeur);
 //							article.setLieuRetrait(ret);
 						article.setCategorieArticle(categorie);
@@ -279,6 +284,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 							article.setPrix_vente(rs.getInt("prix_vente"));
 							article.setVendeur(vendeur);
 							article.setCategorieArticle(categorie);
+							article.setPhoto(rs.getString("photo"));
 							premiereLigne=false;
 						}
 					}
