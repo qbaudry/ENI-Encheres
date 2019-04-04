@@ -39,7 +39,11 @@ public class listeEncheres extends HttpServlet {
 		CategorieManager categorieManager = new CategorieManager();
 		ArticleVenduManager articleManager = new ArticleVenduManager();
 		
+<<<<<<< HEAD
 		List<ArticleVendu> listeEncheres = new ArrayList<>();
+=======
+		
+>>>>>>> branch 'master' of https://github.com/qbaudry/ENI-Encheres.git
 		List<Categorie> listeCategories = new ArrayList<>();
 		List<Integer> listeCodesErreur = new ArrayList<>();
 		

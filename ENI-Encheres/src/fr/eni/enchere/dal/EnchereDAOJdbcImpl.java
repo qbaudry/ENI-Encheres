@@ -21,6 +21,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private static final String SELECT = "select * from ENCHERES where no_article = ? AND no_utilisateur=?";
 	private static final String SELECTBYUSER = "select * from ENCHERES where no_utilisateur=?";
 	private static final String SELECTBYARTICLE = "select * from ENCHERES where no_article = ?";
+	private static final String SELECTMAXBYARTICLE = "select MAX(montant_enchere),date_enchere from ENCHERES where no_article = ?";
 	private static final String LISTER = "select * from ENCHERES";
 	private static UtilisateurDAO utilDAO = DAOFactory.getUtilisateurDAO();
 	private static ArticleVenduDAO artDAO = DAOFactory.getArticleDAO();
@@ -223,4 +224,36 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		return listEnchere;
 	}
 
+	public Enchere selectMaxByArticle(ArticleVendu art) throws BusinessException {
+		Enchere enchere = null;
+		try(Connection cnx = ConnectionProvider.getConnection()){
+			try{
+				cnx.setAutoCommit(false);
+				PreparedStatement pstmt;
+				ResultSet rs;
+					pstmt = cnx.prepareStatement(SELECTMAXBYARTICLE);
+					pstmt.setInt(1, art.getNo_article());
+					rs = pstmt.executeQuery();
+					while(rs.next())
+					{
+						Utilisateur u = utilDAO.selectByID(rs.getInt("no_utilisateur"));
+						enchere = new Enchere(u,rs.getTimestamp("date_enchere"),rs.getInt("montant_enchere"),art);
+					}
+					rs.close();
+					pstmt.close();
+			}catch(Exception e){
+				e.printStackTrace();
+				cnx.rollback();
+				throw e;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			throw businessException;
+		}
+		return enchere;
+	}
+
+	
+	
 }
