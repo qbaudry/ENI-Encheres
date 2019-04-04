@@ -33,28 +33,45 @@ public class Ajax_ListeEnchere extends HttpServlet {
 		// TODO Auto-generated method stub
 		super.doGet(req, resp);
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CategorieManager categorieManager = new CategorieManager();
 		ArticleVenduManager articleManager = new ArticleVenduManager();
 		Categorie categ = null;
 		try {
-			System.out.println(request.getParameter("categ"));
+
 			categ = categorieManager.select(Integer.parseInt((String)request.getParameter("categ")));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
 		List<ArticleVendu> listeEncheres = new ArrayList<>();
+		List<ArticleVendu> listeEncherestemp = new ArrayList<>();
 		try {
-			listeEncheres = articleManager.selectByCategorie(categ);
-			System.out.println(listeEncheres.size());
+			if(Integer.parseInt((String)request.getParameter("categ"))!=0) {
+				listeEncheres = articleManager.selectByCategorie(categ);
+			}else {
+				listeEncheres = articleManager.lister();
+			}
+			String filtre = (String)request.getParameter("filtre");
+			System.out.println("|"+filtre+"|");
+			listeEncherestemp = listeEncheres;
+//			listeEncheres.clear();
+//			if(filtre!=null && !filtre.isEmpty()) {
+//				for(ArticleVendu art : listeEncherestemp) {
+//					if(art.getNom_article().contains(filtre)) {
+//						listeEncheres.add(art);
+//					}
+//				}
+//			}
+
 			request.setAttribute("articles", listeEncheres);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 			request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 		}
-		
+
 		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/ajax/ajax_listEnchere.jsp");
 		rd.forward(request, response);
 	}
