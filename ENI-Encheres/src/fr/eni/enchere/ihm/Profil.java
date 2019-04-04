@@ -39,32 +39,41 @@ public class Profil extends HttpServlet {
 		String pseudo = (String) session.getAttribute("identifiant");
         String mdp = (String) session.getAttribute("motdepasse");
         
-        
-        UtilisateurManager utilisateurManager = new UtilisateurManager();
-        
-        
-        Utilisateur util = new Utilisateur();
-		try {
-			util = utilisateurManager.selectionnerUtilisateur(pseudo, mdp);
-			request.setAttribute("pseudo", util.getPseudo());
-			request.setAttribute("nom", util.getNom());
-			request.setAttribute("prenom", util.getPrenom());
-			request.setAttribute("email", util.getEmail());
-			request.setAttribute("telephone", util.getTelephone());
-			request.setAttribute("rue", util.getRue());
-			request.setAttribute("codepostal", util.getCodePostal());
-			request.setAttribute("ville", util.getVille());
-			request.setAttribute("motdepasse", util.getMotDePasse());
-			request.setAttribute("credit", util.getCredit());
-			
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/Profil.jsp");
+        if(pseudo == null && mdp == null)
+        {
+        	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
 			rd.forward(request, response);
-			
-			
-		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        }
+        else
+        {
+        	UtilisateurManager utilisateurManager = new UtilisateurManager();
+            
+            
+            Utilisateur util = new Utilisateur();
+    		try {
+    			util = utilisateurManager.selectionnerUtilisateur(pseudo, mdp);
+    			request.setAttribute("pseudo", util.getPseudo());
+    			request.setAttribute("nom", util.getNom());
+    			request.setAttribute("prenom", util.getPrenom());
+    			request.setAttribute("email", util.getEmail());
+    			request.setAttribute("telephone", util.getTelephone());
+    			request.setAttribute("rue", util.getRue());
+    			request.setAttribute("codepostal", util.getCodePostal());
+    			request.setAttribute("ville", util.getVille());
+    			request.setAttribute("motdepasse", util.getMotDePasse());
+    			request.setAttribute("credit", util.getCredit());
+    			
+    			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/Profil.jsp");
+    			rd.forward(request, response);
+    			
+    			
+    		} catch (BusinessException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+        }
+        
+       
 	}
 
 	/**
