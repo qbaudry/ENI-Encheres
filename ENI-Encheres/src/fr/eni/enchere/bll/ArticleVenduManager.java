@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bo.ArticleVendu;
+import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.ArticleVenduDAO;
 
@@ -25,6 +26,9 @@ public class ArticleVenduManager {
 	
 	public ArticleVendu select(int id) throws BusinessException {
 		return this.articleDAO.select(id);
+	}
+	public List<ArticleVendu> selectByCategorie(Categorie categ) throws BusinessException {
+		return articleDAO.selectByCategorie(categ);
 	}
 	
 	public List<ArticleVendu> lister() throws BusinessException {

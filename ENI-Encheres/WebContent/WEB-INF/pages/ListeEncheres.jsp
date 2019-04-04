@@ -3,11 +3,17 @@
 <%@ page import="fr.eni.enchere.messages.LecteurMessage" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <jsp:include page="/WEB-INF/includes/Header.jsp"></jsp:include>
 <body>
 	<jsp:include page="../includes/Navbar.jsp"></jsp:include>
+	<script type="text/javascript" src="js/ListeEnchere.js"></script>
+<!-- 	function categChange(){ -->
+<!--     	console.log($("#inputGroupSelect").val()); -->
+<!--     } -->
+<!-- 	</script> -->
 	<div class="container">
 		<div class="alert alert-dark mt-5" role="alert">
 			<h1>Listes des encheres</h1>
@@ -21,7 +27,7 @@
 				  	<div class="input-group-prepend">
 				    	<label class="input-group-text" for="inputGroupSelect">Catégorie</label>
 				  	</div>
-				  	<select class="custom-select" id="inputGroupSelect">
+				  	<select class="custom-select" id="inputGroupSelect" name="categ">
 				  		<option value="toutes" selected>Toutes</option>
 						<c:if test="${categories.size()>0}">
 							<c:forEach var="categorie" items="${categories}">
@@ -35,7 +41,7 @@
 				</div>
 			</div>
 			<hr>
-			<div class="row">
+			<div class="row" id="listeArticle">
 				<c:if test="${articles.size()>0}">
 					<c:forEach var="article" items="${articles}">
 				    	<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 pb-3">

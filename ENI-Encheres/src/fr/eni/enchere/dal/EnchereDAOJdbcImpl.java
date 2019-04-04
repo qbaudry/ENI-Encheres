@@ -27,12 +27,12 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private static ArticleVenduDAO artDAO = DAOFactory.getArticleDAO();
 	@Override
 	public void save(Enchere ench) throws BusinessException {
-		try(Connection cnx = ConnectionProvider.getConnection()){
+		try(Connection cnx = ConnectionProvider.getConnection();){
 			try{
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
-				ResultSet rs;
 				if(this.select(ench.getEncherit(),ench.getConcerne()) == null){
+					ResultSet rs;
 					pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 					pstmt.setInt(1, ench.getEncherit().getNoUtilisateur());
 					pstmt.setInt(2, ench.getConcerne().getNo_article());
@@ -49,11 +49,9 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 					pstmt.setInt(3, ench.getConcerne().getNo_article());
 					pstmt.setInt(4, ench.getEncherit().getNoUtilisateur());
 					pstmt.executeUpdate();
-					rs = pstmt.getGeneratedKeys();
-					rs.close();
 					pstmt.close();
 				}
-				
+
 				cnx.commit();
 			}catch(Exception e){
 				e.printStackTrace();
@@ -74,17 +72,13 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			try{
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
-				ResultSet rs;
 				if(this.select(ench.getEncherit(),ench.getConcerne()) == null){
-					pstmt = cnx.prepareStatement(DELETE, PreparedStatement.RETURN_GENERATED_KEYS);
+					pstmt = cnx.prepareStatement(DELETE);
 					pstmt.setInt(1, ench.getConcerne().getNo_article());
 					pstmt.setInt(2, ench.getEncherit().getNoUtilisateur());
 					pstmt.executeUpdate();
-					rs = pstmt.getGeneratedKeys();
-					rs.close();
 					pstmt.close();
 				}
-				
 				cnx.commit();
 			}catch(Exception e){
 				e.printStackTrace();
@@ -139,16 +133,16 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
 				ResultSet rs;
-					pstmt = cnx.prepareStatement(LISTER);
-					rs = pstmt.executeQuery();
-					while(rs.next())
-					{
-						ArticleVendu art = artDAO.select(rs.getInt("no_article"));
-						Utilisateur u = utilDAO.selectByID(rs.getInt("no_utilisateur"));
-						listEnchere.add(new Enchere(u,rs.getTimestamp("date_enchere"),rs.getInt("montant_enchere"),art));
-					}
-					rs.close();
-					pstmt.close();
+				pstmt = cnx.prepareStatement(LISTER);
+				rs = pstmt.executeQuery();
+				while(rs.next())
+				{
+					ArticleVendu art = artDAO.select(rs.getInt("no_article"));
+					Utilisateur u = utilDAO.selectByID(rs.getInt("no_utilisateur"));
+					listEnchere.add(new Enchere(u,rs.getTimestamp("date_enchere"),rs.getInt("montant_enchere"),art));
+				}
+				rs.close();
+				pstmt.close();
 			}catch(Exception e){
 				e.printStackTrace();
 				cnx.rollback();
@@ -170,16 +164,16 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
 				ResultSet rs;
-					pstmt = cnx.prepareStatement(SELECTBYUSER);
-					pstmt.setInt(1, u.getNoUtilisateur());
-					rs = pstmt.executeQuery();
-					while(rs.next())
-					{
-						ArticleVendu art = artDAO.select(rs.getInt("no_article"));
-						listEnchere.add(new Enchere(u,rs.getTimestamp("date_enchere"),rs.getInt("montant_enchere"),art));
-					}
-					rs.close();
-					pstmt.close();
+				pstmt = cnx.prepareStatement(SELECTBYUSER);
+				pstmt.setInt(1, u.getNoUtilisateur());
+				rs = pstmt.executeQuery();
+				while(rs.next())
+				{
+					ArticleVendu art = artDAO.select(rs.getInt("no_article"));
+					listEnchere.add(new Enchere(u,rs.getTimestamp("date_enchere"),rs.getInt("montant_enchere"),art));
+				}
+				rs.close();
+				pstmt.close();
 			}catch(Exception e){
 				e.printStackTrace();
 				cnx.rollback();
@@ -201,16 +195,16 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
 				ResultSet rs;
-					pstmt = cnx.prepareStatement(SELECTBYARTICLE);
-					pstmt.setInt(1, art.getNo_article());
-					rs = pstmt.executeQuery();
-					while(rs.next())
-					{
-						Utilisateur u = utilDAO.selectByID(rs.getInt("no_utilisateur"));
-						listEnchere.add(new Enchere(u,rs.getTimestamp("date_enchere"),rs.getInt("montant_enchere"),art));
-					}
-					rs.close();
-					pstmt.close();
+				pstmt = cnx.prepareStatement(SELECTBYARTICLE);
+				pstmt.setInt(1, art.getNo_article());
+				rs = pstmt.executeQuery();
+				while(rs.next())
+				{
+					Utilisateur u = utilDAO.selectByID(rs.getInt("no_utilisateur"));
+					listEnchere.add(new Enchere(u,rs.getTimestamp("date_enchere"),rs.getInt("montant_enchere"),art));
+				}
+				rs.close();
+				pstmt.close();
 			}catch(Exception e){
 				e.printStackTrace();
 				cnx.rollback();
@@ -231,16 +225,16 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
 				ResultSet rs;
-					pstmt = cnx.prepareStatement(SELECTMAXBYARTICLE);
-					pstmt.setInt(1, art.getNo_article());
-					rs = pstmt.executeQuery();
-					while(rs.next())
-					{
-						Utilisateur u = utilDAO.selectByID(rs.getInt("no_utilisateur"));
-						enchere = new Enchere(u,rs.getTimestamp("date_enchere"),rs.getInt("montant_enchere"),art);
-					}
-					rs.close();
-					pstmt.close();
+				pstmt = cnx.prepareStatement(SELECTMAXBYARTICLE);
+				pstmt.setInt(1, art.getNo_article());
+				rs = pstmt.executeQuery();
+				while(rs.next())
+				{
+					Utilisateur u = utilDAO.selectByID(rs.getInt("no_utilisateur"));
+					enchere = new Enchere(u,rs.getTimestamp("date_enchere"),rs.getInt("montant_enchere"),art);
+				}
+				rs.close();
+				pstmt.close();
 			}catch(Exception e){
 				e.printStackTrace();
 				cnx.rollback();
@@ -254,6 +248,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		return enchere;
 	}
 
-	
-	
+
+
 }
