@@ -7,8 +7,7 @@
 <body>
 	<%@ include file="../includes/Navbar.jsp" %>
 	<div class="container">
-		<div class="container">
-		<div class="alert alert-danger" role="alert">
+		<div class="alert alert-danger mt-5" role="alert">
 			<h1>Error</h1>
 			<hr>
 			<p>Vous n'êtes pas connecté !</p>
