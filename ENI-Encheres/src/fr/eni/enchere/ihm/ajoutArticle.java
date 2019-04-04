@@ -1,13 +1,19 @@
 package fr.eni.enchere.ihm;
 
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Date;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +21,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.apache.tomcat.util.http.fileupload.RequestContext;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItem;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bll.ArticleVenduManager;
@@ -31,6 +44,7 @@ import fr.eni.enchere.bo.Utilisateur;
  */
 public class ajoutArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -82,6 +96,8 @@ public class ajoutArticle extends HttpServlet {
 				e.printStackTrace();
 				request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 			}
+			
+			
 
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/AjoutArticle.jsp");
 			rd.forward(request, response); 
@@ -97,15 +113,14 @@ public class ajoutArticle extends HttpServlet {
 		ArticleVenduManager articleManager = new ArticleVenduManager();
 		CategorieManager categManager = new CategorieManager();
 		RetraitManager retraitManager = new RetraitManager();
-		
-		
+
+
 		HttpSession session = request.getSession();
 		String pseudo = (String) session.getAttribute("identifiant");
 		String mdp = (String) session.getAttribute("motdepasse");
 
 		Utilisateur util = new Utilisateur();
-
-
+		
 		try {
 			util = utilisateurManager.selectionnerUtilisateur(pseudo, mdp);
 			String article = request.getParameter("article");
@@ -127,12 +142,12 @@ public class ajoutArticle extends HttpServlet {
 
 			articleManager.save(artVendus);
 
-			
-			Retrait retrait = new Retrait(artVendus.getNo_article(), util.getRue(), util.getCodePostal(), util.getVille());
-			
+
+			Retrait retrait = new Retrait(artVendus.getNo_article(), rue, cp, ville);
+
 			retraitManager.save(retrait);
-		
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/Profil.jsp");
+
+			RequestDispatcher rd = request.getRequestDispatcher("/listeEncheres");
 			rd.forward(request, response);
 
 
@@ -141,10 +156,14 @@ public class ajoutArticle extends HttpServlet {
 			request.setAttribute("error", "Problème d'enregistrement !");
 			e.printStackTrace();
 		}
-	}
 	
+
+
+		
+	}
+
 	public static Timestamp getTimestamp(java.util.Date date) {
-        return date == null ? null : new java.sql.Timestamp(date.getTime());
-    }
+		return date == null ? null : new java.sql.Timestamp(date.getTime());
+	}
 
 }
