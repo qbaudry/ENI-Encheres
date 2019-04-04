@@ -34,6 +34,14 @@
 					<button type="submit" class="btn btn-block btn-primary">Rechercher</button>
 				</div>
 			</div>
+			<div class="btn-group btn-group-toggle" data-toggle="buttons">
+			  <label class="btn btn-secondary">
+			    <input type="radio" name="options" id="achat" autocomplete="off"> Achats
+			  </label>
+			  <label class="btn btn-secondary">
+			    <input type="radio" name="options" id="vente" autocomplete="off"> Mes ventes
+			  </label>
+			</div>
 			<hr>
 			<div class="row">
 				<c:if test="${articles.size()>0}">
