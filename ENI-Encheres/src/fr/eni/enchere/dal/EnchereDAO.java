@@ -13,5 +13,6 @@ public interface EnchereDAO {
 	public Enchere select(Utilisateur u,ArticleVendu art) throws BusinessException;
 	public List<Enchere> selectByUser(Utilisateur u) throws BusinessException;
 	public List<Enchere> selectByArticle(ArticleVendu art) throws BusinessException;
+	public Enchere selectMaxByArticle(ArticleVendu art) throws BusinessException;
 	public List<Enchere> lister() throws BusinessException;
 }

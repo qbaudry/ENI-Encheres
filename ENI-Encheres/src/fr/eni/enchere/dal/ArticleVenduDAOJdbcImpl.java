@@ -22,6 +22,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String SELECTBYCATEGORIE = "select * from ARTICLES_VENDUS where no_categorie = ?";
 	private static CategorieDAO catDAO = DAOFactory.getCategorieDAO();
 	private static UtilisateurDAO utilDAO = DAOFactory.getUtilisateurDAO();
+	private static EnchereDAO enchDAO = DAOFactory.getEnchereDAO();
 	
 	@Override
 	public void save(ArticleVendu article) throws BusinessException {
@@ -145,6 +146,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 							article.setPrix_vente(rs.getInt("prix_vente"));
 							article.setPhoto(rs.getString("photo"));
 							article.setVendeur(vendeur);
+							article.setConcerne(enchDAO.selectMaxByArticle(article));
 //							article.setLieuRetrait(ret);
 							article.setCategorieArticle(categorie);
 							premiereLigne=false;
@@ -194,6 +196,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 						article.setVendeur(vendeur);
 //						article.setLieuRetrait(ret);
 						article.setCategorieArticle(categorie);
+						article.setConcerne(enchDAO.selectMaxByArticle(article));
 						listArticleVendu.add(article);
 					}
 					rs.close();
@@ -239,6 +242,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 						article.setVendeur(vendeur);
 //							article.setLieuRetrait(ret);
 						article.setCategorieArticle(categorie);
+						article.setConcerne(enchDAO.selectMaxByArticle(article));
 						listArticleVendu.add(article);
 					}
 					rs.close();
@@ -285,6 +289,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 							article.setVendeur(vendeur);
 							article.setCategorieArticle(categorie);
 							article.setPhoto(rs.getString("photo"));
+							article.setConcerne(enchDAO.selectMaxByArticle(article));
 							premiereLigne=false;
 						}
 					}
