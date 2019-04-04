@@ -66,11 +66,6 @@ public class listeEncheres extends HttpServlet {
 		rd.forward(request, response);
 	}
 	
-	public String convertDate(Timestamp t) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		return(sdf.format(t));
-	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

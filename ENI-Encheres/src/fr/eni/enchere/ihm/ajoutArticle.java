@@ -2,15 +2,10 @@ package fr.eni.enchere.ihm;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-import javax.print.attribute.standard.DateTimeAtCompleted;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +18,6 @@ import fr.eni.enchere.bll.CategorieManager;
 import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Utilisateur;
-import javafx.util.converter.LocalDateTimeStringConverter;
 
 /**
  * Servlet implementation class ajoutArticle
@@ -55,10 +49,6 @@ public class ajoutArticle extends HttpServlet {
 		}
 		else
 		{
-			
-
-
-			
 			CategorieManager categorieManager = new CategorieManager();
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 
@@ -67,19 +57,19 @@ public class ajoutArticle extends HttpServlet {
 			
 			Utilisateur util = new Utilisateur();
 			
-			
-			
-	        
 			try {
 				listeCategories = categorieManager.lister();
 				request.setAttribute("categories", listeCategories);
 				
 				util = utilisateurManager.selectionnerUtilisateur(pseudo, mdp);
-				request.setAttribute("debut", DateFormat.getDateInstance());
-				request.setAttribute("rue", util.getRue());
-    			request.setAttribute("codepostal", util.getCodePostal());
-    			request.setAttribute("ville", util.getVille());
-    			//System.out.println(auj);
+				request.setAttribute("utilisateur", util);
+				
+				Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+				SimpleDateFormat yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat HHmm = new SimpleDateFormat("HH:mm");
+				String debut = yyyyMMdd.format(timestamp).toString()+"T"+HHmm.format(timestamp).toString();
+				request.setAttribute("debut", debut);
+				
 
 			} catch (BusinessException e) {
 				e.printStackTrace();
