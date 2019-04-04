@@ -54,10 +54,10 @@
 
 						<div class="form-group col-12 col-lg-6 col-xl-6">
 							<label for="debut">Début de l'enchère :</label> <input
-								type="date" class="form-control" name="debut" id="debut" value = "<%=request.getAttribute("debut")%>">
+								type="datetime-local" class="form-control" name="debut" id="debut" value="<%=request.getAttribute("debut")%>">
 						</div>
 						<div class="form-group col-12 col-lg-6 col-xl-6">
-							<label for="fin">Fin de l'enchère :</label> <input type="date"
+							<label for="fin">Fin de l'enchère :</label> <input type="datetime-local"
 								class="form-control" name="fin" id="fin">
 						</div>
 						<div class="col-12 pt-3">
@@ -68,19 +68,19 @@
 										<label class="col-12 col-lg-3 col-xl-3 m-auto pl-0" for="rue">Rue
 											:</label> <input type="text"
 											class="form-control col-12 col-lg-9 col-xl-9" name="rue"
-											id="rue" placeholder="Rue">
+											id="rue" placeholder="Rue" value="<%=request.getAttribute("rue")%>">
 									</div>
 									<div class="form-group row col-12 m-0 pt-3">
 										<label class="col-12 col-lg-3 col-xl-3 m-auto pl-0"
 											for="codepostal">Code Postal :</label> <input type="text"
 											class="form-control col-12 col-lg-9 col-xl-9"
-											name="codepostal" id="codepostal" placeholder="Code Postal">
+											name="codepostal" id="codepostal" placeholder="Code Postal" value="<%=request.getAttribute("codepostal")%>">
 									</div>
 									<div class="form-group row col-12 m-0 pt-3">
 										<label class="col-12 col-lg-3 col-xl-3 m-auto pl-0"
 											for="ville">Ville :</label> <input type="text"
 											class="form-control col-12 col-lg-9 col-xl-9" name="ville"
-											id="ville" placeholder="Ville">
+											id="ville" placeholder="Ville" value="<%=request.getAttribute("ville")%>">
 									</div>
 								</div>
 							</div>

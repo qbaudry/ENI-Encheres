@@ -23,6 +23,8 @@ public abstract class CodesResultatDAL {
 	 * Utilisateur inexistant
 	 */
 	public static final int LECTURE_UTILISATEUR_INEXISTANT = 10003;
+	
+	public static final int SUPPRESSION_UTILISATEUR_ERREUR = 10004;
 }
 
 
