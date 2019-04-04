@@ -10,34 +10,27 @@
 <body>
 	<jsp:include page="../includes/Navbar.jsp"></jsp:include>
 	<script type="text/javascript" src="js/ListeEnchere.js"></script>
-<!-- 	function categChange(){ -->
-<!--     	console.log($("#inputGroupSelect").val()); -->
-<!--     } -->
-<!-- 	</script> -->
 	<div class="container">
 		<div class="alert alert-dark mt-5" role="alert">
 			<h1>Listes des encheres</h1>
 			<hr>
 			<label for="filtre">Filtre :</label>
 			<div class="row">
-				<div class="form-group col-12 col-sm-12 col-md-6 col-lg-5 col-xl-5">
+				<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 					<input type="text" class="form-control" id="filtre" name="filtre" placeholder="Le nom de l'article contient...">
 				</div>
-				<div class="input-group col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 mb-3">
+				<div class="input-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-3">
 				  	<div class="input-group-prepend">
 				    	<label class="input-group-text" for="inputGroupSelect">Catégorie</label>
 				  	</div>
 				  	<select class="custom-select" id="inputGroupSelect" name="categ">
-				  		<option value="toutes" selected>Toutes</option>
+				  		<option value="0" selected>Toutes</option>
 						<c:if test="${categories.size()>0}">
 							<c:forEach var="categorie" items="${categories}">
 						    	<option value="${categorie.noCategorie}">${categorie.libelle}</option>
 					      	</c:forEach>
 				        </c:if>
 			        </select>
-				</div>
-				<div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-					<button type="submit" class="btn btn-block btn-primary">Rechercher</button>
 				</div>
 			</div>
 			<div class="btn-group btn-group-toggle" data-toggle="buttons">
