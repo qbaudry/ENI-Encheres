@@ -18,7 +18,7 @@
 	        <a class="nav-link" href="${pageContext.request.contextPath}/ajoutArticle">Vendre un article</a>
 	      </li>
 	      <li class="nav-item">      
-	        <a class="nav-link" href="${pageContext.request.contextPath}/Profil">Mon profil</a>
+	        <a class="nav-link" href="${pageContext.request.contextPath}/monProfil">Mon profil</a>
 	      </li>
 	      <li class="nav-item">      
 	        <a class="nav-link" href="${pageContext.request.contextPath}/seDeconnecter">Déconnexion</a>
