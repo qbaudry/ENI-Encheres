@@ -8,67 +8,128 @@
 <body>
 	<jsp:include page="../includes/Navbar.jsp"></jsp:include>
 	<div class="container">
-		<form method="post" action="${pageContext.request.contextPath}/Profil">
+		<form method="post" action="${pageContext.request.contextPath}/monProfil">
 			<div class="alert alert-dark mt-5" role="alert">
 				<h1>Mon Profil</h1>
 				<hr>
-				<% if(request.getAttribute("error") != null) {%>
-   				 <div class="alert alert-danger"><%=request.getAttribute("error")%></div>
-				<%}%>
-				<% if(request.getAttribute("congret") != null) {%>
-   				 <div class="alert alert-success"><%=request.getAttribute("congret")%></div>
-				<%}%>
-				<% if(request.getAttribute("supress") != null) {%>
-   				 <div class="alert alert-success"><%=request.getAttribute("supress")%></div>
-				<%}%>
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="pseudo">Pseudo :</label>
-				    	<input type="text" class="form-control" id="pseudo" name="pseudo" value="<%=request.getAttribute("pseudo")%>" >
+				    	<c:choose>
+    						<c:when test="${!empty formulaire}">
+								<input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="Pseudo" value="${formulaire.pseudo}" required>
+							</c:when>
+					        <c:otherwise>
+					        	<input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="Pseudo" required>
+					        </c:otherwise>
+					    </c:choose>
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="nom">Nom :</label>
-				    	<input type="text" class="form-control" id="nom" name="nom" value="<%=request.getAttribute("nom")%>" >
+				    	<c:choose>
+    						<c:when test="${!empty formulaire}">
+								<input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" value="${formulaire.nom}" required>
+							</c:when>
+					        <c:otherwise>
+					        	<input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" required>
+					        </c:otherwise>
+					    </c:choose>
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="prenom">Prénom :</label>
-				    	<input type="text" class="form-control" id="prenom" name="prenom" value="<%=request.getAttribute("prenom")%>" >
+				    	<c:choose>
+    						<c:when test="${!empty formulaire}">
+								<input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom" value="${formulaire.prenom}" required>
+							</c:when>
+					        <c:otherwise>
+					        	<input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom" required>
+					        </c:otherwise>
+					    </c:choose>
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" >
 				    	<label for="nom">Email :</label>
-				    	<input type="email" class="form-control" id="email" name="email" value="<%=request.getAttribute("email")%>" >
+				    	<c:choose>
+    						<c:when test="${!empty formulaire}">
+								<input type="email" class="form-control" id="email" name="email" placeholder="Email" value="${formulaire.email}" required>
+							</c:when>
+					        <c:otherwise>
+					        	<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+					        </c:otherwise>
+					    </c:choose>
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="telephone">Téléphone :</label>				    	
-				    	<input type="text" pattern="\d{10}" class="form-control" id="telephone" name="telephone" value="<%=request.getAttribute("telephone")%>" >
+				    	<c:choose>
+    						<c:when test="${!empty formulaire}">
+								<input type="text" pattern="\d{10}" class="form-control" id="telephone" name="telephone" placeholder="Téléphone" value="${formulaire.telephone}" required>
+							</c:when>
+					        <c:otherwise>
+					        	<input type="text" pattern="\d{10}" class="form-control" id="telephone" name="telephone" placeholder="Téléphone" required>
+					        </c:otherwise>
+					    </c:choose>
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="rue">Rue :</label>
-				    	<input type="text" class="form-control" id="rue" name="rue" value="<%=request.getAttribute("rue")%>" >
+				    	<c:choose>
+    						<c:when test="${!empty formulaire}">
+								<input type="text" class="form-control" id="rue" name="rue" placeholder="Rue" value="${formulaire.rue}" required>
+							</c:when>
+					        <c:otherwise>
+					        	<input type="text" class="form-control" id="rue" name="rue" placeholder="Rue" required>
+					        </c:otherwise>
+					    </c:choose>
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="codepostal">Code postal :</label>
-				    	<input type="text" class="form-control" id="codepostal" name="codepostal" value="<%=request.getAttribute("codepostal")%>" >
+				    	<c:choose>
+    						<c:when test="${!empty formulaire}">
+								<input type="text" pattern="\d{5}" class="form-control" id="codepostal" name="codepostal" placeholder="Code postal" value="${formulaire.codePostal}" required>
+							</c:when>
+					        <c:otherwise>
+					        	<input type="text" pattern="\d{5}" class="form-control" id="codepostal" name="codepostal" placeholder="Code postal" required>
+					        </c:otherwise>
+					    </c:choose>
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="ville">Ville :</label>
-				    	<input type="text" class="form-control" id="ville" name="ville" value="<%=request.getAttribute("ville")%>" >
+				    	<c:choose>
+    						<c:when test="${!empty formulaire}">
+								<input type="text" class="form-control" id="ville" name="ville" placeholder="Ville" value="${formulaire.ville}" required>
+							</c:when>
+					        <c:otherwise>
+					        	<input type="text" class="form-control" id="ville" name="ville" placeholder="Ville" required>
+					        </c:otherwise>
+					    </c:choose>
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="motdepasse">Mot de passe :</label>
-				    	<input type="password" class="form-control" id="motdepasse" name="motdepasse" value="<%=request.getAttribute("motdepasse")%>" >
+				    	<c:choose>
+    						<c:when test="${!empty formulaire}">
+								<input type="password" class="form-control" id="motdepasse" name="motdepasse" placeholder="Mot de passe" value="${formulaire.motDePasse}" required>
+							</c:when>
+					        <c:otherwise>
+					        	<input type="password" class="form-control" id="motdepasse" name="motdepasse" placeholder="Mot de passe" required>
+					        </c:otherwise>
+					    </c:choose>
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="motdepasse2">Crédit :</label>
-				    	<input type="number" class="form-control" id="credit" name="credit"  value="<%=request.getAttribute("credit")%>" readonly>
+				    	<c:choose>
+    						<c:when test="${!empty formulaire}">
+								<input type="number" class="form-control" id="credit" name="credit" placeholder="Crédit" value="${formulaire.credit}" readonly>
+							</c:when>
+					        <c:otherwise>
+					        	<input type="number" class="form-control" id="credit" name="credit" placeholder="Crédit" readonly>
+					        </c:otherwise>
+					    </c:choose>
 					</div>
 				</div>
 				<hr>
@@ -82,6 +143,22 @@
 				</div>
 			</div>
 		</form>
+		<c:if test="${!empty listeCodesErreur}">
+			<div class="alert alert-danger" role="alert">
+			  <strong>Erreur !</strong>
+			  <ul>
+			  	<c:forEach var="code" items="${listeCodesErreur}">
+			  		<li>${LecteurMessage.getMessageErreur(code)}</li>
+			  	</c:forEach>
+			  </ul>
+			</div>
+		</c:if>
+		<% if(request.getAttribute("congret") != null) {%>
+ 			<div class="alert alert-success"><%=request.getAttribute("congret")%></div>
+		<%}%>
+		<% if(request.getAttribute("supress") != null) {%>
+ 			<div class="alert alert-success"><%=request.getAttribute("supress")%></div>
+		<%}%>
 	</div>
 </body>
 </html>

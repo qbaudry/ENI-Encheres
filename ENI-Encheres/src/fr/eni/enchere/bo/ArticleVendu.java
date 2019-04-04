@@ -34,6 +34,23 @@ public class ArticleVendu {
 			this.concerne = concerne;
 			this.categorieArticle = categorieArticle;
 		}
+		
+		public ArticleVendu(String nom_article, String description, Timestamp date_debut_encheres,
+				Timestamp date_fin_encheres, int prix_initial, int prix_vente,
+				Utilisateur vend, Categorie categorieArticle, String photo) {
+			this.nom_article = nom_article;
+			this.description = description;
+			this.date_debut_encheres = date_debut_encheres;
+			this.date_fin_encheres = date_fin_encheres;
+			this.prix_initial = prix_initial;
+			this.prix_vente = prix_vente;
+			this.vendeur = vend;
+			this.categorieArticle = categorieArticle;
+			this.photo = photo;
+		}
+
+
+
 
 		public int getNo_article() {
 			return no_article;

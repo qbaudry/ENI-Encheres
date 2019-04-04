@@ -27,6 +27,10 @@ public class CategorieManager {
 		return this.categDAO.select(id);
 	}
 	
+	public Categorie selectbylibelle(String lib) throws BusinessException {
+		return this.categDAO.selectbylibelle(lib);
+	}
+	
 	public List<Categorie> lister() throws BusinessException {
 		return this.categDAO.lister();
 	}
