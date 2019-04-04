@@ -36,6 +36,7 @@ public class listeEncheres extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CategorieManager categorieManager = new CategorieManager();
 		
+		
 		List<Categorie> listeCategories = new ArrayList<>();
 		List<Integer> listeCodesErreur = new ArrayList<>();
 		
