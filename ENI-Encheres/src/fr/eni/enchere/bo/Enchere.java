@@ -16,7 +16,17 @@ public class Enchere {
 		this.montant_enchere = montant_enchere;
 		this.concerne = concerne;
 	}
+	
+	public Enchere(Utilisateur encherit, ArticleVendu concerne) {
+		super();
+		this.encherit = encherit;
+		this.concerne = concerne;
+	}
 
+	public Enchere() {
+		super();
+	}
+	
 	public Utilisateur getEncherit() {
 		return encherit;
 	}

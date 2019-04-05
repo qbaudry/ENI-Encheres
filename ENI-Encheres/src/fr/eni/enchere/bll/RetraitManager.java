@@ -23,6 +23,8 @@ private RetraitDAO retraitDAO;
 		this.retraitDAO.delete(retrait);
 	}
 	
-
+	public Retrait select(int id) throws BusinessException {
+		return this.retraitDAO.select(id);
+	}
 
 }

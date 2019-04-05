@@ -4,7 +4,6 @@
   <welcome-file-list>
     <welcome-file>listeEncheres</welcome-file>
   </welcome-file-list>
-  
   <servlet>
     <description></description>
     <display-name>mdpOublie</display-name>

@@ -18,7 +18,7 @@ public class Utilisateur {
 	private ArticleVendu achete;
 	private Enchere enrechit;
 	
-	
+
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur,
 			ArticleVendu vend, ArticleVendu achete, Enchere enrechit) {
