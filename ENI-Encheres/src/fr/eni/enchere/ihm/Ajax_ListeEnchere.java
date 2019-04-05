@@ -78,13 +78,7 @@ public class Ajax_ListeEnchere extends HttpServlet {
 					}
 				}
 			}
-				listeEncherestemp = (ArrayList<ArticleVendu>) listeEncheres.clone();
-				listeEncheres.clear();
-				for(ArticleVendu art : listeEncherestemp) {
-					if(!art.getDate_fin_encheres().before(actualTS) && !art.getDate_debut_encheres().before(actualTS) ) {
-						listeEncheres.add(art);
-					}
-				}
+				
 			if(util!=null) {
 				String achatOuVente = (String)request.getParameter("achat_vente");
 				System.out.println(request.getParameter("eOuvertes"));
@@ -111,7 +105,14 @@ public class Ajax_ListeEnchere extends HttpServlet {
 								listeEncheres.add(art);
 //							}
 						}
+						
 					}
+//					for(ArticleVendu art : listeEncherestemp) {
+//						if(art.getDate_fin_encheres().after(actualTS) && art.getDate_debut_encheres().before(actualTS) ) {
+//							listeEncheres.add(art);
+//						}
+//					}
+					
 				}else {
 					listeEncherestemp = (ArrayList<ArticleVendu>) listeEncheres.clone();
 					listeEncheres.clear();
@@ -125,6 +126,14 @@ public class Ajax_ListeEnchere extends HttpServlet {
 								listeEncheres.add(art);
 							}
 						}
+					}
+				}
+			}else {
+				listeEncherestemp = (ArrayList<ArticleVendu>) listeEncheres.clone();
+				listeEncheres.clear();
+				for(ArticleVendu art : listeEncherestemp) {
+					if(art.getDate_fin_encheres().after(actualTS) && art.getDate_debut_encheres().before(actualTS) ) {
+						listeEncheres.add(art);
 					}
 				}
 			}
