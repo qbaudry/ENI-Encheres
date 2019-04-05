@@ -12,8 +12,10 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bll.ArticleVenduManager;
+import fr.eni.enchere.bll.EnchereManager;
 import fr.eni.enchere.bll.RetraitManager;
 import fr.eni.enchere.bo.ArticleVendu;
+import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Retrait;
 
 /**
@@ -48,8 +50,11 @@ public class detailEnchere extends HttpServlet {
 		HttpSession session = request.getSession();
 		String pseudo = (String) session.getAttribute("identifiant");
 		String mdp = (String) session.getAttribute("motdepasse");
+		
+		
 		ArticleVenduManager articleManager = new ArticleVenduManager();
 		RetraitManager retraitManager = new RetraitManager();
+		EnchereManager enchereManager = new EnchereManager();
 		
 		if(pseudo == null && mdp == null)
 		{
@@ -59,8 +64,11 @@ public class detailEnchere extends HttpServlet {
 		else
 		{
 			String art = request.getParameter("no_article");
+			
+			
 			ArticleVendu article = new ArticleVendu();
 			Retrait retrait = new Retrait();
+			
 			
 			try {
 				
@@ -68,8 +76,9 @@ public class detailEnchere extends HttpServlet {
 				retrait = retraitManager.select(Integer.parseInt(art));
 				request.setAttribute("formulaire", article);
 				request.setAttribute("retrait", retrait);
-				
-				
+				Enchere enchere = new Enchere();
+				enchere = enchereManager.select(article.getVendeur(), article);
+				request.setAttribute("enchere", enchere);
 				
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
