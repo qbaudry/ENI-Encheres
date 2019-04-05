@@ -9,7 +9,7 @@
 	<c:forEach var="article" items="${articles}">
 		<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 pb-3">
 			<div class="card" style="height: 100%;">
-				<div class="row no-gutters">
+				<div class="row no-gutters" style="height: 100%;">
 					<div class="col-md-4 px-3 my-auto">
 						<img src="https://via.placeholder.com/150" class="card-img"
 							alt="...">
@@ -19,12 +19,10 @@
 							<h5 class="card-title">${article.nom_article}</h5>
 							<c:choose>
 								<c:when test="${article.concerne != null}">
-									<p class="card-text">Prix :
-										${article.concerne.montant_enchere} points
+									<p class="card-text">Prix : ${article.concerne.montant_enchere} points
 								</c:when>
 								<c:otherwise>
 									<p class="card-text">Prix : ${article.prix_initial} points
-									
 								</c:otherwise>
 							</c:choose>
 							<br>Fin de l'enchère :
