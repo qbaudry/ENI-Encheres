@@ -30,9 +30,7 @@ $( document ).ready(function() {
 		filtrer();
 	});
 	$(':checkbox').change(function() {
-
 		filtrer();
-
 	}); 
 	$('#achat_btn').click();
 
