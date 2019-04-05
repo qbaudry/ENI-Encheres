@@ -81,7 +81,6 @@ public class Ajax_ListeEnchere extends HttpServlet {
 
 			if(util!=null) {
 				String achatOuVente = (String)request.getParameter("achat_vente");
-				System.out.println(request.getParameter("eOuvertes"));
 
 
 				Boolean eOuvertes = Boolean.parseBoolean(request.getParameter("eOuvertes"));
