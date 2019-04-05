@@ -51,7 +51,7 @@
 							<div class="form-group col-12 col-lg-6 col-xl-6">
 								<label for="fin">Fin de l'enchère :</label> <input
 									type="datetime-local" class="form-control" name="fin" id="fin"
-									required>
+									readonly>
 							</div>
 							<div class="form-group col-12 col-lg-6 col-xl-6">
 								<label for="retrait">Retrait :</label> <input type="text"
@@ -76,10 +76,10 @@
 							</select>
 							<hr>
 							<div class="row">
-								<div class="col-6">
+								<div class="col-12">
 									<button type="submit" class="btn btn-block btn-success">Enregistrer</button>
 								</div>
-								<div class="col-6">
+								<div class="col-12">
 									<a class="btn btn-block btn-danger"
 										href="${pageContext.request.contextPath}/listeEncheres">Annuler</a>
 								</div>
