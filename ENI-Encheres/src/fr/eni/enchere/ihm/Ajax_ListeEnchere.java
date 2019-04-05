@@ -45,6 +45,7 @@ public class Ajax_ListeEnchere extends HttpServlet {
 		UtilisateurManager utilManager = new UtilisateurManager();
 		HttpSession session = request.getSession();
 		Utilisateur util = null;
+		Timestamp actualTS = new Timestamp(new Date().getTime());
 		try {
 			util = utilManager.selectionnerUtilisateur((String)session.getAttribute("identifiant"),(String)session.getAttribute("motdepasse"));
 		} catch (BusinessException e1) {
@@ -67,15 +68,7 @@ public class Ajax_ListeEnchere extends HttpServlet {
 				listeEncheres = (ArrayList<ArticleVendu>) articleManager.lister();
 			}
 			String filtre = (String)request.getParameter("filtre");
-			String achatOuVente = (String)request.getParameter("achat_vente");
-			System.out.println(achatOuVente);
-			Boolean eOuvertes = Boolean.parseBoolean(request.getParameter("eOuvertes"));
-			Boolean eEnCours = Boolean.parseBoolean(request.getParameter("eEnCours"));
-			Boolean eFermees = Boolean.parseBoolean(request.getParameter("eFermees"));
-			Boolean vEnCours = Boolean.parseBoolean(request.getParameter("vEnCours"));
-			Boolean vNonDebutees = Boolean.parseBoolean(request.getParameter("vNonDebutees"));
-			Boolean vTerminees = Boolean.parseBoolean(request.getParameter("vTerminees"));
-			
+
 			if(filtre!=null && !filtre.isEmpty()) {
 				listeEncherestemp = (ArrayList<ArticleVendu>) listeEncheres.clone();
 				listeEncheres.clear();
@@ -85,34 +78,53 @@ public class Ajax_ListeEnchere extends HttpServlet {
 					}
 				}
 			}
-			Timestamp actualTS = new Timestamp(new Date().getTime());
-			if(achatOuVente.equals("achat")) {
 				listeEncherestemp = (ArrayList<ArticleVendu>) listeEncheres.clone();
 				listeEncheres.clear();
 				for(ArticleVendu art : listeEncherestemp) {
-					
-					if(art.getVendeur().getNoUtilisateur() != util.getNoUtilisateur()) {
-						if((!eOuvertes && !eEnCours && !eFermees)||
-							(eOuvertes && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS))||
-							(eFermees && art.getDate_fin_encheres().before(actualTS))||
-							(eEnCours && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS))
-							) {
+					if(!art.getDate_fin_encheres().before(actualTS) && !art.getDate_debut_encheres().before(actualTS) ) {
 						listeEncheres.add(art);
-						}
 					}
 				}
-			}else {
-				listeEncherestemp = (ArrayList<ArticleVendu>) listeEncheres.clone();
-				listeEncheres.clear();
-				for(ArticleVendu art : listeEncherestemp) {
-					if(art.getVendeur().getNoUtilisateur() == util.getNoUtilisateur()) {
-						if((!vEnCours && !vTerminees && !vNonDebutees)||
-								(vEnCours && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS))||
-								(vTerminees && art.getDate_fin_encheres().before(actualTS))||
-								(vNonDebutees  && art.getDate_debut_encheres().after(actualTS))
-								) {
-							listeEncheres.add(art);
+			if(util!=null) {
+				String achatOuVente = (String)request.getParameter("achat_vente");
+				System.out.println(request.getParameter("eOuvertes"));
+
+
+				Boolean eOuvertes = Boolean.parseBoolean(request.getParameter("eOuvertes"));
+				Boolean eEnCours = Boolean.parseBoolean(request.getParameter("eEnCours"));
+				Boolean eFermees = Boolean.parseBoolean(request.getParameter("eFermees"));
+				Boolean vEnCours = Boolean.parseBoolean(request.getParameter("vEnCours"));
+				Boolean vNonDebutees = Boolean.parseBoolean(request.getParameter("vNonDebutees"));
+				Boolean vTerminees = Boolean.parseBoolean(request.getParameter("vTerminees"));
+				
+				if(achatOuVente.equals("achat")) {
+					listeEncherestemp = (ArrayList<ArticleVendu>) listeEncheres.clone();
+					listeEncheres.clear();
+					for(ArticleVendu art : listeEncherestemp) {
+
+						if(art.getVendeur().getNoUtilisateur() != util.getNoUtilisateur()) {
+//							if((!eOuvertes && !eEnCours && !eFermees)||
+//									(eOuvertes && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS))||
+//									(eFermees && art.getDate_fin_encheres().before(actualTS))||
+//									(eEnCours && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS))
+//									) {
+								listeEncheres.add(art);
+//							}
+						}
+					}
+				}else {
+					listeEncherestemp = (ArrayList<ArticleVendu>) listeEncheres.clone();
+					listeEncheres.clear();
+					for(ArticleVendu art : listeEncherestemp) {
+						if(art.getVendeur().getNoUtilisateur() == util.getNoUtilisateur()) {
+							if((!vEnCours && !vTerminees && !vNonDebutees)||
+									(vEnCours && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS))||
+									(vTerminees && art.getDate_fin_encheres().before(actualTS))||
+									(vNonDebutees  && art.getDate_debut_encheres().after(actualTS))
+									) {
+								listeEncheres.add(art);
 							}
+						}
 					}
 				}
 			}
