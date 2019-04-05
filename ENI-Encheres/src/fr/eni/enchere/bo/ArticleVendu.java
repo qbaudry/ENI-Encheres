@@ -49,6 +49,13 @@ public class ArticleVendu {
 			this.photo = photo;
 		}
 
+		public ArticleVendu(String nom_article, String description, int prix_initial) {
+			this.nom_article = nom_article;
+			this.description = description;
+			this.prix_initial = prix_initial;
+
+		}
+
 
 
 
