@@ -29,7 +29,27 @@
 							<fmt:formatDate value="${article.date_fin_encheres}"
 								pattern="dd/MM/yyyy HH:mm" />
 							</p>
-							<p class="card-text">Vendeur : ${article.vendeur.pseudo}</p>
+							<a class="card-text" data-toggle="modal" data-target="#modalProfil" onclick="viewProfil(${article.vendeur.pseudo}, ${article.vendeur.motDePasse})">Vendeur : ${article.vendeur.pseudo}</a>
+							
+							<div class="modal fade" id="modalProfil" tabindex="-1" role="dialog" aria-labelledby="modalProfil" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+								  <div class="modal-content">
+								    <div class="modal-header">
+								      <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+								      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								        <span aria-hidden="true">&times;</span>
+								      </button>
+								    </div>
+								    <div class="modal-body">
+								      ...
+								    </div>
+								    <div class="modal-footer">
+								      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								      <button type="button" class="btn btn-primary">Save changes</button>
+								    </div>
+								  </div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
