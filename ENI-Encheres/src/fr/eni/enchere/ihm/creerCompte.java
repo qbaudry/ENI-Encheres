@@ -100,8 +100,9 @@ public class creerCompte extends HttpServlet {
 		String ville = request.getParameter("ville");
 		String motdepasse = request.getParameter("motdepasse");
 		String motdepasse2 = request.getParameter("motdepasse2");
-		if (pseudo == null || nom == null || prenom == null || email == null || telephone == null || rue == null
-				|| codepostal == null || ville == null || motdepasse == null || motdepasse2 == null) {
+		System.out.println("PSEUDO:" + pseudo);
+		if (pseudo.equals("") || nom.equals("") || prenom.equals("") || email.equals("") || telephone.equals("") || rue.equals("")
+				|| codepostal.equals("") || ville.equals("") || motdepasse.equals("") || motdepasse2.equals("")) {
 			listeCodesErreur.add(CodesResultatServlets.FORMULAIRE_INSCIPTION_SAISIE_OBLIGATOIRE);
 		}
 	}

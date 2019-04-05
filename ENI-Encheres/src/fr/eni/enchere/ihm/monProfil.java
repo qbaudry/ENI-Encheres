@@ -137,8 +137,8 @@ public class monProfil extends HttpServlet {
 		String ville = request.getParameter("ville");
 		String motdepasse = request.getParameter("motdepasse");
 		String credit = request.getParameter("credit");
-		if (pseudo == null || nom == null || prenom == null || email == null || telephone == null || rue == null
-				|| codepostal == null || ville == null || motdepasse == null || credit == null) {
+		if (pseudo.equals("") || nom.equals("") || prenom.equals("") || email.equals("") || telephone.equals("") || rue.equals("")
+				|| codepostal.equals("") || ville.equals("") || motdepasse.equals("") || credit.equals("")) {
 			listeCodesErreur.add(CodesResultatServlets.FORMULAIRE_INSCIPTION_SAISIE_OBLIGATOIRE);
 		}
 	}
