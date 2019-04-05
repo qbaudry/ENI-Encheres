@@ -12,7 +12,9 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bll.ArticleVenduManager;
+import fr.eni.enchere.bll.RetraitManager;
 import fr.eni.enchere.bo.ArticleVendu;
+import fr.eni.enchere.bo.Retrait;
 
 /**
  * Servlet implementation class detailEnchere
@@ -47,6 +49,7 @@ public class detailEnchere extends HttpServlet {
 		String pseudo = (String) session.getAttribute("identifiant");
 		String mdp = (String) session.getAttribute("motdepasse");
 		ArticleVenduManager articleManager = new ArticleVenduManager();
+		RetraitManager retraitManager = new RetraitManager();
 		
 		if(pseudo == null && mdp == null)
 		{
@@ -57,12 +60,14 @@ public class detailEnchere extends HttpServlet {
 		{
 			String art = request.getParameter("no_article");
 			ArticleVendu article = new ArticleVendu();
+			Retrait retrait = new Retrait();
 			
 			try {
 				
-				article = articleManager.select(Integer.parseInt(art));				
+				article = articleManager.select(Integer.parseInt(art));	
+				retrait = retraitManager.select(Integer.parseInt(art));
 				request.setAttribute("formulaire", article);
-				
+				request.setAttribute("retrait", retrait);
 				
 				
 				

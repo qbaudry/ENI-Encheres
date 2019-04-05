@@ -44,7 +44,7 @@
 						</div>
 						<div class="row">
 							<div class="font-weight-bold col-4 m-auto">Retrait :</div>
-				     		<div class="col-8 p-1">...</div>
+				     		<div class="col-8 p-1">${retrait.rue} ${retrait.code_postal} ${retrait.ville}</div>
 						</div>
 						<div class="row">
 							<div class="font-weight-bold col-4 m-auto">Vendeur :</div>
