@@ -6,21 +6,27 @@ $( document ).ready(function() {
 		filtrer();		
 	});
 	filtrer();
-	$('#achat').click(function(){
-		$('enchere_ouverte').prop('disabled','');
-		$('enchere_encours').prop('disabled','');
-		$('enchere_remportees').prop('disabled','');
-		$('ventes_encours').prop('disabled','disabled');
-		$('ventes_non_debutees').prop('disabled','disabled');
-		$('ventes_terminees').prop('disabled','disabled');
+	$('#achat_btn').click(function(){
+		$('#encheres_ouvertes').prop('disabled','');
+		$('#encheres_encours').prop('disabled','');
+		$('#encheres_remportees').prop('disabled','');
+		$('#ventes_encours').prop('disabled','disabled');
+		$('#ventes_encours').prop('checked',false);
+		$('#ventes_non_debutees').prop('disabled','disabled');
+		$('#ventes_non_debutees').prop('checked',false);
+		$('#ventes_terminees').prop('disabled','disabled');
+		$('#ventes_terminees').prop('checked',false);
 	});
-	$('#achat').click(function(){
-		$('enchere_ouverte').prop('disabled','disabled');
-		$('enchere_encours').prop('disabled','disabled');
-		$('enchere_remportees').prop('disabled','disabled');
-		$('ventes_encours').prop('disabled','');
-		$('ventes_non_debutees').prop('disabled','');
-		$('ventes_terminees').prop('disabled','');
+	$('#vente_btn').click(function(){
+		$('#encheres_ouvertes').prop('disabled','disabled');
+		$('#encheres_ouvertes').prop('checked',false);
+		$('#encheres_encours').prop('disabled','disabled');
+		$('#encheres_encours').prop('checked',false);
+		$('#encheres_remportees').prop('disabled','disabled');
+		$('#encheres_remportees').prop('checked',false);
+		$('#ventes_encours').prop('disabled','');
+		$('#ventes_non_debutees').prop('disabled','');
+		$('#ventes_terminees').prop('disabled','');
 	});
 });
 

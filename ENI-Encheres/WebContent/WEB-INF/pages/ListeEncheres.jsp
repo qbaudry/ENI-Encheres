@@ -35,10 +35,10 @@
 			</div>
 			<div class="row">
 				<div class="btn-group btn-group-toggle col-12" data-toggle="buttons">
-				  <label class="btn btn-secondary col-6">
+				  <label class="btn btn-secondary col-6" id="achat_btn">
 				    <input type="radio" name="options" id="achat" autocomplete="off"> Achats
 				  </label>
-				  <label class="btn btn-secondary col-6">
+				  <label class="btn btn-secondary col-6" id="vente_btn">
 				    <input type="radio" name="options" id="vente" autocomplete="off"> Mes ventes
 				  </label>
 				</div>
