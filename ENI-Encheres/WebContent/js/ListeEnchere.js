@@ -5,7 +5,6 @@ $( document ).ready(function() {
 	$('#filtre').on('keyup paste',function(){
 		filtrer();		
 	});
-	filtrer();
 	$('#achat_btn').click(function(){
 		$('#encheres_ouvertes').prop('disabled','');
 		$('#encheres_encours').prop('disabled','');
@@ -28,10 +27,17 @@ $( document ).ready(function() {
 		$('#ventes_non_debutees').prop('disabled','');
 		$('#ventes_terminees').prop('disabled','');
 	});
+	$('#achat_btn').click();
+
+	filtrer();
 });
 
 function filtrer(){
-	$.post( "/ENI-Encheres/Ajax_ListeEnchere",{ categ : $('#inputGroupSelect').val(),filtre : $('#filtre').val()})
+	$.post( "/ENI-Encheres/Ajax_ListeEnchere",
+			{ categ : $('#inputGroupSelect').val(),filtre : $('#filtre').val(),
+			achat_vente : $("input[name='options']:checked").val()		
+			
+			})
 	  .done(function( data ) {
 		  $( "#listeArticle" ).html( data );
 		});
