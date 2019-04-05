@@ -9,7 +9,7 @@
 	<c:forEach var="article" items="${articles}">
 		<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 pb-3">
 			<div class="card" style="height: 100%;">
-				<div class="row no-gutters">
+				<div class="row no-gutters" style="height: 100%;">
 					<div class="col-md-4 px-3 my-auto">
 						<img src="https://via.placeholder.com/150" class="card-img"
 							alt="...">
@@ -19,19 +19,37 @@
 							<h5 class="card-title">${article.nom_article}</h5>
 							<c:choose>
 								<c:when test="${article.concerne != null}">
-									<p class="card-text">Prix :
-										${article.concerne.montant_enchere} points
+									<p class="card-text">Prix : ${article.concerne.montant_enchere} points
 								</c:when>
 								<c:otherwise>
 									<p class="card-text">Prix : ${article.prix_initial} points
-									
 								</c:otherwise>
 							</c:choose>
 							<br>Fin de l'enchère :
 							<fmt:formatDate value="${article.date_fin_encheres}"
 								pattern="dd/MM/yyyy HH:mm" />
 							</p>
-							<p class="card-text">Vendeur : ${article.vendeur.pseudo}</p>
+							<a class="card-text" data-toggle="modal" data-target="#modalProfil" onclick="viewProfil(${article.vendeur.pseudo}, ${article.vendeur.motDePasse})">Vendeur : ${article.vendeur.pseudo}</a>
+							
+							<div class="modal fade" id="modalProfil" tabindex="-1" role="dialog" aria-labelledby="modalProfil" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+								  <div class="modal-content">
+								    <div class="modal-header">
+								      <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+								      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								        <span aria-hidden="true">&times;</span>
+								      </button>
+								    </div>
+								    <div class="modal-body">
+								      ...
+								    </div>
+								    <div class="modal-footer">
+								      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								      <button type="button" class="btn btn-primary">Save changes</button>
+								    </div>
+								  </div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

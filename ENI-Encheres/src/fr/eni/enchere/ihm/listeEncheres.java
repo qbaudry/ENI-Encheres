@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.sun.jmx.snmp.Timestamp;
 
@@ -39,6 +40,11 @@ public class listeEncheres extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		String login = (String) session.getAttribute("identifiant");
+        String mdp = (String) session.getAttribute("motdepasse");
+		
 		CategorieManager categorieManager = new CategorieManager();
 		ArticleVenduManager articleManager = new ArticleVenduManager();
 		
