@@ -16,14 +16,10 @@
 					</div>
 					<div class="col-md-8">
 						<div class="card-body">
-<<<<<<< HEAD
 							<form method="post" id="art${article.no_article}" action="/detailEnchere">
-							<input type="hidden" name="no_article" value="${article.no_article}">
+								<input type="hidden" name="no_article" value="${article.no_article}">
 							</form>
 							<h5 class="card-title"><a onclick="$('#art${article.no_article}')" href="">${article.nom_article}</a></h5>
-=======
-							<h5 class="card-title"><a name="article" href="/detailEnchere">${article.nom_article}</a></h5>
->>>>>>> branch 'master' of https://github.com/qbaudry/ENI-Encheres.git
 							<c:choose>
 								<c:when test="${article.concerne != null}">
 									<p class="card-text">Prix : ${article.concerne.montant_enchere} points
