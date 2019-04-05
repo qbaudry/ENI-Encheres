@@ -65,14 +65,8 @@
 						</div>
 						<div class="row mb-3">
 							<div class="font-weight-bold col-4 m-auto">Ma proposition :</div>
-<<<<<<< HEAD
 				     		<div class="form-group col-8 m-0 pr-3">
 								<select class="custom-select" id="inputGroupSelect" name="categorie">
-=======
-							<div class="form-group col-8 m-0  p-1">
-								<select class="custom-select" id="inputGroupSelect"
-									name="categorie">
->>>>>>> branch 'master' of https://github.com/qbaudry/ENI-Encheres.git
 									<option value="dog">Dog</option>
 									<option value="cat">Cat</option>
 									<option value="hamster">Hamster</option>
