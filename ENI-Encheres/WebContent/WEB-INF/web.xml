@@ -44,14 +44,4 @@
     <servlet-name>ajoutArticle</servlet-name>
     <url-pattern>/ajoutArticle</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>detailEnchere</display-name>
-    <servlet-name>detailEnchere</servlet-name>
-    <servlet-class>fr.eni.enchere.ihm.detailEnchere</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>detailEnchere</servlet-name>
-    <url-pattern>/detailEnchere</url-pattern>
-  </servlet-mapping>
 </web-app>

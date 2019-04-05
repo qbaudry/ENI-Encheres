@@ -16,10 +16,10 @@
 					</div>
 					<div class="col-md-8">
 						<div class="card-body">
-							<form method="post" id="art${article.no_article}" action="/detailEnchere">
+							<form method="post" id="art${article.no_article}" action="${pageContext.request.contextPath}/detailEnchere">
 								<input type="hidden" name="no_article" value="${article.no_article}">
 							</form>
-							<h5 class="card-title"><a onclick="$('#art${article.no_article}')" href="">${article.nom_article}</a></h5>
+							<h5 class="card-title"><a onclick="$('#art${article.no_article}').submit();">${article.nom_article}</a></h5>
 							<c:choose>
 								<c:when test="${article.concerne != null}">
 									<p class="card-text">Prix : ${article.concerne.montant_enchere} points
