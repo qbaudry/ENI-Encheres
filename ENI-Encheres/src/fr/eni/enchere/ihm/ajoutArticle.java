@@ -114,51 +114,110 @@ public class ajoutArticle extends HttpServlet {
 		CategorieManager categManager = new CategorieManager();
 		RetraitManager retraitManager = new RetraitManager();
 
-
+		List<Categorie> listeCategories = new ArrayList<>();
+		List<Integer> listeCodesErreur = new ArrayList<>();
+		lireParametreFormulaire(request, listeCodesErreur);
+		lirePrixNonNegatif(request, listeCodesErreur);
+		lireJavaScript(request, listeCodesErreur);
+		lireDatedeFin(request, listeCodesErreur);
+		
 		HttpSession session = request.getSession();
 		String pseudo = (String) session.getAttribute("identifiant");
 		String mdp = (String) session.getAttribute("motdepasse");
 
 		Utilisateur util = new Utilisateur();
+		ArticleVendu art = new ArticleVendu(request.getParameter("article"), request.getParameter("description"), Integer.valueOf(request.getParameter("prix")));
 		
-		try {
-			util = utilisateurManager.selectionnerUtilisateur(pseudo, mdp);
-			String article = request.getParameter("article");
-			String description = request.getParameter("description");
-			int categorie = Integer.valueOf(request.getParameter("categorie"));
-			String image = request.getParameter("image");
-			int prix = Integer.valueOf(request.getParameter("prix"));
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-			Timestamp debut = getTimestamp(format.parse(request.getParameter("debut")));
-			System.out.println(debut);
-			Timestamp fin = getTimestamp(format.parse(request.getParameter("fin")));
-			String rue = (String) request.getParameter("rue");
-			String cp = (String) request.getParameter("codepostal");
-			String ville = (String) request.getParameter("ville");
-
-			Categorie categ = new Categorie();
-			categ = categManager.select(categorie);
-			ArticleVendu artVendus = new ArticleVendu(article, description, debut, fin, prix, 0, util, categ, "test");
-
-			articleManager.save(artVendus);
-
-
-			Retrait retrait = new Retrait(artVendus.getNo_article(), rue, cp, ville);
-
-			retraitManager.save(retrait);
-
-			RequestDispatcher rd = request.getRequestDispatcher("/listeEncheres");
+		
+		if(listeCodesErreur.size()>0)
+		{
+			System.out.println("erreur : " + listeCodesErreur);
+			request.setAttribute("listeCodesErreur", listeCodesErreur);
+			request.setAttribute("formulaire", art);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/AjoutArticle.jsp");
 			rd.forward(request, response);
-
-
-		} catch (BusinessException | ParseException e) {
-			// TODO Auto-generated catch block
-			request.setAttribute("error", "Problème d'enregistrement !");
-			e.printStackTrace();
 		}
+		else
+		{
+			try {
+				util = utilisateurManager.selectionnerUtilisateur(pseudo, mdp);
+				String article = request.getParameter("article");
+				String description = request.getParameter("description");
+				int categorie = Integer.valueOf(request.getParameter("categorie"));
+				String image = request.getParameter("image");
+				int prix = Integer.valueOf(request.getParameter("prix"));
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+				Timestamp debut = getTimestamp(format.parse(request.getParameter("debut")));
+				System.out.println(debut);
+				Timestamp fin = getTimestamp(format.parse(request.getParameter("fin")));
+				String rue = (String) request.getParameter("rue");
+				String cp = (String) request.getParameter("codepostal");
+				String ville = (String) request.getParameter("ville");
+
+				Categorie categ = new Categorie();
+				categ = categManager.select(categorie);
+				ArticleVendu artVendus = new ArticleVendu(article, description, debut, fin, prix, 0, util, categ, "test");
+
+				articleManager.save(artVendus);
+
+
+				Retrait retrait = new Retrait(artVendus.getNo_article(), rue, cp, ville);
+
+				retraitManager.save(retrait);
+
+				RequestDispatcher rd = request.getRequestDispatcher("/listeEncheres");
+				rd.forward(request, response);
+
+
+			} catch (BusinessException | ParseException e) {
+				// TODO Auto-generated catch block
+				request.setAttribute("error", "Problème d'enregistrement !");
+				e.printStackTrace();
+			}
+		}
+		
 	
 
 
+		
+	}
+
+	private void lireDatedeFin(HttpServletRequest request, List<Integer> listeCodesErreur) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+		try {
+			Timestamp debut = getTimestamp(format.parse(request.getParameter("debut")));
+			Timestamp fin = getTimestamp(format.parse(request.getParameter("fin")));
+			if(fin.before(debut))
+			{
+				listeCodesErreur.add(CodesResultatServlets.DATE_INCOHERANTE);
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+
+	private void lireJavaScript(HttpServletRequest request, List<Integer> listeCodesErreur) {
+		String article = request.getParameter("article");
+		String description = request.getParameter("description");
+		String rue = (String) request.getParameter("rue");
+		String cp = (String) request.getParameter("codepostal");
+		String ville = (String) request.getParameter("ville");
+		if(article.contains("<") || description.contains("<") || rue.contains("<") || cp.contains("<") || ville.contains("<"))
+		{
+			listeCodesErreur.add(CodesResultatServlets.EMPECHER_JAVASCRIPT);
+		}
+		
+	}
+
+	private void lirePrixNonNegatif(HttpServletRequest request, List<Integer> listeCodesErreur) {
+		String prix = request.getParameter("prix");
+		if(prix.startsWith("-"))
+		{
+			listeCodesErreur.add(CodesResultatServlets.PRIX_NON_NEGATIF);
+		}
 		
 	}
 
@@ -166,4 +225,21 @@ public class ajoutArticle extends HttpServlet {
 		return date == null ? null : new java.sql.Timestamp(date.getTime());
 	}
 
+	private void lireParametreFormulaire(HttpServletRequest request, List<Integer> listeCodesErreur) {
+		String article = request.getParameter("article");
+		String description = request.getParameter("description");
+		int categorie = Integer.valueOf(request.getParameter("categorie"));
+		String image = request.getParameter("image");
+		String prix = request.getParameter("prix");
+		String debut = request.getParameter("debut");
+		String fin = request.getParameter("fin");
+		String rue = (String) request.getParameter("rue");
+		String cp = (String) request.getParameter("codepostal");
+		String ville = (String) request.getParameter("ville");
+		
+		if (article.equals("") || description.equals("") || prix.equals("") || rue.equals("") || cp.equals("")
+				|| ville.equals("") || ville.equals("") || debut.equals("") || fin.equals("")) {
+			listeCodesErreur.add(CodesResultatServlets.FORMULAIRE_AJOUT_SAISIE_OBLIGATOIRE);
+		}
+	}
 }
