@@ -8,7 +8,7 @@
 <c:if test="${articles.size()>0}">
 	<c:forEach var="article" items="${articles}">
 		<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 pb-3">
-			<div class="card">
+			<div class="card" style="height: 100%;">
 				<div class="row no-gutters">
 					<div class="col-md-4 px-3 my-auto">
 						<img src="https://via.placeholder.com/150" class="card-img"
