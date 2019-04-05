@@ -33,7 +33,7 @@
 								pattern="dd/MM/yyyy HH:mm" />
 							</p>
 							<p class="card-text">Vendeur : 
-								<a href="#" data-toggle="modal" data-target="#modalProfil" onclick="viewProfil(${article.vendeur.pseudo}, ${article.vendeur.motDePasse})">${article.vendeur.pseudo}</a>
+								<a href="#" onclick="viewProfil('${article.vendeur.pseudo}','${article.vendeur.motDePasse}');">${article.vendeur.pseudo}</a>
 							</p>
 						</div>
 					</div>

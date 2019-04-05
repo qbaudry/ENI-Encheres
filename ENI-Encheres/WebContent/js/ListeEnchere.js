@@ -57,12 +57,13 @@ function filtrer(){
 
 }
 function viewProfil(pseudo,mdp){
-	$.post( "/ENI-Encheres/Ajax_ListeEnchere",
-			{ pseudo:$pseudo,
-		mdp:$mdp
+	$.post( "/ENI-Encheres/ajax_profil",
+			{ pseudo:pseudo,
+		mdp:mdp
 			})
 			.done(function( data ) {
-				$( "#modalProfil" ).html( data );
+				$( "#corpsModal" ).html( data );
+				$('#titreModal').html(pseudo);
 			});
-	$( "#modalProfil" ).modal();
+	$("#modalProfil").modal();
 }
