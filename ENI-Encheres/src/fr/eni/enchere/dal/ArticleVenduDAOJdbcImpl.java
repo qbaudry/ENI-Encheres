@@ -255,7 +255,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 					pstmt = cnx.prepareStatement(SELECTBYCATEGORIE);
 					pstmt.setInt(1, categ.getNoCategorie());
 					rs = pstmt.executeQuery();
-					boolean premiereLigne = true;
 					while(rs.next())
 					{
 							Categorie categorie = catDAO.select(rs.getInt("no_categorie"));
@@ -272,8 +271,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 							article.setCategorieArticle(categorie);
 							article.setPhoto(rs.getString("photo"));
 							article.setConcerne(enchDAO.selectMaxByArticle(article));
-							//System.out.println("+1");
-							premiereLigne=false;
 							listArticleVendu.add(article);
 
 					}
