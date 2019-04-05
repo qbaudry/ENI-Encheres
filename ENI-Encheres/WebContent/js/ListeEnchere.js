@@ -48,3 +48,13 @@ function filtrer(){
 				$( "#listeArticle" ).html( data );
 			});
 }
+function viewProfil(pseudo,mdp){
+	$.post( "/ENI-Encheres/Ajax_ListeEnchere",
+			{ pseudo:$pseudo,
+				mdp:$mdp
+				})
+				.done(function( data ) {
+					$( "#modalProfil" ).html( data );
+				});
+	$( "#modalProfil" ).modal();
+}
