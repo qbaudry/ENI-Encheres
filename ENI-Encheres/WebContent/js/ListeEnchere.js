@@ -6,6 +6,7 @@ $( document ).ready(function() {
 		filtrer();		
 	});
 	$('#achat_btn').click(function(){
+		$('#achat').prop('checked','checked');
 		$('#encheres_ouvertes').prop('disabled','');
 		$('#encheres_encours').prop('disabled','');
 		$('#encheres_remportees').prop('disabled','');
@@ -18,6 +19,7 @@ $( document ).ready(function() {
 		filtrer();
 	});
 	$('#vente_btn').click(function(){
+		$('#vente').prop('checked','checked');
 		$('#encheres_ouvertes').prop('disabled','disabled');
 		$('#encheres_ouvertes').prop('checked',false);
 		$('#encheres_encours').prop('disabled','disabled');
