@@ -1,7 +1,9 @@
 package fr.eni.enchere.ihm;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -15,8 +17,10 @@ import javax.servlet.http.HttpSession;
 import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bll.ArticleVenduManager;
 import fr.eni.enchere.bll.CategorieManager;
+import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
+import fr.eni.enchere.bo.Utilisateur;
 
 @WebServlet("/Ajax_ListeEnchere")
 public class Ajax_ListeEnchere extends HttpServlet {
@@ -38,6 +42,14 @@ public class Ajax_ListeEnchere extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CategorieManager categorieManager = new CategorieManager();
 		ArticleVenduManager articleManager = new ArticleVenduManager();
+		UtilisateurManager utilManager = new UtilisateurManager();
+		HttpSession session = request.getSession();
+		Utilisateur util = null;
+		try {
+			util = utilManager.selectionnerUtilisateur((String)session.getAttribute("identifiant"),(String)session.getAttribute("motdepasse"));
+		} catch (BusinessException e1) {
+			e1.printStackTrace();
+		}
 		Categorie categ = null;
 		try {
 
@@ -49,19 +61,58 @@ public class Ajax_ListeEnchere extends HttpServlet {
 		ArrayList<ArticleVendu> listeEncheres = new ArrayList<>();
 		ArrayList<ArticleVendu> listeEncherestemp = new ArrayList<>();
 		try {
-			if(Integer.parseInt((String)request.getParameter("categ"))!=0) {
+			if(Integer.parseInt((String)request.getParameter("categ"))!=0 && util != null) {
 				listeEncheres = (ArrayList<ArticleVendu>) articleManager.selectByCategorie(categ);
 			}else {
 				listeEncheres = (ArrayList<ArticleVendu>) articleManager.lister();
 			}
 			String filtre = (String)request.getParameter("filtre");
-			System.out.println("|"+filtre+"|");
+			String achatOuVente = (String)request.getParameter("achat_vente");
+			System.out.println(achatOuVente);
+			Boolean eOuvertes = Boolean.parseBoolean(request.getParameter("eOuvertes"));
+			Boolean eEnCours = Boolean.parseBoolean(request.getParameter("eEnCours"));
+			Boolean eFermees = Boolean.parseBoolean(request.getParameter("eFermees"));
+			Boolean vEnCours = Boolean.parseBoolean(request.getParameter("vEnCours"));
+			Boolean vNonDebutees = Boolean.parseBoolean(request.getParameter("vNonDebutees"));
+			Boolean vTerminees = Boolean.parseBoolean(request.getParameter("vTerminees"));
+			
 			if(filtre!=null && !filtre.isEmpty()) {
 				listeEncherestemp = (ArrayList<ArticleVendu>) listeEncheres.clone();
 				listeEncheres.clear();
 				for(ArticleVendu art : listeEncherestemp) {
 					if(art.getNom_article().contains(filtre)) {
 						listeEncheres.add(art);
+					}
+				}
+			}
+			Timestamp actualTS = new Timestamp(new Date().getTime());
+			if(achatOuVente.equals("achat")) {
+				listeEncherestemp = (ArrayList<ArticleVendu>) listeEncheres.clone();
+				listeEncheres.clear();
+				for(ArticleVendu art : listeEncherestemp) {
+					
+					if(art.getVendeur().getNoUtilisateur() != util.getNoUtilisateur()) {
+						if((!eOuvertes && !eEnCours && !eFermees)||
+							(eOuvertes && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS))||
+							(eFermees && art.getDate_fin_encheres().before(actualTS))||
+							(eEnCours && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS))
+							) {
+						listeEncheres.add(art);
+						}
+					}
+				}
+			}else {
+				listeEncherestemp = (ArrayList<ArticleVendu>) listeEncheres.clone();
+				listeEncheres.clear();
+				for(ArticleVendu art : listeEncherestemp) {
+					if(art.getVendeur().getNoUtilisateur() == util.getNoUtilisateur()) {
+						if((!vEnCours && !vTerminees && !vNonDebutees)||
+								(vEnCours && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS))||
+								(vTerminees && art.getDate_fin_encheres().before(actualTS))||
+								(vNonDebutees  && art.getDate_debut_encheres().after(actualTS))
+								) {
+							listeEncheres.add(art);
+							}
 					}
 				}
 			}

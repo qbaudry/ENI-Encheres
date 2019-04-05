@@ -34,11 +34,16 @@ $( document ).ready(function() {
 
 function filtrer(){
 	$.post( "/ENI-Encheres/Ajax_ListeEnchere",
-			{ categ : $('#inputGroupSelect').val(),filtre : $('#filtre').val(),
-			achat_vente : $("input[name='options']:checked").val()		
-			
+		{ categ : $('#inputGroupSelect').val(),filtre : $('#filtre').val(),
+		achat_vente : $("input[name='options']:checked").prop('id'),		
+		eOuvertes:$('#encheres_ouvertes').checked(),
+		eEnCours:$('#encheres_encours').checked(),
+		eFermees:$('#encheres_remportees').checked(),
+		vEnCours:$('#ventes_encours').checked(),
+		vNonDebutees:$('#ventes_non_debutees').checked(),
+		vTerminees:$('#ventes_terminees').checked()
 			})
-	  .done(function( data ) {
-		  $( "#listeArticle" ).html( data );
-		});
+			.done(function( data ) {
+				$( "#listeArticle" ).html( data );
+			});
 }
