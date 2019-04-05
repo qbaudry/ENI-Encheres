@@ -46,25 +46,25 @@ public class Ajax_ListeEnchere extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		List<ArticleVendu> listeEncheres = new ArrayList<>();
-		List<ArticleVendu> listeEncherestemp = new ArrayList<>();
+		ArrayList<ArticleVendu> listeEncheres = new ArrayList<>();
+		ArrayList<ArticleVendu> listeEncherestemp = new ArrayList<>();
 		try {
 			if(Integer.parseInt((String)request.getParameter("categ"))!=0) {
-				listeEncheres = articleManager.selectByCategorie(categ);
+				listeEncheres = (ArrayList<ArticleVendu>) articleManager.selectByCategorie(categ);
 			}else {
-				listeEncheres = articleManager.lister();
+				listeEncheres = (ArrayList<ArticleVendu>) articleManager.lister();
 			}
 			String filtre = (String)request.getParameter("filtre");
 			System.out.println("|"+filtre+"|");
-			listeEncherestemp = listeEncheres;
-//			listeEncheres.clear();
-//			if(filtre!=null && !filtre.isEmpty()) {
-//				for(ArticleVendu art : listeEncherestemp) {
-//					if(art.getNom_article().contains(filtre)) {
-//						listeEncheres.add(art);
-//					}
-//				}
-//			}
+			if(filtre!=null && !filtre.isEmpty()) {
+				listeEncherestemp = (ArrayList<ArticleVendu>) listeEncheres.clone();
+				listeEncheres.clear();
+				for(ArticleVendu art : listeEncherestemp) {
+					if(art.getNom_article().contains(filtre)) {
+						listeEncheres.add(art);
+					}
+				}
+			}
 
 			request.setAttribute("articles", listeEncheres);
 		} catch (BusinessException e) {
