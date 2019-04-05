@@ -16,7 +16,7 @@
 					</div>
 					<div class="col-md-8">
 						<div class="card-body">
-							<h5 class="card-title"><a href="#">${article.nom_article}</a></h5>
+							<h5 class="card-title"><a name="article" href="/detailEnchere">${article.nom_article}</a></h5>
 							<c:choose>
 								<c:when test="${article.concerne != null}">
 									<p class="card-text">Prix : ${article.concerne.montant_enchere} points
