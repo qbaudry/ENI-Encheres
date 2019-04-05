@@ -15,6 +15,7 @@ $( document ).ready(function() {
 		$('#ventes_non_debutees').prop('checked',false);
 		$('#ventes_terminees').prop('disabled','disabled');
 		$('#ventes_terminees').prop('checked',false);
+		filtrer();
 	});
 	$('#vente_btn').click(function(){
 		$('#encheres_ouvertes').prop('disabled','disabled');
@@ -26,16 +27,20 @@ $( document ).ready(function() {
 		$('#ventes_encours').prop('disabled','');
 		$('#ventes_non_debutees').prop('disabled','');
 		$('#ventes_terminees').prop('disabled','');
+		filtrer();
 	});
+	$(':checkbox').change(function() {
+		filtrer();
+	}); 
 	$('#achat_btn').click();
 
 	filtrer();
 });
 
 function filtrer(){
-	
+
 	$.post( "/ENI-Encheres/Ajax_ListeEnchere",
-		{ categ : $('#inputGroupSelect').val(),filtre : $('#filtre').val(),
+			{ categ : $('#inputGroupSelect').val(),filtre : $('#filtre').val(),
 		achat_vente : $("input[name='options']:checked").prop('id'),		
 		eOuvertes:$('#encheres_ouvertes').is(':checked'),
 		eEnCours:$('#encheres_encours').is(':checked'),
@@ -47,14 +52,15 @@ function filtrer(){
 			.done(function( data ) {
 				$( "#listeArticle" ).html( data );
 			});
+
 }
 function viewProfil(pseudo,mdp){
 	$.post( "/ENI-Encheres/Ajax_ListeEnchere",
 			{ pseudo:$pseudo,
-				mdp:$mdp
-				})
-				.done(function( data ) {
-					$( "#modalProfil" ).html( data );
-				});
+		mdp:$mdp
+			})
+			.done(function( data ) {
+				$( "#modalProfil" ).html( data );
+			});
 	$( "#modalProfil" ).modal();
 }

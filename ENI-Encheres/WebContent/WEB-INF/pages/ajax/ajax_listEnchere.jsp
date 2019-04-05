@@ -9,29 +9,72 @@
 	<c:forEach var="article" items="${articles}">
 		<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 pb-3">
 			<div class="card" style="height: 100%;">
-				<div class="row no-gutters">
+				<div class="row no-gutters" style="height: 100%;">
 					<div class="col-md-4 px-3 my-auto">
 						<img src="https://via.placeholder.com/150" class="card-img"
 							alt="...">
 					</div>
 					<div class="col-md-8">
 						<div class="card-body">
-							<h5 class="card-title">${article.nom_article}</h5>
+							<h5 class="card-title"><a href="#">${article.nom_article}</a></h5>
 							<c:choose>
 								<c:when test="${article.concerne != null}">
-									<p class="card-text">Prix :
-										${article.concerne.montant_enchere} points
+									<p class="card-text">Prix : ${article.concerne.montant_enchere} points
 								</c:when>
 								<c:otherwise>
 									<p class="card-text">Prix : ${article.prix_initial} points
-									
 								</c:otherwise>
 							</c:choose>
 							<br>Fin de l'enchère :
 							<fmt:formatDate value="${article.date_fin_encheres}"
 								pattern="dd/MM/yyyy HH:mm" />
 							</p>
-							<p class="card-text">Vendeur : ${article.vendeur.pseudo}</p>
+							<p class="card-text">Vendeur : 
+								<a href="#" data-toggle="modal" data-target="#modalProfil" onclick="viewProfil(${article.vendeur.pseudo}, ${article.vendeur.motDePasse})">${article.vendeur.pseudo}</a>
+							</p>
+							
+							<div class="modal fade" id="modalProfil" tabindex="-1" role="dialog" aria-labelledby="modalProfil" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+								  <div class="modal-content">
+								    <div class="modal-header">
+								      <h5 class="modal-title">Pseudo</h5>
+								      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								        <span aria-hidden="true">&times;</span>
+								      </button>
+								    </div>
+								    <div class="modal-body">
+								     	<div class="row">
+								     		<div class="font-weight-bold col-4">Nom :</div>
+								     		<div class="col-8">t</div>
+								     	</div>
+								     	<div class="row">
+								     		<div class="font-weight-bold col-4">Prénom :</div>
+								     		<div class="col-8">t</div>
+								     	</div>
+								     	<div class="row">
+								     		<div class="font-weight-bold col-4">Email :</div>
+								     		<div class="col-8">t</div>
+								     	</div>
+								     	<div class="row">
+								     		<div class="font-weight-bold col-4">Téléphone :</div>
+								     		<div class="col-8">t</div>
+								     	</div>
+								     	<div class="row">
+								     		<div class="font-weight-bold col-4">Rue :</div>
+								     		<div class="col-8">t</div>
+								     	</div>
+								     	<div class="row">
+								     		<div class="font-weight-bold col-4">Code postal :</div>
+								     		<div class="col-8">t</div>
+								     	</div>
+								     	<div class="row">
+								     		<div class="font-weight-bold col-4">Ville :</div>
+								     		<div class="col-8">t</div>
+								     	</div>
+								    </div>
+								  </div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
