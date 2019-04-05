@@ -8,6 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import fr.eni.enchere.BusinessException;
+import fr.eni.enchere.bll.ArticleVenduManager;
+import fr.eni.enchere.bo.ArticleVendu;
 
 /**
  * Servlet implementation class detailEnchere
@@ -36,11 +41,43 @@ public class detailEnchere extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String art = request.getParameter("no_article");
-		System.out.println(art);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
-		rd.forward(request, response);
+		
+		HttpSession session = request.getSession();
+		String pseudo = (String) session.getAttribute("identifiant");
+		String mdp = (String) session.getAttribute("motdepasse");
+		ArticleVenduManager articleManager = new ArticleVenduManager();
+		
+		if(pseudo == null && mdp == null)
+		{
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+			rd.forward(request, response);
+		}
+		else
+		{
+			String art = request.getParameter("no_article");
+			ArticleVendu article = new ArticleVendu();
+			
+			try {
+				
+				article = articleManager.select(Integer.parseInt(art));				
+				request.setAttribute("formulaire", article);
+				
+				
+				
+				
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
+			rd.forward(request, response);
+		}
+		
 	}
 
 }
