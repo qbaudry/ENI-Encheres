@@ -88,6 +88,9 @@
 			<hr>
 			<div class="row" id="listeArticle"></div>
 		</div>
+		
+		<div class="modal fade" id="modalProfil" tabindex="-1" role="dialog" aria-labelledby="modalProfil" aria-hidden="true"></div>
+		
 		<c:if test="${!empty listeCodesErreur}">
 			<div class="alert alert-danger" role="alert">
 				<strong>Erreur !</strong>

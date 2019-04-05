@@ -32,49 +32,6 @@
 							<p class="card-text">Vendeur : 
 								<a href="#" data-toggle="modal" data-target="#modalProfil" onclick="viewProfil(${article.vendeur.pseudo}, ${article.vendeur.motDePasse})">${article.vendeur.pseudo}</a>
 							</p>
-							
-							<div class="modal fade" id="modalProfil" tabindex="-1" role="dialog" aria-labelledby="modalProfil" aria-hidden="true">
-								<div class="modal-dialog modal-dialog-centered" role="document">
-								  <div class="modal-content">
-								    <div class="modal-header">
-								      <h5 class="modal-title">Pseudo</h5>
-								      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								        <span aria-hidden="true">&times;</span>
-								      </button>
-								    </div>
-								    <div class="modal-body">
-								     	<div class="row">
-								     		<div class="font-weight-bold col-4">Nom :</div>
-								     		<div class="col-8">t</div>
-								     	</div>
-								     	<div class="row">
-								     		<div class="font-weight-bold col-4">Prénom :</div>
-								     		<div class="col-8">t</div>
-								     	</div>
-								     	<div class="row">
-								     		<div class="font-weight-bold col-4">Email :</div>
-								     		<div class="col-8">t</div>
-								     	</div>
-								     	<div class="row">
-								     		<div class="font-weight-bold col-4">Téléphone :</div>
-								     		<div class="col-8">t</div>
-								     	</div>
-								     	<div class="row">
-								     		<div class="font-weight-bold col-4">Rue :</div>
-								     		<div class="col-8">t</div>
-								     	</div>
-								     	<div class="row">
-								     		<div class="font-weight-bold col-4">Code postal :</div>
-								     		<div class="col-8">t</div>
-								     	</div>
-								     	<div class="row">
-								     		<div class="font-weight-bold col-4">Ville :</div>
-								     		<div class="col-8">t</div>
-								     	</div>
-								    </div>
-								  </div>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
