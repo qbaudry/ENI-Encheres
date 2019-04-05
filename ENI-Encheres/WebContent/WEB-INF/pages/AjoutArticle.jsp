@@ -23,11 +23,11 @@
 							<div class="form-group col-12">
 								<label for="identifiant">Article :</label> <input type="text"
 									class="form-control" name="article" id="article"
-									placeholder="Nom de l'article">
+									placeholder="Nom de l'article" required>
 							</div>
 							<div class="form-group col-12">
 								<label for="description">Desciption :</label>
-								<textarea name="description" rows="6" class="form-control">Description de l'article</textarea>
+								<textarea name="description" rows="6" class="form-control" required>Description de l'article</textarea>
 							</div>
 							<div class="form-group col-12 col-lg-6 col-xl-6">
 								<label for="motdepasse">Catégorie :</label> <select
@@ -50,7 +50,7 @@
 							<div class="form-group col-12">
 								<label for="prix">Mise à prix :</label> <input type="number"
 									class="form-control" name="prix" id="prix"
-									placeholder="Prix de l'article">
+									placeholder="Prix de l'article" required>
 							</div>
 	
 							<div class="form-group col-12 col-lg-6 col-xl-6">
@@ -59,7 +59,7 @@
 							</div>
 							<div class="form-group col-12 col-lg-6 col-xl-6">
 								<label for="fin">Fin de l'enchère :</label> <input type="datetime-local"
-									class="form-control" name="fin" id="fin">
+									class="form-control" name="fin" id="fin" required>
 							</div>
 							<div class="col-12 pt-3">
 								<div class="card">
@@ -69,19 +69,19 @@
 											<label class="col-12 col-lg-3 col-xl-3 m-auto pl-0" for="rue">Rue
 												:</label> <input type="text"
 												class="form-control col-12 col-lg-9 col-xl-9" name="rue"
-												id="rue" placeholder="Rue" value="${utilisateur.rue}">
+												id="rue" placeholder="Rue" value="${utilisateur.rue}" required>
 										</div>
 										<div class="form-group row col-12 m-0 pt-3">
 											<label class="col-12 col-lg-3 col-xl-3 m-auto pl-0"
 												for="codepostal">Code Postal :</label> <input type="text"
 												class="form-control col-12 col-lg-9 col-xl-9"
-												name="codepostal" id="codepostal" placeholder="Code Postal" value="${utilisateur.codePostal}">
+												name="codepostal" id="codepostal" placeholder="Code Postal" value="${utilisateur.codePostal}" required>
 										</div>
 										<div class="form-group row col-12 m-0 pt-3">
 											<label class="col-12 col-lg-3 col-xl-3 m-auto pl-0"
 												for="ville">Ville :</label> <input type="text"
 												class="form-control col-12 col-lg-9 col-xl-9" name="ville"
-												id="ville" placeholder="Ville" value="${utilisateur.ville}">
+												id="ville" placeholder="Ville" value="${utilisateur.ville}" required>
 										</div>
 									</div>
 								</div>
