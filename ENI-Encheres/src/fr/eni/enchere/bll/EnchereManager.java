@@ -16,9 +16,9 @@ public class EnchereManager {
 		this.enchereDAO=DAOFactory.getEnchereDAO();
 	}
 
-	public void save(Enchere enchere) throws BusinessException
+	public Enchere save(Enchere enchere) throws BusinessException
 	{
-		this.enchereDAO.save(enchere);
+		return this.enchereDAO.save(enchere);
 	}
 	
 	public void delete(Enchere enchere) throws BusinessException {

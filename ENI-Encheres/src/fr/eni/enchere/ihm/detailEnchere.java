@@ -1,6 +1,10 @@
 package fr.eni.enchere.ihm;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,9 +18,12 @@ import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bll.ArticleVenduManager;
 import fr.eni.enchere.bll.EnchereManager;
 import fr.eni.enchere.bll.RetraitManager;
+import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.ArticleVendu;
+import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Retrait;
+import fr.eni.enchere.bo.Utilisateur;
 
 /**
  * Servlet implementation class detailEnchere
@@ -55,6 +62,9 @@ public class detailEnchere extends HttpServlet {
 		ArticleVenduManager articleManager = new ArticleVenduManager();
 		RetraitManager retraitManager = new RetraitManager();
 		EnchereManager enchereManager = new EnchereManager();
+		UtilisateurManager utilManager = new UtilisateurManager();
+		
+		List<Integer> listeSoldes = new ArrayList<>();
 		
 		if(pseudo == null && mdp == null)
 		{
@@ -68,17 +78,47 @@ public class detailEnchere extends HttpServlet {
 			
 			ArticleVendu article = new ArticleVendu();
 			Retrait retrait = new Retrait();
+			Utilisateur util = new Utilisateur();
 			
 			
 			try {
 				
-				article = articleManager.select(Integer.parseInt(art));	
+				util = utilManager.selectionnerUtilisateur(pseudo, mdp);
+				article = articleManager.select(Integer.parseInt(art));		
 				retrait = retraitManager.select(Integer.parseInt(art));
 				request.setAttribute("formulaire", article);
 				request.setAttribute("retrait", retrait);
 				Enchere enchere = new Enchere();
 				enchere = enchereManager.select(article.getVendeur(), article);
 				request.setAttribute("enchere", enchere);
+				if(article.getPrix_vente() == 0)
+				{
+					for(int i = article.getPrix_initial(); i <= util.getCredit(); i++)
+					{
+							listeSoldes.add(i);				
+					}
+				}
+				else
+				{
+					for(int i = enchere.getMontant_enchere() + 1; i <= util.getCredit(); i++)
+					{
+							listeSoldes.add(i);				
+					}
+				}
+				request.setAttribute("soldes", listeSoldes);
+				
+				
+				
+				int valeur = Integer.parseInt(request.getParameter("solde"));
+				enchere.setMontant_enchere(valeur);
+				enchere.setEncherit(util);
+				
+				
+				
+				
+				
+				
+				
 				
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block

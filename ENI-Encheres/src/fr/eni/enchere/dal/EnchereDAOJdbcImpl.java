@@ -26,7 +26,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private static UtilisateurDAO utilDAO = DAOFactory.getUtilisateurDAO();
 	private static ArticleVenduDAO artDAO = DAOFactory.getArticleDAO();
 	@Override
-	public void save(Enchere ench) throws BusinessException {
+	public Enchere save(Enchere ench) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection();){
 			try{
 				cnx.setAutoCommit(false);
@@ -63,6 +63,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			BusinessException businessException = new BusinessException();
 			throw businessException;
 		}
+		return ench;
 
 	}
 
