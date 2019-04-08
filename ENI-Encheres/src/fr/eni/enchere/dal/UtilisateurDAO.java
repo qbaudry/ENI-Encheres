@@ -1,5 +1,7 @@
 package fr.eni.enchere.dal;
 
+import java.util.List;
+
 import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bo.Utilisateur;
 
@@ -13,4 +15,5 @@ public interface UtilisateurDAO {
 	public Utilisateur selectByID(int id) throws BusinessException;
 	public void updateByID(Utilisateur util) throws BusinessException;
 	public void deleteUser(int id) throws BusinessException;
+	public List<Utilisateur> lister() throws BusinessException;
 }

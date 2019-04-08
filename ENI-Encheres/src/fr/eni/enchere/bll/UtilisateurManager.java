@@ -1,5 +1,6 @@
 package fr.eni.enchere.bll;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import fr.eni.enchere.BusinessException;
@@ -38,6 +39,10 @@ public class UtilisateurManager {
 	
 	public void deleteUser(int id) throws BusinessException {
 		this.utilDAO.deleteUser(id);
+	}
+	
+	public ArrayList<Utilisateur> lister() throws BusinessException{
+		return (ArrayList<Utilisateur>) this.utilDAO.lister();
 	}
 	
 	

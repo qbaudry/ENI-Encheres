@@ -37,7 +37,6 @@
 										<option value="${categorie.noCategorie}">${categorie.libelle}</option>
 									</c:otherwise>
 								</c:choose>
-
 							</c:forEach>
 						</c:if>
 					</select>
