@@ -32,9 +32,16 @@
 							<fmt:formatDate value="${article.date_fin_encheres}"
 								pattern="dd/MM/yyyy HH:mm" />
 							</p>
-							<p class="card-text">Vendeur : 
-								<a href="#" onclick="viewProfil('${article.vendeur.pseudo}','${article.vendeur.motDePasse}');">${article.vendeur.pseudo}</a>
-							</p>
+							<c:choose>
+								<c:when test="${identifiant != null && motdepasse != null}">
+									<p class="card-text">Vendeur : 
+										<a href="#" onclick="viewProfil('${article.vendeur.pseudo}','${article.vendeur.motDePasse}');">${article.vendeur.pseudo}</a>
+									</p>
+								</c:when>
+								<c:otherwise>
+									<p class="card-text">Vendeur :  ${article.vendeur.pseudo}</p>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 				</div>
