@@ -67,11 +67,24 @@ public class ajax_profile extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		HttpSession session = request.getSession();
+		UtilisateurManager utilisateurManager = new UtilisateurManager();
+		String loginUser = (String) session.getAttribute("identifiant");
+        String mdpUser = (String) session.getAttribute("motdepasse");
+        Utilisateur user = new Utilisateur();
+        try {
+			user = utilisateurManager.selectionnerUtilisateur(loginUser, mdpUser);
+			if(user == null) {
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+			}
+		} catch (BusinessException e1) {
+			e1.printStackTrace();
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+		}
+		
 		List<Integer> listeCodesErreur = new ArrayList<>();
 		System.out.println("listeCodesErreur : " + listeCodesErreur);
 		
-		UtilisateurManager utilisateurManager = new UtilisateurManager();
 		
 		String login = (String) request.getParameter("pseudo");
 	    String mdp = (String) request.getParameter("mdp");
