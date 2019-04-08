@@ -40,10 +40,14 @@ public class Ajax_ListeEnchere extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		String login = (String) session.getAttribute("identifiant");
+        String mdp = (String) session.getAttribute("motdepasse");
+        
 		CategorieManager categorieManager = new CategorieManager();
 		ArticleVenduManager articleManager = new ArticleVenduManager();
 		UtilisateurManager utilManager = new UtilisateurManager();
-		HttpSession session = request.getSession();
 		Utilisateur util = null;
 		Timestamp actualTS = new Timestamp(new Date().getTime());
 		try {
@@ -73,12 +77,11 @@ public class Ajax_ListeEnchere extends HttpServlet {
 				listeEncherestemp = (ArrayList<ArticleVendu>) listeEncheres.clone();
 				listeEncheres.clear();
 				for(ArticleVendu art : listeEncherestemp) {
-					if(art.getNom_article().contains(filtre)) {
+					if(art.getNom_article().toUpperCase().contains(filtre.toUpperCase())) {
 						listeEncheres.add(art);
 					}
 				}
 			}
-
 			if(util!=null) {
 				String achatOuVente = (String)request.getParameter("achat_vente");
 

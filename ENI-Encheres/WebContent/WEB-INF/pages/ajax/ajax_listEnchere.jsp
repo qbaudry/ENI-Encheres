@@ -19,7 +19,10 @@
 							<form method="post" id="art${article.no_article}" action="${pageContext.request.contextPath}/detailEnchere">
 								<input type="hidden" name="no_article" value="${article.no_article}">
 							</form>
-							<h5 class="card-title"><a onclick="$('#art${article.no_article}').submit();">${article.nom_article}</a></h5>
+							<h5 class="card-title">
+								<a onclick="$('#art${article.no_article}').submit();" class="link">
+								${article.nom_article}</a>
+							</h5>
 							<c:choose>
 								<c:when test="${article.concerne != null}">
 									<p class="card-text">Prix : ${article.concerne.montant_enchere} points
@@ -32,9 +35,16 @@
 							<fmt:formatDate value="${article.date_fin_encheres}"
 								pattern="dd/MM/yyyy HH:mm" />
 							</p>
-							<p class="card-text">Vendeur : 
-								<a href="#" onclick="viewProfil('${article.vendeur.pseudo}','${article.vendeur.motDePasse}');">${article.vendeur.pseudo}</a>
-							</p>
+							<c:choose>
+								<c:when test="${identifiant != null && motdepasse != null}">
+									<p class="card-text">Vendeur : 
+										<a href="#" onclick="viewProfil('${article.vendeur.pseudo}','${article.vendeur.motDePasse}');">${article.vendeur.pseudo}</a>
+									</p>
+								</c:when>
+								<c:otherwise>
+									<p class="card-text">Vendeur :  ${article.vendeur.pseudo}</p>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 				</div>
