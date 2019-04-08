@@ -77,12 +77,11 @@ public class Ajax_ListeEnchere extends HttpServlet {
 				listeEncherestemp = (ArrayList<ArticleVendu>) listeEncheres.clone();
 				listeEncheres.clear();
 				for(ArticleVendu art : listeEncherestemp) {
-					if(art.getNom_article().contains(filtre)) {
+					if(art.getNom_article().toUpperCase().contains(filtre.toUpperCase())) {
 						listeEncheres.add(art);
 					}
 				}
 			}
-
 			if(util!=null) {
 				String achatOuVente = (String)request.getParameter("achat_vente");
 
