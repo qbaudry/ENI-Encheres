@@ -13,4 +13,5 @@ public interface UtilisateurDAO {
 	public Utilisateur selectByID(int id) throws BusinessException;
 	public void updateByID(Utilisateur util) throws BusinessException;
 	public void deleteUser(int id) throws BusinessException;
+	boolean countPseudo(String pseudo) throws BusinessException;
 }

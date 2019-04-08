@@ -39,6 +39,8 @@ public class UtilisateurManager {
 	public void deleteUser(int id) throws BusinessException {
 		this.utilDAO.deleteUser(id);
 	}
-	
-	
+
+	public boolean countPseudo(String pseudo) throws BusinessException {
+		return this.utilDAO.countPseudo(pseudo);
+	}
 }

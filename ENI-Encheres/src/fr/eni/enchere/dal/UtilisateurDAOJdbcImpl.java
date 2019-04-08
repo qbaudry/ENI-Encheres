@@ -16,6 +16,7 @@ import fr.eni.enchere.dal.CodesResultatDAL;
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private static final String INSERT_UTILISATEUR = "insert into UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	private static final String SELECT_ACCOUNT_EXIST = "select count (*) AS count FROM UTILISATEURS WHERE pseudo = (?)";
 	private static final String SELECT_ACCOUNT = "select * FROM UTILISATEURS WHERE pseudo = (?) AND mot_de_passe = (?) ;";
 	private static final String SELECT_ACCOUNT_BY_EMAIL = "select * FROM UTILISATEURS WHERE pseudo = (?) AND email = (?) ;";
 	private static final String SELECT_ACCOUNT_BY_ID = "select * FROM UTILISATEURS WHERE no_utilisateur = (?) ;";
@@ -266,7 +267,35 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
-			businessException.ajouterErreur(CodesResultatDAL.SUPPRESSION_UTILISATEUR_ERREUR);
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_ECHEC);
+			throw businessException;
+		}
+	}
+	
+	@Override
+	public boolean countPseudo(String pseudo) throws BusinessException {
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ACCOUNT_EXIST);
+			pstmt.setString(1, pseudo);
+			ResultSet rs = pstmt.executeQuery();
+			int num = 0;
+            while(rs.next()){
+                num = (rs.getInt(1));
+            }
+            
+			System.out.println("TEST:"+ num);
+			if (num == 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_ECHEC);
 			throw businessException;
 		}
 	}
