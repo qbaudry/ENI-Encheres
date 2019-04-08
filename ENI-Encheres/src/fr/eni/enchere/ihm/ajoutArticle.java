@@ -148,7 +148,6 @@ public class ajoutArticle extends HttpServlet {
 				int prix = Integer.valueOf(request.getParameter("prix"));
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 				Timestamp debut = getTimestamp(format.parse(request.getParameter("debut")));
-				System.out.println(debut);
 				Timestamp fin = getTimestamp(format.parse(request.getParameter("fin")));
 				String rue = (String) request.getParameter("rue");
 				String cp = (String) request.getParameter("codepostal");
