@@ -40,10 +40,14 @@ public class Ajax_ListeEnchere extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		String login = (String) session.getAttribute("identifiant");
+        String mdp = (String) session.getAttribute("motdepasse");
+        
 		CategorieManager categorieManager = new CategorieManager();
 		ArticleVenduManager articleManager = new ArticleVenduManager();
 		UtilisateurManager utilManager = new UtilisateurManager();
-		HttpSession session = request.getSession();
 		Utilisateur util = null;
 		Timestamp actualTS = new Timestamp(new Date().getTime());
 		try {
