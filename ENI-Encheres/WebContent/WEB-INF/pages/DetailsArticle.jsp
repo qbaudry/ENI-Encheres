@@ -21,24 +21,24 @@
 					</div>
 					<div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
 						<div class="row">
-							<h3 class="col-12">${formulaire.nom_article}</h3>
+							<h3 class="col-12 mb-4">${formulaire.nom_article}</h3>
 						</div>
 						<div class="row">
 							<div class="font-weight-bold col-4">Desciption :</div>
-							<div class="col-8 p-1">${formulaire.description}</div>
+							<div class="col-8 px-3 py-1">${formulaire.description}</div>
 						</div>
 						<div class="row">
 							<div class="font-weight-bold col-4 m-auto">Catégorie :</div>
-							<div class="col-8 p-1">${formulaire.categorieArticle.libelle}</div>
+							<div class="col-8 px-3 py-1">${formulaire.categorieArticle.libelle}</div>
 						</div>
 						<div class="row">
 							<div class="font-weight-bold col-4 m-auto">Meilleur offre :</div>
 							<c:choose>
 								<c:when test="${!empty enchere}">
-									<div class="col-8 p-1">${enchere.montant_enchere} pts par ${enchere.encherit.pseudo}</div>
+									<div class="col-8 px-3 py-1">${enchere.montant_enchere} pts par ${enchere.encherit.pseudo}</div>
 								</c:when>
 								<c:otherwise>
-									<div class="col-8 p-1">Pas d'offre en cours</div>
+									<div class="col-8 px-3 py-1">Pas d'offre en cours</div>
 								</c:otherwise>
 
 							</c:choose>
@@ -46,25 +46,25 @@
 						</div>
 						<div class="row">
 							<div class="font-weight-bold col-4 m-auto">Mise à prix :</div>
-							<div class="col-8 p-1">${formulaire.prix_initial} points</div>
+							<div class="col-8 px-3 py-1">${formulaire.prix_initial} points</div>
 						</div>
 						<div class="row">
 							<div class="font-weight-bold col-4 m-auto">Fin de l'enchère
 								:</div>
-							<div class="col-8 p-1">${formulaire.date_fin_encheres}</div>
+							<div class="col-8 px-3 py-1">${formulaire.date_fin_encheres}</div>
 						</div>
 						<div class="row">
 							<div class="font-weight-bold col-4 m-auto">Retrait :</div>
-							<div class="col-8 p-1">${retrait.rue}
+							<div class="col-8 px-3 py-1">${retrait.rue}
 								${retrait.code_postal} ${retrait.ville}</div>
 						</div>
 						<div class="row">
 							<div class="font-weight-bold col-4 m-auto">Vendeur :</div>
-							<div class="col-8 p-1">${formulaire.vendeur.pseudo}</div>
+							<div class="col-8 px-3 py-1">${formulaire.vendeur.pseudo}</div>
 						</div>
 						<div class="row mb-3">
 							<div class="font-weight-bold col-4 m-auto">Ma proposition :</div>
-							<div class="form-group col-8 m-0 pr-3">
+							<div class="form-group col-8 m-0 pr-3  py-1">
 								<select class="custom-select" id="inputGroupSelect" name="categ">
 									
 									<c:if test="${soldes.size()>0}">
