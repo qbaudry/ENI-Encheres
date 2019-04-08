@@ -32,7 +32,10 @@
         <c:otherwise>
         	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			  	<span class="m-auto"></span>
-			    <ul class="navbar-nav">   
+			    <ul class="navbar-nav">
+			      <li class="nav-item">      
+		        	<a class="nav-link" href="${pageContext.request.contextPath}/listeEncheres">Enchères</a>
+		      	  </li>
 			      <li class="nav-item">      
 			        <a class="nav-link" href="${pageContext.request.contextPath}/seConnecter">S'inscire - Se connecter</a>
 			      </li>
