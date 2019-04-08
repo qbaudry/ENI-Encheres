@@ -287,7 +287,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
                 num = (rs.getInt(1));
             }
             
-			System.out.println("TEST:"+ num);
 			if (num == 0) {
 				return true;
 			} else {

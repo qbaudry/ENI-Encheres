@@ -16,7 +16,7 @@
 					</div>
 					<div class="col-md-8">
 						<div class="card-body">
-							<form method="post" id="art${article.no_article}" action="${pageContext.request.contextPath}/detailEnchere">
+							<form method="get" id="art${article.no_article}" action="${pageContext.request.contextPath}/detailEnchere">
 								<input type="hidden" name="no_article" value="${article.no_article}">
 							</form>
 							<h5 class="card-title">
