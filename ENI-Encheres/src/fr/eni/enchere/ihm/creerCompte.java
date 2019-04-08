@@ -52,6 +52,8 @@ public class creerCompte extends HttpServlet {
 		List<Integer> listeCodesErreur = new ArrayList<>();
 		
 		lireParametreFormulaire(request, listeCodesErreur);
+		lireJavaScript(request, listeCodesErreur);
+		validerPseudoUtilisateur(request, listeCodesErreur);
 		validerEmailUtilisateur(request, listeCodesErreur);
 		validerTelephoneUtilisateur(request, listeCodesErreur);
 		validerCodePostalUtilisateur(request, listeCodesErreur);
@@ -100,10 +102,24 @@ public class creerCompte extends HttpServlet {
 		String ville = request.getParameter("ville");
 		String motdepasse = request.getParameter("motdepasse");
 		String motdepasse2 = request.getParameter("motdepasse2");
-		System.out.println("PSEUDO:" + pseudo);
+
 		if (pseudo.equals("") || nom.equals("") || prenom.equals("") || email.equals("") || telephone.equals("") || rue.equals("")
 				|| codepostal.equals("") || ville.equals("") || motdepasse.equals("") || motdepasse2.equals("")) {
 			listeCodesErreur.add(CodesResultatServlets.FORMULAIRE_INSCIPTION_SAISIE_OBLIGATOIRE);
+		}
+	}
+	
+	private void validerPseudoUtilisateur(HttpServletRequest request, List<Integer> listeCodesErreur) {
+		String pseudo = request.getParameter("pseudo");
+		UtilisateurManager utilisateurManager = new UtilisateurManager();
+		
+		try {
+			System.out.println(utilisateurManager.countPseudo(pseudo));
+			if (!utilisateurManager.countPseudo(pseudo)) {
+				listeCodesErreur.add(CodesResultatServlets.PSEUDO_INSCIPTION_EXIST);
+			}
+		} catch (BusinessException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -142,5 +158,25 @@ public class creerCompte extends HttpServlet {
 		if (!motdepasse.equals(motdepasse2)) {
 			listeCodesErreur.add(CodesResultatServlets.MOT_DE_PASSE_INSCIPTION_SAISIE_OBLIGATOIRE);
 		}
+	}
+	
+	private void lireJavaScript(HttpServletRequest request, List<Integer> listeCodesErreur) {
+		String pseudo = request.getParameter("pseudo");
+		String nom = request.getParameter("nom");
+		String prenom = request.getParameter("prenom");
+		String email = request.getParameter("email");
+		String telephone = request.getParameter("telephone");
+		String rue = request.getParameter("rue");
+		String codepostal = request.getParameter("codepostal");
+		String ville = request.getParameter("ville");
+		String motdepasse = request.getParameter("motdepasse");
+		String motdepasse2 = request.getParameter("motdepasse2");
+		if(pseudo.contains("<") || nom.contains("<") || prenom.contains("<") || email.contains("<") ||
+			telephone.contains("<") || rue.contains("<") || codepostal.contains("<") || ville.contains("<") ||
+			motdepasse.contains("<") || motdepasse2.contains("<"))
+		{
+			listeCodesErreur.add(CodesResultatServlets.EMPECHER_JAVASCRIPT);
+		}
+		
 	}
 }

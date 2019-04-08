@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bo.Utilisateur;
@@ -16,11 +18,13 @@ import fr.eni.enchere.dal.CodesResultatDAL;
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private static final String INSERT_UTILISATEUR = "insert into UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	private static final String SELECT_ACCOUNT_EXIST = "select count (*) AS count FROM UTILISATEURS WHERE pseudo = (?)";
 	private static final String SELECT_ACCOUNT = "select * FROM UTILISATEURS WHERE pseudo = (?) AND mot_de_passe = (?) ;";
 	private static final String SELECT_ACCOUNT_BY_EMAIL = "select * FROM UTILISATEURS WHERE pseudo = (?) AND email = (?) ;";
 	private static final String SELECT_ACCOUNT_BY_ID = "select * FROM UTILISATEURS WHERE no_utilisateur = (?) ;";
 	private static final String UPDATE_ACCOUNT ="update UTILISATEURS SET pseudo = (?), nom = (?), prenom = (?), email = (?), telephone = (?), rue = (?), code_postal =(?) , ville = (?), mot_de_passe = (?) where no_utilisateur = (?)";
 	private static final String DELETE_ACCOUNT = "DELETE FROM UTILISATEURS WHERE no_utilisateur = (?);";
+	private static final String LISTER = "SELECT * FROM UTILISATEURS";
 	
 	@Override
 	public void insert(Utilisateur util) throws BusinessException {
@@ -266,8 +270,80 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
-			businessException.ajouterErreur(CodesResultatDAL.SUPPRESSION_UTILISATEUR_ERREUR);
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_ECHEC);
 			throw businessException;
 		}
+	}
+	
+	@Override
+	public boolean countPseudo(String pseudo) throws BusinessException {
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ACCOUNT_EXIST);
+			pstmt.setString(1, pseudo);
+			ResultSet rs = pstmt.executeQuery();
+			int num = 0;
+            while(rs.next()){
+                num = (rs.getInt(1));
+            }
+            
+			System.out.println("TEST:"+ num);
+			if (num == 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_ECHEC);
+			throw businessException;
+		}
+	}
+
+	@Override
+	public List<Utilisateur> lister() throws BusinessException {
+		ArrayList<Utilisateur> listUtil = new ArrayList<Utilisateur>();
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			PreparedStatement pstmt = cnx.prepareStatement(LISTER);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				Utilisateur util = new Utilisateur();
+				util.setNoUtilisateur(rs.getInt("no_utilisateur"));
+				util.setPseudo(rs.getString("pseudo"));
+				util.setMotDePasse(rs.getString("mot_de_passe"));
+				util.setNom(rs.getString("nom"));
+				util.setPrenom(rs.getString("prenom"));
+				util.setEmail(rs.getString("email"));
+				util.setTelephone(rs.getString("telephone"));
+				util.setRue(rs.getString("rue"));
+				util.setCodePostal(rs.getString("code_postal"));
+				util.setVille(rs.getString("ville"));
+				util.setCredit(rs.getInt("credit"));
+				util.setAdministrateur(rs.getBoolean("administrateur"));
+				
+				listUtil.add(util);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_ECHEC);
+			throw businessException;
+		}
+		/*
+		if(util.getPseudo() == null || util.getMotDePasse() == null)
+		{
+			BusinessException businessException = new BusinessException();	
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_INEXISTANT);
+			throw businessException;
+		}
+		*/
+		return listUtil;
 	}
 }

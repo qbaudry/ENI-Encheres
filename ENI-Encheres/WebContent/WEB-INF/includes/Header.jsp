@@ -32,4 +32,8 @@
 	-->
 	<script type="text/javascript" src="js/bootstrap.4.3.1.js"></script>
 	
+	<!-- DataTables -->
+	<link rel="stylesheet" type="text/css" href="css/datatable/datatables.min.css"/>
+	<script type="text/javascript" src="css/datatable/datatables.min.js"></script>
+	
 </header>

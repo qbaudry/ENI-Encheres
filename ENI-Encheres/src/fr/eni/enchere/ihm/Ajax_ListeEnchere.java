@@ -40,11 +40,11 @@ public class Ajax_ListeEnchere extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession();
 		String login = (String) session.getAttribute("identifiant");
-        String mdp = (String) session.getAttribute("motdepasse");
-        
+		String mdp = (String) session.getAttribute("motdepasse");
+
 		CategorieManager categorieManager = new CategorieManager();
 		ArticleVenduManager articleManager = new ArticleVenduManager();
 		UtilisateurManager utilManager = new UtilisateurManager();
@@ -100,21 +100,16 @@ public class Ajax_ListeEnchere extends HttpServlet {
 						for(ArticleVendu art : listeEncherestemp) {
 
 							if(art.getVendeur().getNoUtilisateur() != util.getNoUtilisateur()) {
-								//							if((!eOuvertes && !eEnCours && !eFermees)||
-								//									(eOuvertes && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS))||
-								//									(eFermees && art.getDate_fin_encheres().before(actualTS))||
-								//									(eEnCours && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS))
-								//									) {
-								listeEncheres.add(art);
-								//							}
+								if((!eOuvertes && !eEnCours && !eFermees)||
+										(eOuvertes && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS) && art.getConcerne().getEncherit().getNoUtilisateur()!= util.getNoUtilisateur())||
+										(eFermees && art.getDate_fin_encheres().before(actualTS)&& art.getConcerne().getEncherit().getNoUtilisateur()==util.getNoUtilisateur())||
+										(eEnCours && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS) && art.getConcerne().getEncherit().getNoUtilisateur()==util.getNoUtilisateur())
+										) {
+									listeEncheres.add(art);
+								}
 							}
 
 						}
-						//					for(ArticleVendu art : listeEncherestemp) {
-						//						if(art.getDate_fin_encheres().after(actualTS) && art.getDate_debut_encheres().before(actualTS) ) {
-						//							listeEncheres.add(art);
-						//						}
-						//					}
 
 					}else {
 						listeEncherestemp = (ArrayList<ArticleVendu>) listeEncheres.clone();

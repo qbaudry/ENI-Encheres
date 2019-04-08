@@ -1,0 +1,9 @@
+.container{
+	margin : 0px;
+	margin-left : 0px;
+	width: 100%;
+	max-width: max-content;
+}
+#tableUsers_wrapper{
+	width:100%;
+}
