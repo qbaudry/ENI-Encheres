@@ -20,9 +20,18 @@
 								<input type="hidden" name="no_article" value="${article.no_article}">
 							</form>
 							<h5 class="card-title">
-								<a onclick="$('#art${article.no_article}').submit();" class="link">
+								
+								<c:choose>
+								<c:when test="${identifiant != null && motdepasse != null}">
+									<a onclick="$('#art${article.no_article}').submit();" class="link">
 								${article.nom_article}</a>
+								</c:when>
+								<c:otherwise>
+									<p>${article.nom_article}</p>
+								</c:otherwise>
+							</c:choose>
 							</h5>
+							
 							<c:choose>
 								<c:when test="${article.concerne != null}">
 									<p class="card-text">Prix : ${article.concerne.montant_enchere} points

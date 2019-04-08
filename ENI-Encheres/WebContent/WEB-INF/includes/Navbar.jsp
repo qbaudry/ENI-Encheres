@@ -12,7 +12,8 @@
 	<c:choose>
 		<c:when test="${identifiant != null}">
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			  	<span class="text-uppercase font-weight-bold mt-1 mr-auto">${identifiant}</span>
+			  	<span class="text-uppercase font-weight-bold mt-1 mr-1">${identifiant}</span>
+			  	<span class="badge badge-light mt-1 mr-auto">${credits}$</span>
 			    <ul class="navbar-nav">   
 			      	<li class="nav-item">      
 			        	<a class="nav-link" href="${pageContext.request.contextPath}/listeEncheres">Enchères</a>
@@ -32,7 +33,10 @@
         <c:otherwise>
         	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			  	<span class="m-auto"></span>
-			    <ul class="navbar-nav">   
+			    <ul class="navbar-nav">
+			      <li class="nav-item">      
+		        	<a class="nav-link" href="${pageContext.request.contextPath}/listeEncheres">Enchères</a>
+		      	  </li>
 			      <li class="nav-item">      
 			        <a class="nav-link" href="${pageContext.request.contextPath}/seConnecter">S'inscire - Se connecter</a>
 			      </li>

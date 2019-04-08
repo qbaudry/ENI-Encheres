@@ -71,6 +71,7 @@ public class seConnecter extends HttpServlet {
 						HttpSession session = request.getSession();
 				        session.setAttribute("identifiant", util.getPseudo());
 				        session.setAttribute("motdepasse", util.getMotDePasse());
+				        session.setAttribute("credits", util.getCredit());
 				        request.setAttribute("congret", "Bienvenue " + util.getPseudo() + " !");
 				        RequestDispatcher rd = request.getRequestDispatcher("/listeEncheres");
 						rd.forward(request, response);

@@ -44,6 +44,8 @@ public class UtilisateurManager {
 	public ArrayList<Utilisateur> lister() throws BusinessException{
 		return (ArrayList<Utilisateur>) this.utilDAO.lister();
 	}
-	
+	public boolean countPseudo(String pseudo) throws BusinessException {
+		return this.utilDAO.countPseudo(pseudo);
+	}
 	
 }

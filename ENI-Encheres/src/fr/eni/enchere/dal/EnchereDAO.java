@@ -8,7 +8,7 @@ import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
 
 public interface EnchereDAO {
-	public void save(Enchere ench) throws BusinessException;
+	public Enchere save(Enchere ench) throws BusinessException;
 	public void delete(Enchere ench) throws BusinessException;
 	public Enchere select(Utilisateur u,ArticleVendu art) throws BusinessException;
 	public List<Enchere> selectByUser(Utilisateur u) throws BusinessException;
