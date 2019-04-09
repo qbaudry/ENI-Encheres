@@ -73,8 +73,6 @@ public class detailEnchere extends HttpServlet {
 			Utilisateur util = new Utilisateur();
 
 			try {
-
-
 				util = utilManager.selectionnerUtilisateur(pseudo, mdp);
 				session.setAttribute("credits", util.getCredit());
 				article = articleManager.select(Integer.parseInt(art));		
@@ -86,28 +84,24 @@ public class detailEnchere extends HttpServlet {
 				request.setAttribute("formulaire", article);
 				request.setAttribute("retrait", retrait);
 				Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+				
 				if(timestamp.after(article.getDate_fin_encheres()))
 				{
-					if(enchere == null)
-					{
-						
-					}
-					else
+					if(enchere != null)
 					{
 						if(util.getNoUtilisateur() == enchere.getEncherit().getNoUtilisateur())
 						{
-							request.setAttribute("message", "Bravo, vous avez remporté l'enchère !");
+							request.setAttribute("message", "Bravo, vous avez remportÃ© l'enchÃ¨re !");
 							article.setPrix_vente(enchere.getMontant_enchere());
 							articleManager.save(article);
 						}
 						else
 						{
-							request.setAttribute("message", "Dommage, vous n'avez pas remporté l'enchère !");
+							request.setAttribute("message", enchere.getEncherit().getPseudo()+" a gagnÃ© l'enchÃ¨re !");
 						}
+					} else {
+						request.setAttribute("message", "Dommage, l'enchÃ¨re c'est terminÃ© sans aucune proposition !");
 					}
-					
-
-
 				}
 
 			} catch (NumberFormatException e) {
@@ -121,9 +115,6 @@ public class detailEnchere extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
 			rd.forward(request, response);
 		}
-
-
-
 	}
 
 	/**
@@ -150,7 +141,6 @@ public class detailEnchere extends HttpServlet {
 
 		lireValeurCredit(request, listeCodesErreur);
 
-
 		if(listeCodesErreur.size()>0)
 		{
 			System.out.println("erreur : " + listeCodesErreur);
@@ -161,7 +151,6 @@ public class detailEnchere extends HttpServlet {
 		else
 		{
 			try {
-
 				util = utilManager.selectionnerUtilisateur(pseudo, mdp);
 				article = articleManager.select(Integer.parseInt(art));		
 				retrait = retraitManager.select(Integer.parseInt(art));
@@ -186,7 +175,6 @@ public class detailEnchere extends HttpServlet {
 					int credit = util.getCredit() - Integer.valueOf(value);
 					session.setAttribute("credits", credit);
 					request.setAttribute("enchere", enchere);
-
 
 				}
 				else
@@ -227,17 +215,12 @@ public class detailEnchere extends HttpServlet {
 										}
 									}
 								}
-
 							}
 						}
 					}
-
-
 				}
-
 				session.setAttribute("id", art);
-
-
+				
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -245,13 +228,12 @@ public class detailEnchere extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			
 			response.setIntHeader("Refresh", 0);
 			System.out.println("doPost");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
 			rd.forward(request, response);
 		}
-
 	}
 
 	private void lireValeurCredit(HttpServletRequest request, List<Integer> listeCodesErreur) {
