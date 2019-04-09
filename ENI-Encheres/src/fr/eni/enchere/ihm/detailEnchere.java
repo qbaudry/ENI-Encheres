@@ -150,8 +150,9 @@ public class detailEnchere extends HttpServlet {
 					newEnchere.setEncherit(util);
 					newEnchere.setConcerne(article);
 					enchereManager.save(newEnchere);
-					utilManager.UpdateUtilisateurById(util);
 					util.setCredit(util.getCredit() - Integer.valueOf(value));
+					utilManager.UpdateUtilisateurCreditById(util);
+					
 					
 					
 				}
@@ -164,8 +165,9 @@ public class detailEnchere extends HttpServlet {
 					enchere.setDateEnchere(timestamp);
 					enchere.setEncherit(util);
 					enchereManager.save(enchere);
-					utilManager.UpdateUtilisateurById(util);
 					util.setCredit(util.getCredit() - Integer.valueOf(value));
+					utilManager.UpdateUtilisateurCreditById(util);
+					
 					
 					
 				}

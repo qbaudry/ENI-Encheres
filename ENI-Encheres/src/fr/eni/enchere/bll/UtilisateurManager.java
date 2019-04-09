@@ -37,6 +37,10 @@ public class UtilisateurManager {
 		this.utilDAO.updateByID(util);
 	}
 	
+	public void UpdateUtilisateurCreditById(Utilisateur util) throws BusinessException {
+		 this.utilDAO.updateCreditByID(util);
+	}
+	
 	public void deleteUser(int id) throws BusinessException {
 		this.utilDAO.deleteUser(id);
 	}
