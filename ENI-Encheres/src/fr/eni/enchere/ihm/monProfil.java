@@ -55,6 +55,7 @@ public class monProfil extends HttpServlet {
             Utilisateur util = new Utilisateur();
     		try {
     			util = utilisateurManager.selectionnerUtilisateur(login, mdp);
+    			session.setAttribute("credits", util.getCredit());
     			request.setAttribute("formulaire", util);
     			
     			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/Profil.jsp");

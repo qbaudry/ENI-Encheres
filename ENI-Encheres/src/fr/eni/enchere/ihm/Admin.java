@@ -43,6 +43,7 @@ public class Admin extends HttpServlet {
 		Utilisateur util = null;
 		try {
 			util = utilManager.selectionnerUtilisateur(login,mdp);
+			session.setAttribute("credits", util.getCredit());
 		} catch (BusinessException e1) {
 			e1.printStackTrace();
 		}
