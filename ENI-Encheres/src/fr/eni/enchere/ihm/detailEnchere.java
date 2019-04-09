@@ -258,7 +258,7 @@ System.out.println("doGet");
 				}
 			}
 			else
-			{
+			  {
 				if(value > util.getCredit() || value <= enchere.getMontant_enchere())
 				{
 					listeCodesErreur.add(CodesResultatServlets.PRIX_COMPRIS_DE_LENCHERE);
