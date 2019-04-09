@@ -6,6 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <jsp:include page="/WEB-INF/includes/Header.jsp"></jsp:include>
+<script type="text/javascript" src="js/DetailArticle.js"></script>
 <body>
 	<jsp:include page="../includes/Navbar.jsp"></jsp:include>
 	<div class="container">
@@ -54,8 +55,9 @@
 						<div class="row">
 							<div class="font-weight-bold col-4 m-auto">Fin de l'enchère :</div>
 							<div class="col-8 px-3 py-1">
+								<input type="hidden" id="dateTimer" value="${formulaire.date_fin_encheres}">
 								<fmt:formatDate value="${formulaire.date_fin_encheres}"
-									pattern="dd/MM/yyyy à HH:mm" />
+									pattern="dd/MM/yyyy à HH:mm" /><div id="demo"></div> 
 							</div>
 						</div>
 						<div class="row">
@@ -95,5 +97,6 @@
 			</div>
 		</c:if>
 	</div>
+	
 </body>
 </html>

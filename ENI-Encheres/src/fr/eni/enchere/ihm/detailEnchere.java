@@ -86,7 +86,7 @@ public class detailEnchere extends HttpServlet {
 				request.setAttribute("formulaire", article);
 				request.setAttribute("retrait", retrait);
 				Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-				if(article.getDate_fin_encheres().after(timestamp))
+				if(article.getDate_fin_encheres().before(timestamp))
 				{
 					if(util.getNoUtilisateur() == enchere.getEncherit().getNoUtilisateur())
 					{

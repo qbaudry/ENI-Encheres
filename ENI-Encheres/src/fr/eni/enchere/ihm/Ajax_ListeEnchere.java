@@ -110,7 +110,7 @@ public class Ajax_ListeEnchere extends HttpServlet {
 										}
 									}
 								}else {
-									if((!eOuvertes && !eEnCours && !eFermees)||
+									if((!eOuvertes && !eEnCours && !eFermees && art.getDate_fin_encheres().after(actualTS))||
 											(eOuvertes && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS))
 											) {
 										listeEncheres.add(art);
