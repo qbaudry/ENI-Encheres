@@ -62,7 +62,12 @@ public class detailEnchere extends HttpServlet {
 		else
 		{
 			String art = request.getParameter("no_article");
-
+			
+			if(art == null)
+			{
+				art = (String) session.getAttribute("id");
+				
+			}
 			ArticleVendu article = new ArticleVendu();
 			Retrait retrait = new Retrait();
 			Utilisateur util = new Utilisateur();
@@ -78,13 +83,7 @@ public class detailEnchere extends HttpServlet {
 				request.setAttribute("enchere", enchere);
 				request.setAttribute("formulaire", article);
 				request.setAttribute("retrait", retrait);
-				/*Timestamp timer = article.getDate_debut_encheres(); //on r�cup�re le temps d�ex�cution du programme au lancement du timer
-				Timestamp fin = article.getDate_fin_encheres();
-				int delay = fin.compareTo(timer);
-				while (timer.before(fin)) //tant que le temps �coul� depuis qu'on a initialis� le timer est inf�rieur au delay
-				{
-				    request.setAttribute("temps", delay);
-				}*/
+
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -159,6 +158,7 @@ public class detailEnchere extends HttpServlet {
 					util.setCredit(util.getCredit() - Integer.valueOf(value));
 					utilManager.UpdateUtilisateurCreditById(util);
 					session.setAttribute("credits", util.getCredit() - Integer.valueOf(value));
+					request.setAttribute("enchere", enchere);
 					
 					
 				}
@@ -174,11 +174,40 @@ public class detailEnchere extends HttpServlet {
 					util.setCredit(util.getCredit() - Integer.valueOf(value));
 					utilManager.UpdateUtilisateurCreditById(util);
 					session.setAttribute("credits", util.getCredit() - Integer.valueOf(value));
+					request.setAttribute("enchere", enchere);
+					List<Enchere> lstenchere = new ArrayList();
+					lstenchere = enchereManager.lister();
+					for(Enchere ench: lstenchere)
+					{
+						if(ench.getConcerne().getNo_article() == article.getNo_article())
+						{
+							if(ench.getEncherit().getNoUtilisateur() != util.getNoUtilisateur())
+							{
+								ArrayList<Utilisateur> lstutil2 = new ArrayList();
+								lstutil2 = utilManager.lister();
+								for(Utilisateur util2: lstutil2)
+								{
+									if(util2.getNoUtilisateur() != util.getNoUtilisateur())
+									{
+										if(ench.getEncherit().getNoUtilisateur() == util2.getNoUtilisateur())
+										{
+											util2.setCredit(util2.getCredit() + ench.getMontant_enchere());
+											utilManager.UpdateUtilisateurCreditById(util2);
+											System.out.println(util2.getCredit());
+											session.setAttribute("credits", util2.getCredit() + ench.getMontant_enchere());
+										
+										}
+									}
+								}
+								
+							}
+						}
+					}
 					
 					
 				}
 				
-				request.setAttribute("enchere", enchere);
+				session.setAttribute("id", art);
 				
 
 			} catch (NumberFormatException e) {
@@ -189,7 +218,9 @@ public class detailEnchere extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/detailEnchere?no_article="+art);
+			response.setIntHeader("Refresh", 0);
+			System.out.println("doPost");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
 			rd.forward(request, response);
 		}
 		
