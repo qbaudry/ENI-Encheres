@@ -104,7 +104,7 @@ public class Ajax_ListeEnchere extends HttpServlet {
 										if((!eOuvertes && !eEnCours && !eFermees)||
 												(eOuvertes && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS) && art.getConcerne().getEncherit().getNoUtilisateur()!= util.getNoUtilisateur())||
 												(eFermees && art.getDate_fin_encheres().before(actualTS)&& art.getConcerne().getEncherit().getNoUtilisateur()==util.getNoUtilisateur())||
-												(eEnCours && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS) && art.getConcerne().getEncherit().getNoUtilisateur()==util.getNoUtilisateur())
+												(eEnCours && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS) && art.getConcerne().getEncherit().getNoUtilisateur() == util.getNoUtilisateur())
 												) {
 											listeEncheres.add(art);
 										}

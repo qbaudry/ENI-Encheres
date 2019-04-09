@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import fr.eni.enchere.BusinessException;
+import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.UtilisateurDAO;
@@ -42,6 +43,13 @@ public class UtilisateurManager {
 	}
 	
 	public void deleteUser(int id) throws BusinessException {
+		ArticleVenduManager artManager = new ArticleVenduManager();
+		ArrayList<ArticleVendu> listArt = (ArrayList<ArticleVendu>) artManager.selectByVendeur(this.selectionnerUtilisateurById(id));
+		if(!listArt.isEmpty()) {
+			for(ArticleVendu art : listArt) {
+				artManager.delete(art);
+			}
+		}
 		this.utilDAO.deleteUser(id);
 	}
 	
