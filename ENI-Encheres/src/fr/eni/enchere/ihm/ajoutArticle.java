@@ -141,6 +141,7 @@ public class ajoutArticle extends HttpServlet {
 		{
 			try {
 				util = utilisateurManager.selectionnerUtilisateur(pseudo, mdp);
+				session.setAttribute("credits", util.getCredit());
 				String article = request.getParameter("article");
 				String description = request.getParameter("description");
 				int categorie = Integer.valueOf(request.getParameter("categorie"));

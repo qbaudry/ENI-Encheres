@@ -17,6 +17,7 @@ import com.sun.jmx.snmp.Timestamp;
 
 import fr.eni.enchere.bll.ArticleVenduManager;
 import fr.eni.enchere.bll.CategorieManager;
+import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.BusinessException;
@@ -47,12 +48,14 @@ public class listeEncheres extends HttpServlet {
 		
 		CategorieManager categorieManager = new CategorieManager();
 		ArticleVenduManager articleManager = new ArticleVenduManager();
+		UtilisateurManager utilManager = new UtilisateurManager();
 		
 		List<ArticleVendu> listeEncheres = new ArrayList<>();
 		List<Categorie> listeCategories = new ArrayList<>();
 		List<Integer> listeCodesErreur = new ArrayList<>();
 		
 		try {
+			session.setAttribute("credits", utilManager.selectionnerUtilisateur(login, mdp).getCredit());
 			listeCategories = categorieManager.lister();
 			request.setAttribute("categories", listeCategories);
 		} catch (BusinessException e) {

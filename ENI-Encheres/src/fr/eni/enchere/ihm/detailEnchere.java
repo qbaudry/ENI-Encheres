@@ -75,6 +75,7 @@ public class detailEnchere extends HttpServlet {
 			try {
 
 				util = utilManager.selectionnerUtilisateur(pseudo, mdp);
+				session.setAttribute("credits", util.getCredit());
 				article = articleManager.select(Integer.parseInt(art));		
 				retrait = retraitManager.select(Integer.parseInt(art));
 				
