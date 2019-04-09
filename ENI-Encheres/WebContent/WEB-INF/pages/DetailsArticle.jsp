@@ -78,6 +78,7 @@
 						<div class="row">
 							<div class="font-weight-bold col-4 m-auto">Ma proposition :</div>
 							<div class="col-8 px-3 py-1">
+
 								<input type="number" class="form-control" id="solde"
 									name="solde" required>
 							</div>
