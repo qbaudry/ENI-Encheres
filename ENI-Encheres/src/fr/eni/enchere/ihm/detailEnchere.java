@@ -49,14 +49,11 @@ public class detailEnchere extends HttpServlet {
 		String pseudo = (String) session.getAttribute("identifiant");
 		String mdp = (String) session.getAttribute("motdepasse");
 
-
 		ArticleVenduManager articleManager = new ArticleVenduManager();
 		RetraitManager retraitManager = new RetraitManager();
 		EnchereManager enchereManager = new EnchereManager();
 		UtilisateurManager utilManager = new UtilisateurManager();
 		
-		
-
 		if(pseudo == null && mdp == null)
 		{
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
@@ -81,10 +78,10 @@ public class detailEnchere extends HttpServlet {
 				request.setAttribute("enchere", enchere);
 				request.setAttribute("formulaire", article);
 				request.setAttribute("retrait", retrait);
-				/*Timestamp timer = article.getDate_debut_encheres(); //on récupère le temps d’exécution du programme au lancement du timer
+				/*Timestamp timer = article.getDate_debut_encheres(); //on rï¿½cupï¿½re le temps dï¿½exï¿½cution du programme au lancement du timer
 				Timestamp fin = article.getDate_fin_encheres();
 				int delay = fin.compareTo(timer);
-				while (timer.before(fin)) //tant que le temps écoulé depuis qu'on a initialisé le timer est inférieur au delay
+				while (timer.before(fin)) //tant que le temps ï¿½coulï¿½ depuis qu'on a initialisï¿½ le timer est infï¿½rieur au delay
 				{
 				    request.setAttribute("temps", delay);
 				}*/
@@ -132,7 +129,7 @@ public class detailEnchere extends HttpServlet {
 		if(listeCodesErreur.size()>0)
 		{
 			System.out.println("erreur : " + listeCodesErreur);
-			request.setAttribute("listeCodesErreur", listeCodesErreur);			
+			request.setAttribute("listeCodesErreur", listeCodesErreur);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
 			rd.forward(request, response);
 		}
@@ -192,7 +189,7 @@ public class detailEnchere extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/detailEnchere");
+			RequestDispatcher rd = request.getRequestDispatcher("/detailEnchere?no_article="+art);
 			rd.forward(request, response);
 		}
 		
@@ -206,11 +203,9 @@ public class detailEnchere extends HttpServlet {
 		String art = request.getParameter("id");
 		
 		ArticleVendu article = new ArticleVendu();
-		Retrait retrait = new Retrait();
 		Utilisateur util = new Utilisateur();
 		
 		ArticleVenduManager articleManager = new ArticleVenduManager();
-		RetraitManager retraitManager = new RetraitManager();
 		EnchereManager enchereManager = new EnchereManager();
 		UtilisateurManager utilManager = new UtilisateurManager();
 		int value = Integer.valueOf(request.getParameter("solde"));
@@ -239,8 +234,5 @@ public class detailEnchere extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
-
-
 }
