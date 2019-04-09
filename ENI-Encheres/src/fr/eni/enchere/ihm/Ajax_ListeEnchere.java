@@ -51,7 +51,7 @@ public class Ajax_ListeEnchere extends HttpServlet {
 		Utilisateur util = null;
 		Timestamp actualTS = new Timestamp(new Date().getTime());
 		try {
-			util = utilManager.selectionnerUtilisateur((String)session.getAttribute("identifiant"),(String)session.getAttribute("motdepasse"));
+			util = utilManager.selectionnerUtilisateur(login,mdp);
 		} catch (BusinessException e1) {
 			e1.printStackTrace();
 		}
@@ -98,17 +98,25 @@ public class Ajax_ListeEnchere extends HttpServlet {
 						listeEncherestemp = (ArrayList<ArticleVendu>) listeEncheres.clone();
 						listeEncheres.clear();
 						for(ArticleVendu art : listeEncherestemp) {
-
 							if(art.getVendeur().getNoUtilisateur() != util.getNoUtilisateur()) {
-								if((!eOuvertes && !eEnCours && !eFermees)||
-										(eOuvertes && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS) && art.getConcerne().getEncherit().getNoUtilisateur()!= util.getNoUtilisateur())||
-										(eFermees && art.getDate_fin_encheres().before(actualTS)&& art.getConcerne().getEncherit().getNoUtilisateur()==util.getNoUtilisateur())||
-										(eEnCours && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS) && art.getConcerne().getEncherit().getNoUtilisateur()==util.getNoUtilisateur())
-										) {
-									listeEncheres.add(art);
+								if(art.getConcerne() != null) {
+									if(art.getVendeur().getNoUtilisateur() != util.getNoUtilisateur()) {
+										if((!eOuvertes && !eEnCours && !eFermees)||
+												(eOuvertes && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS) && art.getConcerne().getEncherit().getNoUtilisateur()!= util.getNoUtilisateur())||
+												(eFermees && art.getDate_fin_encheres().before(actualTS)&& art.getConcerne().getEncherit().getNoUtilisateur()==util.getNoUtilisateur())||
+												(eEnCours && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS) && art.getConcerne().getEncherit().getNoUtilisateur()==util.getNoUtilisateur())
+												) {
+											listeEncheres.add(art);
+										}
+									}
+								}else {
+									if((!eOuvertes && !eEnCours && !eFermees)||
+											(eOuvertes && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS))
+											) {
+										listeEncheres.add(art);
+									}
 								}
 							}
-
 						}
 
 					}else {
