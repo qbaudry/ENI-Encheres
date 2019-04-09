@@ -5,7 +5,10 @@ import java.util.List;
 import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
+import fr.eni.enchere.bo.Retrait;
+import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.DAOFactory;
+import fr.eni.enchere.dal.RetraitDAO;
 import fr.eni.enchere.dal.ArticleVenduDAO;
 
 public class ArticleVenduManager {
@@ -21,6 +24,13 @@ public class ArticleVenduManager {
 	}
 	
 	public void delete(ArticleVendu article) throws BusinessException {
+		RetraitManager retManager = new RetraitManager();
+		UtilisateurManager utilManager = new UtilisateurManager();
+		Retrait ret = retManager.select(article.getNo_article());
+		retManager.delete(ret);
+		Utilisateur util = article.getConcerne().getEncherit();
+		util.setCredit(util.getCredit()+article.getConcerne().getMontant_enchere());
+		utilManager.UpdateUtilisateurById(util);
 		this.articleDAO.delete(article);
 	}
 	
@@ -29,6 +39,9 @@ public class ArticleVenduManager {
 	}
 	public List<ArticleVendu> selectByCategorie(Categorie categ) throws BusinessException {
 		return articleDAO.selectByCategorie(categ);
+	}
+	public List<ArticleVendu> selectByVendeur(Utilisateur user) throws BusinessException {
+		return articleDAO.selectByVendeur(user);
 	}
 	
 	public List<ArticleVendu> lister() throws BusinessException {
