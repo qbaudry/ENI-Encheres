@@ -143,7 +143,7 @@ public class detailEnchere extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/detailEnchere?no_article="+art);
 		rd.forward(request, response);
 	}
 
