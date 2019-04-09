@@ -145,7 +145,7 @@ public class detailEnchere extends HttpServlet {
 		{
 			System.out.println("erreur : " + listeCodesErreur);
 			request.setAttribute("listeCodesErreur", listeCodesErreur);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/detailEnchere.jsp");
 			rd.forward(request, response);
 		}
 		else
