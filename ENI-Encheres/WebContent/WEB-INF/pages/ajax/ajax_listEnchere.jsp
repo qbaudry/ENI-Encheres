@@ -42,7 +42,7 @@
 							</c:choose>
 							<br>Fin de l'enchère :
 							<fmt:formatDate value="${article.date_fin_encheres}"
-								pattern="dd/MM/yyyy HH:mm" />
+								pattern="dd/MM/yyyy à HH:mm" />
 							</p>
 							<c:choose>
 								<c:when test="${identifiant != null && motdepasse != null}">

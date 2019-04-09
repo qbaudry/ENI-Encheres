@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="fr.eni.enchere.messages.LecteurMessage"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <jsp:include page="/WEB-INF/includes/Header.jsp"></jsp:include>
@@ -52,7 +53,10 @@
 						</div>
 						<div class="row">
 							<div class="font-weight-bold col-4 m-auto">Fin de l'enchère :</div>
-							<div class="col-8 px-3 py-1">${formulaire.date_fin_encheres}</div>
+							<div class="col-8 px-3 py-1">
+								<fmt:formatDate value="${formulaire.date_fin_encheres}"
+									pattern="dd/MM/yyyy à HH:mm" />
+							</div>
 						</div>
 						<div class="row">
 							<div class="font-weight-bold col-4 m-auto">Retrait :</div>
