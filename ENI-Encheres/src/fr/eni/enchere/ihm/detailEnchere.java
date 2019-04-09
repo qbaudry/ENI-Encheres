@@ -73,12 +73,12 @@ public class detailEnchere extends HttpServlet {
 				util = utilManager.selectionnerUtilisateur(pseudo, mdp);
 				article = articleManager.select(Integer.parseInt(art));		
 				retrait = retraitManager.select(Integer.parseInt(art));
+				
+				Enchere enchere = new Enchere();
+				enchere = enchereManager.selectMaxByArticle(article);
+				request.setAttribute("enchere", enchere);
 				request.setAttribute("formulaire", article);
 				request.setAttribute("retrait", retrait);
-				Enchere enchere = new Enchere();
-				enchere = enchereManager.select(article.getVendeur(), article);
-				request.setAttribute("enchere", enchere);
-
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -104,6 +104,8 @@ public class detailEnchere extends HttpServlet {
 		String pseudo = (String) session.getAttribute("identifiant");
 		String mdp = (String) session.getAttribute("motdepasse");
 		
+		List<Integer> listeCodesErreur = new ArrayList<>();
+		
 		ArticleVenduManager articleManager = new ArticleVenduManager();
 		RetraitManager retraitManager = new RetraitManager();
 		EnchereManager enchereManager = new EnchereManager();
@@ -114,35 +116,118 @@ public class detailEnchere extends HttpServlet {
 		ArticleVendu article = new ArticleVendu();
 		Retrait retrait = new Retrait();
 		Utilisateur util = new Utilisateur();
+		
+		lireValeurCredit(request, listeCodesErreur);
+		
+		
+		if(listeCodesErreur.size()>0)
+		{
+			System.out.println("erreur : " + listeCodesErreur);
+			request.setAttribute("listeCodesErreur", listeCodesErreur);			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
+			rd.forward(request, response);
+		}
+		else
+		{
+			try {
 
-		try {
+				util = utilManager.selectionnerUtilisateur(pseudo, mdp);
+				article = articleManager.select(Integer.parseInt(art));		
+				retrait = retraitManager.select(Integer.parseInt(art));
+				request.setAttribute("formulaire", article);
+				request.setAttribute("retrait", retrait);
+				Enchere enchere = new Enchere();
+				enchere = enchereManager.selectMaxByArticle(article);
+				if(enchere == null)
+				{
+					Enchere newEnchere = new Enchere();
+					
+					String value = request.getParameter("solde");
+					newEnchere.setMontant_enchere(Integer.valueOf(value));
+					
+					Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+					newEnchere.setDateEnchere(timestamp);
+					newEnchere.setEncherit(util);
+					newEnchere.setConcerne(article);
+					enchereManager.save(newEnchere);
+					utilManager.UpdateUtilisateurById(util);
+					util.setCredit(util.getCredit() - Integer.valueOf(value));
+					
+					
+				}
+				else
+				{
+					
+					String value = request.getParameter("solde");
+					enchere.setMontant_enchere(Integer.valueOf(value));
+					Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+					enchere.setDateEnchere(timestamp);
+					enchere.setEncherit(util);
+					enchereManager.save(enchere);
+					utilManager.UpdateUtilisateurById(util);
+					util.setCredit(util.getCredit() - Integer.valueOf(value));
+					
+					
+				}
+				request.setAttribute("enchere", enchere);
+				
 
-			util = utilManager.selectionnerUtilisateur(pseudo, mdp);
-			article = articleManager.select(Integer.parseInt(art));		
-			retrait = retraitManager.select(Integer.parseInt(art));
-			request.setAttribute("formulaire", article);
-			request.setAttribute("retrait", retrait);
-			Enchere enchere = new Enchere();
-			enchere = enchereManager.select(article.getVendeur(), article);
-			request.setAttribute("enchere", enchere);
-			String value = request.getParameter("solde");
-			enchere.setMontant_enchere(Integer.valueOf(value));
-			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-			enchere.setDateEnchere(timestamp);
-			enchere.setEncherit(util);
-			enchereManager.save(enchere);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
+			rd.forward(request, response);
+		}
+		
+	}
 
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	private void lireValeurCredit(HttpServletRequest request, List<Integer> listeCodesErreur) {
+		HttpSession session = request.getSession();
+		String pseudo = (String) session.getAttribute("identifiant");
+		String mdp = (String) session.getAttribute("motdepasse");
+		
+		String art = request.getParameter("id");
+		
+		ArticleVendu article = new ArticleVendu();
+		Retrait retrait = new Retrait();
+		Utilisateur util = new Utilisateur();
+		
+		ArticleVenduManager articleManager = new ArticleVenduManager();
+		RetraitManager retraitManager = new RetraitManager();
+		EnchereManager enchereManager = new EnchereManager();
+		UtilisateurManager utilManager = new UtilisateurManager();
+		int value = Integer.valueOf(request.getParameter("solde"));
+		
+		try {
+			util = utilManager.selectionnerUtilisateur(pseudo, mdp);
+			article = articleManager.select(Integer.parseInt(art));	
+			Enchere enchere = new Enchere();
+			enchere = enchereManager.selectMaxByArticle(article);
+			
+			if(enchere == null)
+			{
+				if(value > util.getCredit() || value < article.getPrix_initial())
+				{
+					listeCodesErreur.add(CodesResultatServlets.PRIX_COMPRIS);
+				}
+			}
+			else
+			{
+				if(value > util.getCredit() || value <= enchere.getMontant_enchere())
+				{
+					listeCodesErreur.add(CodesResultatServlets.PRIX_COMPRIS_DE_LENCHERE);
+				}
+			}
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
-		rd.forward(request, response);
+		
 	}
 
 

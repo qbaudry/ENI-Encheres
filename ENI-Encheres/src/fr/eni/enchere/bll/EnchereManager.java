@@ -32,4 +32,7 @@ public class EnchereManager {
 	public List<Enchere> lister() throws BusinessException {
 		return this.enchereDAO.lister();
 	}
+	public Enchere selectMaxByArticle(ArticleVendu art) throws BusinessException {
+		return this.enchereDAO.selectMaxByArticle(art);
+	}
 }
