@@ -74,6 +74,7 @@ public class detailEnchere extends HttpServlet {
 
 			try {
 
+				
 				util = utilManager.selectionnerUtilisateur(pseudo, mdp);
 				session.setAttribute("credits", util.getCredit());
 				article = articleManager.select(Integer.parseInt(art));		
@@ -84,6 +85,18 @@ public class detailEnchere extends HttpServlet {
 				request.setAttribute("enchere", enchere);
 				request.setAttribute("formulaire", article);
 				request.setAttribute("retrait", retrait);
+				Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+				if(article.getDate_fin_encheres().after(timestamp))
+				{
+					if(util.getNoUtilisateur() == enchere.getEncherit().getNoUtilisateur())
+					{
+						request.setAttribute("Bravo", "Bravo, vous avez remporté l'enchère !");
+					}
+					else
+					{
+						request.setAttribute("Null", "Dommage, vous n'avez pas remporté l'enchère !");
+					}
+				}
 
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
@@ -158,7 +171,8 @@ public class detailEnchere extends HttpServlet {
 					enchereManager.save(newEnchere);
 					util.setCredit(util.getCredit() - Integer.valueOf(value));
 					utilManager.UpdateUtilisateurCreditById(util);
-					session.setAttribute("credits", util.getCredit() - Integer.valueOf(value));
+					int credit = util.getCredit() - Integer.valueOf(value);
+					session.setAttribute("credits", credit);
 					request.setAttribute("enchere", enchere);
 					
 					
@@ -174,7 +188,8 @@ public class detailEnchere extends HttpServlet {
 					enchereManager.save(enchere);
 					util.setCredit(util.getCredit() - Integer.valueOf(value));
 					utilManager.UpdateUtilisateurCreditById(util);
-					session.setAttribute("credits", util.getCredit() - Integer.valueOf(value));
+					int credit = util.getCredit() - Integer.valueOf(value);
+					session.setAttribute("credits", credit);
 					request.setAttribute("enchere", enchere);
 					List<Enchere> lstenchere = new ArrayList();
 					lstenchere = enchereManager.lister();
