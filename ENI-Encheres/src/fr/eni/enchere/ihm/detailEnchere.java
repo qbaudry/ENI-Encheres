@@ -49,14 +49,11 @@ public class detailEnchere extends HttpServlet {
 		String pseudo = (String) session.getAttribute("identifiant");
 		String mdp = (String) session.getAttribute("motdepasse");
 
-
 		ArticleVenduManager articleManager = new ArticleVenduManager();
 		RetraitManager retraitManager = new RetraitManager();
 		EnchereManager enchereManager = new EnchereManager();
 		UtilisateurManager utilManager = new UtilisateurManager();
 		
-		
-
 		if(pseudo == null && mdp == null)
 		{
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
@@ -107,7 +104,7 @@ public class detailEnchere extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-System.out.println("doGet");
+
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
 			rd.forward(request, response);
 		}
@@ -133,7 +130,7 @@ System.out.println("doGet");
 		UtilisateurManager utilManager = new UtilisateurManager();
 
 		String art = request.getParameter("id");
-		
+
 		ArticleVendu article = new ArticleVendu();
 		Retrait retrait = new Retrait();
 		Utilisateur util = new Utilisateur();
@@ -144,7 +141,7 @@ System.out.println("doGet");
 		if(listeCodesErreur.size()>0)
 		{
 			System.out.println("erreur : " + listeCodesErreur);
-			request.setAttribute("listeCodesErreur", listeCodesErreur);			
+			request.setAttribute("listeCodesErreur", listeCodesErreur);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
 			rd.forward(request, response);
 		}
@@ -222,6 +219,7 @@ System.out.println("doGet");
 						}
 					}
 					
+					
 				}
 				
 				session.setAttribute("id", art);
@@ -234,6 +232,7 @@ System.out.println("doGet");
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			response.setIntHeader("Refresh", 0);
 			System.out.println("doPost");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
@@ -250,11 +249,9 @@ System.out.println("doGet");
 		String art = request.getParameter("id");
 		
 		ArticleVendu article = new ArticleVendu();
-		Retrait retrait = new Retrait();
 		Utilisateur util = new Utilisateur();
 		
 		ArticleVenduManager articleManager = new ArticleVenduManager();
-		RetraitManager retraitManager = new RetraitManager();
 		EnchereManager enchereManager = new EnchereManager();
 		UtilisateurManager utilManager = new UtilisateurManager();
 		int value = Integer.valueOf(request.getParameter("solde"));
@@ -273,7 +270,7 @@ System.out.println("doGet");
 				}
 			}
 			else
-			  {
+			{
 				if(value > util.getCredit() || value <= enchere.getMontant_enchere())
 				{
 					listeCodesErreur.add(CodesResultatServlets.PRIX_COMPRIS_DE_LENCHERE);
@@ -283,8 +280,5 @@ System.out.println("doGet");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
-
-
 }

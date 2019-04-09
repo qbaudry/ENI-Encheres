@@ -10,11 +10,11 @@
 		<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 pb-3">
 			<div class="card" style="height: 100%;">
 				<div class="row no-gutters" style="height: 100%;">
-					<div class="col-md-4 px-3 my-auto">
+					<div class="col-4 px-3 my-auto">
 						<img src="https://via.placeholder.com/150" class="card-img"
 							alt="...">
 					</div>
-					<div class="col-md-8">
+					<div class="col-8">
 						<div class="card-body">
 							<form method="get" id="art${article.no_article}" action="${pageContext.request.contextPath}/detailEnchere">
 								<input type="hidden" name="no_article" value="${article.no_article}">
@@ -42,7 +42,7 @@
 							</c:choose>
 							<br>Fin de l'enchère :
 							<fmt:formatDate value="${article.date_fin_encheres}"
-								pattern="dd/MM/yyyy HH:mm" />
+								pattern="dd/MM/yyyy à HH:mm" />
 							</p>
 							<c:choose>
 								<c:when test="${identifiant != null && motdepasse != null}">

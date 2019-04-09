@@ -29,24 +29,24 @@
 							<th>Ville</th>
 							<th>Mot De Passe</th>
 							<th>Crédit</th>
-							<th>Administrateur</th>
+							<th>Admin</th>
 							<th></th>
 						</tr>
 					</thead>
 					<c:forEach var="user" items="${listUser}">
 						<tr>
-							<td onclick="modifUser(${user.pseudo},${user.motDePasse})">${user.pseudo}</th>
-							<td>${user.nom}</td>
-							<td>${user.prenom}</td>
-							<td>${user.email}</td>
-							<td>${user.telephone}</td>
-							<td>${user.rue}</td>
-							<td>${user.codePostal}</td>
-							<td>${user.ville}</td>
-							<td>${user.motDePasse}</td>
-							<td>${user.credit}</td>
-							<td><c:if test="${user.administrateur}">Oui</c:if></td>
-							<td></td>
+							<td onclick="modifUser('${user.pseudo}','${user.motDePasse}')">${user.pseudo}</th>
+							<td onclick="modifUser('${user.pseudo}','${user.motDePasse}')">${user.nom}</td>
+							<td onclick="modifUser('${user.pseudo}','${user.motDePasse}')">${user.prenom}</td>
+							<td onclick="modifUser('${user.pseudo}','${user.motDePasse}')">${user.email}</td>
+							<td onclick="modifUser('${user.pseudo}','${user.motDePasse}')">${user.telephone}</td>
+							<td onclick="modifUser('${user.pseudo}','${user.motDePasse}')">${user.rue}</td>
+							<td onclick="modifUser('${user.pseudo}','${user.motDePasse}')">${user.codePostal}</td>
+							<td onclick="modifUser('${user.pseudo}','${user.motDePasse}')">${user.ville}</td>
+							<td onclick="modifUser('${user.pseudo}','${user.motDePasse}')">${user.motDePasse}</td>
+							<td onclick="modifUser('${user.pseudo}','${user.motDePasse}')">${user.credit}</td>
+							<td onclick="modifUser('${user.pseudo}','${user.motDePasse}')"><c:if test="${user.administrateur}"><center><i class="fas fa-check" ></i></center></c:if></td>
+							<td onclick="deleteUser('${user.pseudo}','${user.motDePasse}')"><center><i class="fas fa-trash"></i></center></td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -55,4 +55,19 @@
 		</div>
 	</div>
 </body>
+<div class="modal" id="modalProfil">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="titreModal"></h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" id="corpsModal">
+						
+					</div>
+				</div>
+			</div>
+		</div>
 </html>
