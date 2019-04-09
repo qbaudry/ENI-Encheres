@@ -14,7 +14,12 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			  	<span class="text-uppercase font-weight-bold mt-1 mr-1">${identifiant}</span>
 			  	<span class="badge badge-light mt-1 mr-auto">${credits}$</span>
-			    <ul class="navbar-nav">   
+			    <ul class="navbar-nav">
+			    	<c:if test="${admin}">
+				    	<li class="nav-item">      
+				        	<a class="nav-link font-weight-bold" href="${pageContext.request.contextPath}/AdminPage">Administration</a>
+				      	</li>
+			      	</c:if>
 			      	<li class="nav-item">      
 			        	<a class="nav-link" href="${pageContext.request.contextPath}/listeEncheres">Enchères</a>
 			      	</li>

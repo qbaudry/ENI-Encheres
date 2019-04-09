@@ -54,6 +54,8 @@ public class detailEnchere extends HttpServlet {
 		RetraitManager retraitManager = new RetraitManager();
 		EnchereManager enchereManager = new EnchereManager();
 		UtilisateurManager utilManager = new UtilisateurManager();
+		
+		
 
 		if(pseudo == null && mdp == null)
 		{

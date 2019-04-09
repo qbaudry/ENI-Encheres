@@ -37,7 +37,7 @@
 							<div class="font-weight-bold col-4 m-auto">Meilleur offre :</div>
 							<c:choose>
 								<c:when test="${!empty enchere}">
-									<div class="col-8 px-3 py-1">${formulaire.concerne.montant_enchere} pts par ${enchere.encherit.pseudo}</div>
+									<div class="col-8 px-3 py-1">${formulaire.concerne.montant_enchere} points par ${enchere.encherit.pseudo}</div>
 								</c:when>
 								<c:otherwise>
 									<div class="col-8 px-3 py-1">Pas d'offre en cours</div>
@@ -51,8 +51,7 @@
 							<div class="col-8 px-3 py-1">${formulaire.prix_initial} points</div>
 						</div>
 						<div class="row">
-							<div class="font-weight-bold col-4 m-auto">Fin de l'enchère
-								:</div>
+							<div class="font-weight-bold col-4 m-auto">Fin de l'enchère :</div>
 							<div class="col-8 px-3 py-1">${formulaire.date_fin_encheres}</div>
 						</div>
 						<div class="row">
