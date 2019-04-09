@@ -89,11 +89,13 @@ public class detailEnchere extends HttpServlet {
 				{
 					if(util.getNoUtilisateur() == enchere.getEncherit().getNoUtilisateur())
 					{
-						request.setAttribute("Bravo", "Bravo, vous avez remporté l'enchère !");
+						request.setAttribute("message", "Bravo, vous avez remporté l'enchère !");
+						article.setPrix_vente(enchere.getMontant_enchere());
+						articleManager.save(article);
 					}
 					else
 					{
-						request.setAttribute("Null", "Dommage, vous n'avez pas remporté l'enchère !");
+						request.setAttribute("message", "Dommage, vous n'avez pas remporté l'enchère !");
 					}
 				}
 
