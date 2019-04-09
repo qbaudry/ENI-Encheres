@@ -53,7 +53,7 @@ public class detailEnchere extends HttpServlet {
 		RetraitManager retraitManager = new RetraitManager();
 		EnchereManager enchereManager = new EnchereManager();
 		UtilisateurManager utilManager = new UtilisateurManager();
-		
+
 		if(pseudo == null && mdp == null)
 		{
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
@@ -62,39 +62,45 @@ public class detailEnchere extends HttpServlet {
 		else
 		{
 			String art = request.getParameter("no_article");
-			
+
 			if(art == null)
 			{
 				art = (String) session.getAttribute("id");
-				
+
 			}
 			ArticleVendu article = new ArticleVendu();
 			Retrait retrait = new Retrait();
 			Utilisateur util = new Utilisateur();
 
 			try {
-
-				
 				util = utilManager.selectionnerUtilisateur(pseudo, mdp);
 				session.setAttribute("credits", util.getCredit());
 				article = articleManager.select(Integer.parseInt(art));		
 				retrait = retraitManager.select(Integer.parseInt(art));
-				
+
 				Enchere enchere = new Enchere();
 				enchere = enchereManager.selectMaxByArticle(article);
 				request.setAttribute("enchere", enchere);
 				request.setAttribute("formulaire", article);
 				request.setAttribute("retrait", retrait);
 				Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-				if(article.getDate_fin_encheres().before(timestamp))
+				
+				if(timestamp.after(article.getDate_fin_encheres()))
 				{
-					if(util.getNoUtilisateur() == enchere.getEncherit().getNoUtilisateur())
+					if(enchere != null)
 					{
-						request.setAttribute("Bravo", "Bravo, vous avez remportÈ l'enchËre !");
-					}
-					else
-					{
-						request.setAttribute("Null", "Dommage, vous n'avez pas remportÈ l'enchËre !");
+						if(util.getNoUtilisateur() == enchere.getEncherit().getNoUtilisateur())
+						{
+							request.setAttribute("message", "Bravo, vous avez remport√© l'ench√®re !");
+							article.setPrix_vente(enchere.getMontant_enchere());
+							articleManager.save(article);
+						}
+						else
+						{
+							request.setAttribute("message", enchere.getEncherit().getPseudo()+" a gagn√© l'ench√®re !");
+						}
+					} else {
+						request.setAttribute("message", "Dommage, l'ench√®re c'est termin√© sans aucune proposition !");
 					}
 				}
 
@@ -109,22 +115,19 @@ public class detailEnchere extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
 			rd.forward(request, response);
 		}
-
-
-
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession();
 		String pseudo = (String) session.getAttribute("identifiant");
 		String mdp = (String) session.getAttribute("motdepasse");
-		
+
 		List<Integer> listeCodesErreur = new ArrayList<>();
-		
+
 		ArticleVenduManager articleManager = new ArticleVenduManager();
 		RetraitManager retraitManager = new RetraitManager();
 		EnchereManager enchereManager = new EnchereManager();
@@ -135,10 +138,9 @@ public class detailEnchere extends HttpServlet {
 		ArticleVendu article = new ArticleVendu();
 		Retrait retrait = new Retrait();
 		Utilisateur util = new Utilisateur();
-		
+
 		lireValeurCredit(request, listeCodesErreur);
-		
-		
+
 		if(listeCodesErreur.size()>0)
 		{
 			System.out.println("erreur : " + listeCodesErreur);
@@ -149,7 +151,6 @@ public class detailEnchere extends HttpServlet {
 		else
 		{
 			try {
-
 				util = utilManager.selectionnerUtilisateur(pseudo, mdp);
 				article = articleManager.select(Integer.parseInt(art));		
 				retrait = retraitManager.select(Integer.parseInt(art));
@@ -160,10 +161,10 @@ public class detailEnchere extends HttpServlet {
 				if(enchere == null)
 				{
 					Enchere newEnchere = new Enchere();
-					
+
 					String value = request.getParameter("solde");
 					newEnchere.setMontant_enchere(Integer.valueOf(value));
-					
+
 					Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 					newEnchere.setDateEnchere(timestamp);
 					newEnchere.setEncherit(util);
@@ -174,12 +175,11 @@ public class detailEnchere extends HttpServlet {
 					int credit = util.getCredit() - Integer.valueOf(value);
 					session.setAttribute("credits", credit);
 					request.setAttribute("enchere", enchere);
-					
-					
+
 				}
 				else
 				{
-					
+
 					String value = request.getParameter("solde");
 					enchere.setMontant_enchere(Integer.valueOf(value));
 					Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -211,21 +211,16 @@ public class detailEnchere extends HttpServlet {
 											utilManager.UpdateUtilisateurCreditById(util2);
 											System.out.println(util2.getCredit());
 											session.setAttribute("credits", util2.getCredit() + ench.getMontant_enchere());
-										
+
 										}
 									}
 								}
-								
 							}
 						}
 					}
-					
-					
 				}
-				
 				session.setAttribute("id", art);
 				
-
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -239,30 +234,29 @@ public class detailEnchere extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
 			rd.forward(request, response);
 		}
-		
 	}
 
 	private void lireValeurCredit(HttpServletRequest request, List<Integer> listeCodesErreur) {
 		HttpSession session = request.getSession();
 		String pseudo = (String) session.getAttribute("identifiant");
 		String mdp = (String) session.getAttribute("motdepasse");
-		
+
 		String art = request.getParameter("id");
-		
+
 		ArticleVendu article = new ArticleVendu();
 		Utilisateur util = new Utilisateur();
-		
+
 		ArticleVenduManager articleManager = new ArticleVenduManager();
 		EnchereManager enchereManager = new EnchereManager();
 		UtilisateurManager utilManager = new UtilisateurManager();
 		int value = Integer.valueOf(request.getParameter("solde"));
-		
+
 		try {
 			util = utilManager.selectionnerUtilisateur(pseudo, mdp);
 			article = articleManager.select(Integer.parseInt(art));	
 			Enchere enchere = new Enchere();
 			enchere = enchereManager.selectMaxByArticle(article);
-			
+
 			if(enchere == null)
 			{
 				if(value > util.getCredit() || value < article.getPrix_initial())

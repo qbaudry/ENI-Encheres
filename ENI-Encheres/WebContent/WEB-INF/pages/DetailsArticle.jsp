@@ -15,6 +15,11 @@
 			<div class="alert alert-dark mt-5" role="alert">
 				<h1>Détail vente</h1>
 				<hr>
+
+				<c:if test="${message != null}">
+					<div class="alert alert-warning">${message}</div>
+				</c:if>
+
 				<div class="row">
 					<div
 						class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 px-3 pb-3 mt-4 mb-auto">
@@ -22,8 +27,8 @@
 							alt="...">
 					</div>
 					<div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-					<input type="hidden" class="form-control" id="id"
-								name="id" value="${formulaire.no_article}">
+						<input type="hidden" class="form-control" id="id" name="id"
+							value="${formulaire.no_article}">
 						<div class="row">
 							<h3 class="col-12 mb-4">${formulaire.nom_article}</h3>
 						</div>
@@ -39,21 +44,22 @@
 							<div class="font-weight-bold col-4 m-auto">Meilleur offre :</div>
 							<c:choose>
 								<c:when test="${!empty enchere}">
-									<div class="col-8 px-3 py-1">${formulaire.concerne.montant_enchere} points par ${enchere.encherit.pseudo}</div>
+									<div class="col-8 px-3 py-1">${formulaire.concerne.montant_enchere}
+										points par ${enchere.encherit.pseudo}</div>
 								</c:when>
 								<c:otherwise>
 									<div class="col-8 px-3 py-1">Pas d'offre en cours</div>
 								</c:otherwise>
-
 							</c:choose>
-
 						</div>
 						<div class="row">
 							<div class="font-weight-bold col-4 m-auto">Mise à prix :</div>
-							<div class="col-8 px-3 py-1">${formulaire.prix_initial} points</div>
+							<div class="col-8 px-3 py-1">${formulaire.prix_initial}
+								points</div>
 						</div>
 						<div class="row">
-							<div class="font-weight-bold col-4 m-auto">Fin de l'enchère :</div>
+							<div class="font-weight-bold col-4 m-auto">Fin de l'enchère
+								:</div>
 							<div class="col-8 px-3 py-1">
 								<input type="hidden" id="dateTimer" value="${formulaire.date_fin_encheres}">
 								<fmt:formatDate value="${formulaire.date_fin_encheres}"
@@ -69,19 +75,22 @@
 							<div class="font-weight-bold col-4 m-auto">Vendeur :</div>
 							<div class="col-8 px-3 py-1">${formulaire.vendeur.pseudo}</div>
 						</div>
-						<div class="row">
-							<div class="font-weight-bold col-4 m-auto">Ma proposition :</div>
-							<div class="col-8 px-3 py-1">
-								<input type="number" class="form-control" id="solde"
-								name="solde" required>
+						<c:if test="${message == null && identifiant != enchere.encherit.pseudo}">
+							<div class="row">
+								<div class="font-weight-bold col-4 m-auto">Ma proposition :</div>
+								<div class="col-8 px-3 py-1">
+	
+									<input type="number" class="form-control" id="solde"
+										name="solde" required>
+								</div>
 							</div>
-						</div>
-						<hr>
-						<div class="row">
-							<div class="col-12">
-								<button type="submit" class="btn btn-block btn-success">Enchérir</button>
+							<hr>
+							<div class="row">
+								<div class="col-12">
+									<button type="submit" class="btn btn-block btn-success">Enchérir</button>
+								</div>
 							</div>
-						</div>
+						</c:if>
 					</div>
 				</div>
 			</div>
