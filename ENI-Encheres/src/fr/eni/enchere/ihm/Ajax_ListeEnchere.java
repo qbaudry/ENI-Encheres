@@ -49,7 +49,7 @@ public class Ajax_ListeEnchere extends HttpServlet {
 		ArticleVenduManager articleManager = new ArticleVenduManager();
 		UtilisateurManager utilManager = new UtilisateurManager();
 		Utilisateur util = null;
-		Timestamp actualTS = new Timestamp(new Date().getTime());
+		Timestamp actualTS = new Timestamp(System.currentTimeMillis());
 		try {
 			util = utilManager.selectionnerUtilisateur(login,mdp);
 		} catch (BusinessException e1) {
@@ -101,7 +101,7 @@ public class Ajax_ListeEnchere extends HttpServlet {
 							if(art.getVendeur().getNoUtilisateur() != util.getNoUtilisateur()) {
 								if(art.getConcerne() != null) {
 									if(art.getVendeur().getNoUtilisateur() != util.getNoUtilisateur()) {
-										if((!eOuvertes && !eEnCours && !eFermees)||
+										if((!eOuvertes && !eEnCours && !eFermees && art.getDate_fin_encheres().after(actualTS))||
 												(eOuvertes && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS) && art.getConcerne().getEncherit().getNoUtilisateur()!= util.getNoUtilisateur())||
 												(eFermees && art.getDate_fin_encheres().before(actualTS)&& art.getConcerne().getEncherit().getNoUtilisateur()==util.getNoUtilisateur())||
 												(eEnCours && art.getDate_debut_encheres().before(actualTS) && art.getDate_fin_encheres().after(actualTS) && art.getConcerne().getEncherit().getNoUtilisateur() == util.getNoUtilisateur())
