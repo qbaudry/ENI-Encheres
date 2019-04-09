@@ -54,6 +54,8 @@ public class detailEnchere extends HttpServlet {
 		RetraitManager retraitManager = new RetraitManager();
 		EnchereManager enchereManager = new EnchereManager();
 		UtilisateurManager utilManager = new UtilisateurManager();
+		
+		
 
 		if(pseudo == null && mdp == null)
 		{
@@ -79,6 +81,13 @@ public class detailEnchere extends HttpServlet {
 				request.setAttribute("enchere", enchere);
 				request.setAttribute("formulaire", article);
 				request.setAttribute("retrait", retrait);
+				/*Timestamp timer = article.getDate_debut_encheres(); //on récupère le temps d’exécution du programme au lancement du timer
+				Timestamp fin = article.getDate_fin_encheres();
+				int delay = fin.compareTo(timer);
+				while (timer.before(fin)) //tant que le temps écoulé depuis qu'on a initialisé le timer est inférieur au delay
+				{
+				    request.setAttribute("temps", delay);
+				}*/
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -152,7 +161,7 @@ public class detailEnchere extends HttpServlet {
 					enchereManager.save(newEnchere);
 					util.setCredit(util.getCredit() - Integer.valueOf(value));
 					utilManager.UpdateUtilisateurCreditById(util);
-					
+					session.setAttribute("credits", util.getCredit() - Integer.valueOf(value));
 					
 					
 				}
@@ -167,10 +176,11 @@ public class detailEnchere extends HttpServlet {
 					enchereManager.save(enchere);
 					util.setCredit(util.getCredit() - Integer.valueOf(value));
 					utilManager.UpdateUtilisateurCreditById(util);
-					
+					session.setAttribute("credits", util.getCredit() - Integer.valueOf(value));
 					
 					
 				}
+				
 				request.setAttribute("enchere", enchere);
 				
 
@@ -182,7 +192,7 @@ public class detailEnchere extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/detailEnchere");
 			rd.forward(request, response);
 		}
 		
