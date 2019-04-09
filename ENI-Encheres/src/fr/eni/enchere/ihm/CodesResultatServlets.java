@@ -18,4 +18,9 @@ public abstract class CodesResultatServlets {
 	public static final Integer PRIX_NON_NEGATIF = 30006;
 	public static final Integer EMPECHER_JAVASCRIPT = 30007;
 	public static final Integer DATE_INCOHERANTE = 30008;
+	
+	// Enchere
+	
+	public static final Integer PRIX_COMPRIS  = 30200;
+	public static final Integer PRIX_COMPRIS_DE_LENCHERE  = 30201;
 }

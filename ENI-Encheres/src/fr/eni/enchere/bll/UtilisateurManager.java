@@ -38,6 +38,10 @@ public class UtilisateurManager {
 		this.utilDAO.updateByID(util);
 	}
 	
+	public void UpdateUtilisateurCreditById(Utilisateur util) throws BusinessException {
+		 this.utilDAO.updateCreditByID(util);
+	}
+	
 	public void deleteUser(int id) throws BusinessException {
 		ArticleVenduManager artManager = new ArticleVenduManager();
 		ArrayList<ArticleVendu> listArt = (ArrayList<ArticleVendu>) artManager.selectByVendeur(this.selectionnerUtilisateurById(id));

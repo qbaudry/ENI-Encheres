@@ -14,6 +14,7 @@ public interface UtilisateurDAO {
 	public Utilisateur selectByPseudoAndMail(String pseudo, String email) throws BusinessException;
 	public Utilisateur selectByID(int id) throws BusinessException;
 	public void updateByID(Utilisateur util) throws BusinessException;
+	public void updateCreditByID(Utilisateur util) throws BusinessException;
 	public void deleteUser(int id) throws BusinessException;
 	public List<Utilisateur> lister() throws BusinessException;
 	boolean countPseudo(String pseudo) throws BusinessException;
