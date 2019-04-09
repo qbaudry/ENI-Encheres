@@ -150,11 +150,12 @@ public class monProfil extends HttpServlet {
 	private void validerPseudoUtilisateur(HttpServletRequest request, List<Integer> listeCodesErreur) {
 		String pseudo = request.getParameter("pseudo");
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
-		
+		HttpSession session = request.getSession();
 		try {
-			System.out.println(utilisateurManager.countPseudo(pseudo));
-			if (!utilisateurManager.countPseudo(pseudo)) {
-				listeCodesErreur.add(CodesResultatServlets.PSEUDO_INSCIPTION_EXIST);
+			if (!session.getAttribute("identifiant").equals(pseudo)) {
+				if (!utilisateurManager.countPseudo(pseudo)) {
+					listeCodesErreur.add(CodesResultatServlets.PSEUDO_INSCIPTION_EXIST);
+				}
 			}
 		} catch (BusinessException e) {
 			e.printStackTrace();
