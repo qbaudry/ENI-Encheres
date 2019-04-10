@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bo.ArticleVendu;
+import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.DAOFactory;
 import fr.eni.enchere.dal.UtilisateurDAO;
@@ -36,13 +37,13 @@ public class UtilisateurManager {
 					if(art.getConcerne() != null) {
 						Utilisateur vendeur = art.getVendeur();
 						System.out.println(vendeur.getPseudo() + " se fait créditer " 
-						+ art.getConcerne().getMontant_enchere() + " pour la vente de " + art.getNom_article() + 
-						" à " + art.getConcerne().getEncherit().getPseudo());
+								+ art.getConcerne().getMontant_enchere() + " pour la vente de " + art.getNom_article() + 
+								" à " + art.getConcerne().getEncherit().getPseudo());
 						System.out.println("il avait " + vendeur.getCredit() + "il a maintenant " 
-						+ vendeur.getCredit()+art.getConcerne().getMontant_enchere());
+								+ vendeur.getCredit()+art.getConcerne().getMontant_enchere());
 						vendeur.setCredit(vendeur.getCredit()+art.getConcerne().getMontant_enchere());
 						this.UpdateUtilisateurCreditById(vendeur);
-						
+
 					}
 					art.setPaye(true);
 					artManager.save(art);
@@ -70,10 +71,17 @@ public class UtilisateurManager {
 
 	public void deleteUser(int id) throws BusinessException {
 		ArticleVenduManager artManager = new ArticleVenduManager();
+		EnchereManager enchereMngr = new EnchereManager();
 		ArrayList<ArticleVendu> listArt = (ArrayList<ArticleVendu>) artManager.selectByVendeur(this.selectionnerUtilisateurById(id));
 		if(!listArt.isEmpty()) {
 			for(ArticleVendu art : listArt) {
 				artManager.delete(art);
+			}
+		}
+		ArrayList<Enchere> listEncheres = (ArrayList<Enchere>) enchereMngr.selectByUser(this.selectionnerUtilisateurById(id));
+		if(!listEncheres.isEmpty()) {
+			for(Enchere e : listEncheres) {
+				enchereMngr.delete(e);
 			}
 		}
 		this.utilDAO.deleteUser(id);

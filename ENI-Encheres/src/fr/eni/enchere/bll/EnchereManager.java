@@ -38,4 +38,7 @@ public class EnchereManager {
 	public List<Enchere> selectByArticle(ArticleVendu art) throws BusinessException {
 		return this.enchereDAO.selectByArticle(art);
 	}
+	public List<Enchere> selectByUser(Utilisateur u) throws BusinessException{
+		return this.enchereDAO.selectByUser(u);
+	}
 }

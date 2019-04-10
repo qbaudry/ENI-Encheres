@@ -15,7 +15,7 @@ import fr.eni.enchere.dal.ArticleVenduDAO;
 
 public class ArticleVenduManager {
 	private ArticleVenduDAO articleDAO;
-	
+
 	public ArticleVenduManager() {
 		this.articleDAO=DAOFactory.getArticleDAO();
 	}
@@ -24,7 +24,7 @@ public class ArticleVenduManager {
 	{
 		this.articleDAO.save(article);
 	}
-	
+
 	public void delete(ArticleVendu article) throws BusinessException {
 		RetraitManager retManager = new RetraitManager();
 		UtilisateurManager utilManager = new UtilisateurManager();
@@ -37,12 +37,14 @@ public class ArticleVenduManager {
 			utilManager.UpdateUtilisateurCreditById(util);
 		}
 		ArrayList<Enchere> listEncheres = (ArrayList<Enchere>) enchereMngr.selectByArticle(article);
-		for(Enchere e : listEncheres) {
-			enchereMngr.delete(e);
+		if(!listEncheres.isEmpty()) {
+			for(Enchere e : listEncheres) {
+				enchereMngr.delete(e);
+			}
 		}
 		this.articleDAO.delete(article);
 	}
-	
+
 	public ArticleVendu select(int id) throws BusinessException {
 		return this.articleDAO.select(id);
 	}
@@ -52,7 +54,7 @@ public class ArticleVenduManager {
 	public List<ArticleVendu> selectByVendeur(Utilisateur user) throws BusinessException {
 		return articleDAO.selectByVendeur(user);
 	}
-	
+
 	public List<ArticleVendu> lister() throws BusinessException {
 		return this.articleDAO.lister();
 	}
