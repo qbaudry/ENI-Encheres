@@ -26,5 +26,9 @@ private RetraitDAO retraitDAO;
 	public Retrait select(int id) throws BusinessException {
 		return this.retraitDAO.select(id);
 	}
+	
+	public List<Retrait> lister() throws BusinessException{
+		return this.retraitDAO.lister();
+	}
 
 }

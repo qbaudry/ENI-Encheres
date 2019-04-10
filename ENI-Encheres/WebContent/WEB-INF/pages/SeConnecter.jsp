@@ -22,18 +22,18 @@
 				<br>
 				<div class="row">
 					<div class="form-group col-12">
-				    	<label for="identifiant">Identifiant :</label>
+				    	<label for="identifiant" class="font-weight-bold">Identifiant :</label>
 				    	<input type="text" class="form-control" name="identifiant" id="identifiant" placeholder="Identifiant" value="${pseudo}">
 					</div>
 					<div class="form-group col-12">
-				    	<label for="motdepasse">Mot de passe :</label>
+				    	<label for="motdepasse" class="font-weight-bold">Mot de passe :</label>
 				    	<input type="password" class="form-control" name="motdepasse" id="motdepasse" placeholder="Mot de passe" value="${mdp}">
 					</div>
 				</div>
 				<hr>
 				<div class="row">
 					<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-				    	<button type="submit" class="btn btn-block btn-success">Connexion</button>
+				    	<button type="submit" class="btn btn-block btn-success font-weight-bold">Connexion</button>
 						<div class="input-group mb-3">
 						  <div class="input-group-prepend">
 						    <div class="input-group-text">
@@ -44,11 +44,11 @@
 						</div>
 					</div>
 					<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						<a class="btn btn-block btn-warning" href="${pageContext.request.contextPath}/mdpOublie">Mot de passe oublié</a>
+						<a class="btn btn-block btn-secondary font-weight-bold" href="${pageContext.request.contextPath}/mdpOublie">Mot de passe oublié</a>
 					</div>
 				</div>
 				<div class="pt-3 pt-sm-3 pt-md-0 pt-lg-0 pt-xl-0">
-					<a class="btn btn-block btn-success" href="${pageContext.request.contextPath}/creerCompte">Créer un compte</a>
+					<a class="btn btn-block btn-success font-weight-bold" href="${pageContext.request.contextPath}/creerCompte">Créer un compte</a>
 				</div>
 			</div>
 		</form>
