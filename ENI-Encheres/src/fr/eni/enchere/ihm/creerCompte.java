@@ -153,8 +153,6 @@ public class creerCompte extends HttpServlet {
 	private void validerMotDePasseUtilisateur(HttpServletRequest request, List<Integer> listeCodesErreur) {
 		String motdepasse = request.getParameter("motdepasse");
 		String motdepasse2 = request.getParameter("motdepasse2");
-		System.out.println(motdepasse);
-		System.out.println(motdepasse2);
 		if (!motdepasse.equals(motdepasse2)) {
 			listeCodesErreur.add(CodesResultatServlets.MOT_DE_PASSE_INSCIPTION_SAISIE_OBLIGATOIRE);
 		}

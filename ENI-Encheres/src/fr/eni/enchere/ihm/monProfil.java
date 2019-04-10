@@ -40,9 +40,7 @@ public class monProfil extends HttpServlet {
 		HttpSession session = request.getSession();
 		String login = (String) session.getAttribute("identifiant");
         String mdp = (String) session.getAttribute("motdepasse");
-        
-        Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-        
+                
         if(login == null && mdp == null)
         {
         	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
@@ -79,6 +77,7 @@ public class monProfil extends HttpServlet {
 		validerEmailUtilisateur(request, listeCodesErreur);
 		validerTelephoneUtilisateur(request, listeCodesErreur);
 		validerCodePostalUtilisateur(request, listeCodesErreur);
+		validerMotDePasseUtilisateur(request, listeCodesErreur);
 		
 		System.out.println("listeCodesErreur : " + listeCodesErreur);
 		
@@ -106,10 +105,23 @@ public class monProfil extends HttpServlet {
 		else
 		{
 			try {
-				Utilisateur modifCompte = new Utilisateur(util.getNoUtilisateur(), request.getParameter("pseudo"),
-						request.getParameter("nom"), request.getParameter("prenom"), request.getParameter("email"),
-						request.getParameter("telephone"), request.getParameter("rue"), request.getParameter("codepostal"),
-						request.getParameter("ville"), request.getParameter("motdepasse"));
+				String motdepasse2a = request.getParameter("motdepasse2a");
+				String motdepasse2b = request.getParameter("motdepasse2b");
+				Utilisateur modifCompte;
+				
+				if (!motdepasse2a.equals("") || !motdepasse2b.equals("")) {
+					System.out.println("modif");
+					modifCompte = new Utilisateur(util.getNoUtilisateur(), request.getParameter("pseudo"),
+							request.getParameter("nom"), request.getParameter("prenom"), request.getParameter("email"),
+							request.getParameter("telephone"), request.getParameter("rue"), request.getParameter("codepostal"),
+							request.getParameter("ville"), motdepasse2a);
+				} else {
+					System.out.println("pas modif");
+					modifCompte = new Utilisateur(util.getNoUtilisateur(), request.getParameter("pseudo"),
+							request.getParameter("nom"), request.getParameter("prenom"), request.getParameter("email"),
+							request.getParameter("telephone"), request.getParameter("rue"), request.getParameter("codepostal"),
+							request.getParameter("ville"), util.getMotDePasse());
+				}
 				
 				utilisateurManager.UpdateUtilisateurById(modifCompte);
 				
@@ -187,6 +199,16 @@ public class monProfil extends HttpServlet {
 		Pattern pat = Pattern.compile(codepostalRegex);
 		if (!pat.matcher(codepostal).matches()) {
 			listeCodesErreur.add(CodesResultatServlets.CODE_POSTAL_INSCIPTION_SAISIE_OBLIGATOIRE);
+		}
+	}
+	
+	private void validerMotDePasseUtilisateur(HttpServletRequest request, List<Integer> listeCodesErreur) {
+		String motdepasse2a = request.getParameter("motdepasse2a");
+		String motdepasse2b = request.getParameter("motdepasse2b");
+		if (!motdepasse2a.equals("") || !motdepasse2b.equals("")) {
+			if (!motdepasse2a.equals(motdepasse2b)) {
+				listeCodesErreur.add(CodesResultatServlets.MOT_DE_PASSE_INSCIPTION_SAISIE_OBLIGATOIRE);
+			}
 		}
 	}
 	
