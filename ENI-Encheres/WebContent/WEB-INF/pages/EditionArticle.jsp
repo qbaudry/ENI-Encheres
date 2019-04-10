@@ -21,33 +21,20 @@
 					</div>
 					<div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
 						<div class="row">
+						<input type="hidden" class="form-control" id="id" name="id"
+							value="${formulaire.no_article}">
 							<div class="form-group col-12">
 								<label for="identifiant">Article :</label>
-								<c:choose>
-									<c:when test="${!empty art}">
 										<input type="text" class="form-control" id="article"
 											name="article" placeholder="Nom article"
-											value="${formulaire.nom_article}" required>
-									</c:when>
-									<c:otherwise>
-										<input type="text" class="form-control" id="article"
-											name="article" placeholder="Nom article" required>
-									</c:otherwise>
-								</c:choose>
+											value="${article.nom_article}" required>
+
 							</div>
 							<div class="form-group col-12">
 								<label for="description">Desciption :</label>
-								<c:choose>
-									<c:when test="${!empty art}">
 										<textarea  class="form-control" id="description"
-											name="description" placeholder="Description de l'article"
-											value="${formulaire.description}" required></textarea>
-									</c:when>
-									<c:otherwise>
-										<textarea class="form-control" id="description"
-											name="description" placeholder="Description de l'article" required></textarea>
-									</c:otherwise>
-								</c:choose>
+											name="description" placeholder="Description de l'article" 
+											required>${article.description}</textarea>
 							</div>
 							<div class="form-group col-12 col-lg-6 col-xl-6">
 								<label for="motdepasse">Catégorie :</label> <select
@@ -69,28 +56,20 @@
 							</div>
 							<div class="form-group col-12">
 								<label for="prix">Mise à prix :</label>
-								<c:choose>
-									<c:when test="${!empty art}">
 										<input type="number" class="form-control" id="prix"
 											name="prix" placeholder="Prix de l'article"
-											value="${formulaire.prix_initial}" required>
-									</c:when>
-									<c:otherwise>
-										<input type="number" class="form-control" id="prix"
-											name="prix" placeholder="Prix de l'article" required>
-									</c:otherwise>
-								</c:choose>
+											value="${article.prix_initial}" required>
 							</div>
 
 							<div class="form-group col-12 col-lg-6 col-xl-6">
 								<label for="debut">Début de l'enchère :</label> <input
 									type="datetime-local" class="form-control" name="debut"
-									id="debut" value="${debut}">
+									id="debut" value="${datedebut}">
 							</div>
 							<div class="form-group col-12 col-lg-6 col-xl-6">
 								<label for="fin">Fin de l'enchère :</label> <input
 									type="datetime-local" class="form-control" name="fin" id="fin"
-									required>
+									value="${datefin}" required>
 							</div>
 							<div class="col-12 pt-3">
 								<div class="card">
@@ -100,7 +79,7 @@
 											<label class="col-12 col-lg-3 col-xl-3 m-auto pl-0" for="rue">Rue
 												:</label> <input type="text"
 												class="form-control col-12 col-lg-9 col-xl-9" name="rue"
-												id="rue" placeholder="Rue" value="${utilisateur.rue}"
+												id="rue" placeholder="Rue" value="${retrait.rue}"
 												required>
 										</div>
 										<div class="form-group row col-12 m-0 pt-3">
@@ -108,13 +87,13 @@
 												for="codepostal">Code Postal :</label> <input type="text"
 												class="form-control col-12 col-lg-9 col-xl-9"
 												name="codepostal" id="codepostal" placeholder="Code Postal"
-												value="${utilisateur.codePostal}" required>
+												value="${retrait.code_postal}" required>
 										</div>
 										<div class="form-group row col-12 m-0 pt-3">
 											<label class="col-12 col-lg-3 col-xl-3 m-auto pl-0"
 												for="ville">Ville :</label> <input type="text"
 												class="form-control col-12 col-lg-9 col-xl-9" name="ville"
-												id="ville" placeholder="Ville" value="${utilisateur.ville}"
+												id="ville" placeholder="Ville" value="${retrait.ville}"
 												required>
 										</div>
 									</div>
@@ -128,7 +107,7 @@
 							</div>
 							<div class="col-6">
 								<a class="btn btn-block btn-danger"
-									href="${pageContext.request.contextPath}/listeEncheres">Annuler</a>
+									href="${pageContext.request.contextPath}/listeEncheres">Supprimer Article</a>
 							</div>
 						</div>
 					</div>
