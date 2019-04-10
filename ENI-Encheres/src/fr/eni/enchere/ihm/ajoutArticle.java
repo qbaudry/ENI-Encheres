@@ -1,21 +1,11 @@
 package fr.eni.enchere.ihm;
 
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,14 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
-
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
-import org.apache.tomcat.util.http.fileupload.RequestContext;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItem;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bll.ArticleVenduManager;
@@ -50,7 +32,6 @@ import fr.eni.enchere.bo.Utilisateur;
 public class ajoutArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -67,7 +48,6 @@ public class ajoutArticle extends HttpServlet {
 		String pseudo = (String) session.getAttribute("identifiant");
 		String mdp = (String) session.getAttribute("motdepasse");
 
-
 		if(pseudo == null && mdp == null)
 		{
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
@@ -79,8 +59,6 @@ public class ajoutArticle extends HttpServlet {
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 
 			List<Categorie> listeCategories = new ArrayList<>();
-			List<Integer> listeCodesErreur = new ArrayList<>();
-
 			Utilisateur util = new Utilisateur();
 
 			try {
@@ -96,14 +74,11 @@ public class ajoutArticle extends HttpServlet {
 				String debut = yyyyMMdd.format(timestamp).toString()+"T"+HHmm.format(timestamp).toString();
 				request.setAttribute("debut", debut);
 
-
 			} catch (BusinessException e) {
 				e.printStackTrace();
 				request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 			}
 			
-			
-
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/AjoutArticle.jsp");
 			rd.forward(request, response); 
 		}
@@ -119,7 +94,6 @@ public class ajoutArticle extends HttpServlet {
 		CategorieManager categManager = new CategorieManager();
 		RetraitManager retraitManager = new RetraitManager();
 
-		List<Categorie> listeCategories = new ArrayList<>();
 		List<Integer> listeCodesErreur = new ArrayList<>();
 		lireParametreFormulaire(request, listeCodesErreur);
 		lirePrixNonNegatif(request, listeCodesErreur);
@@ -150,7 +124,6 @@ public class ajoutArticle extends HttpServlet {
 				String article = request.getParameter("article");
 				String description = request.getParameter("description");
 				int categorie = Integer.valueOf(request.getParameter("categorie"));
-				String image = request.getParameter("image");
 				int prix = Integer.valueOf(request.getParameter("prix"));
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 				Timestamp debut = getTimestamp(format.parse(request.getParameter("debut")));
@@ -159,36 +132,17 @@ public class ajoutArticle extends HttpServlet {
 				String cp = (String) request.getParameter("codepostal");
 				String ville = (String) request.getParameter("ville");
 				
-				
-			    Part filePart = request.getPart("image");
-			    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-			    
-			    File fileUpload = new File("/img");
-			    File file = new File(fileUpload, fileName);
-
-			    try (InputStream fileContent = filePart.getInputStream();) {
-			        Files.copy(fileContent, file.toPath());
-			    }
-			    
-			    System.out.println(filePart);
-			    System.out.println(fileName);
-			    //System.out.println(fileContent);
-			    System.out.println(fileUpload);
-			    
 				Categorie categ = new Categorie();
 				categ = categManager.select(categorie);
 				ArticleVendu artVendus = new ArticleVendu(article, description, debut, fin, prix, 0, util, categ, "test");
 				artVendus.setPaye(false);
-				//articleManager.save(artVendus);
-
+				articleManager.save(artVendus);
 
 				Retrait retrait = new Retrait(artVendus.getNo_article(), rue, cp, ville);
-
-				//retraitManager.save(retrait);
-
+				retraitManager.save(retrait);
+				
 				RequestDispatcher rd = request.getRequestDispatcher("/listeEncheres");
 				rd.forward(request, response);
-
 
 			} catch (BusinessException | ParseException e) {
 				// TODO Auto-generated catch block
@@ -196,11 +150,6 @@ public class ajoutArticle extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
-	
-
-
-		
 	}
 
 	private void lireDatedeFin(HttpServletRequest request, List<Integer> listeCodesErreur) {
@@ -216,8 +165,6 @@ public class ajoutArticle extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 	}
 
 	private void lireJavaScript(HttpServletRequest request, List<Integer> listeCodesErreur) {
