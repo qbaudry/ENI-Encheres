@@ -64,7 +64,7 @@
 								<label for="image">Photo de l'article :</label>
 								<div class="custom-file">
 									<input type="file" class="custom-file-input" id="image"
-										accept="image/png, image/jpeg" name="image"> <label
+										accept="image/png, image/jpeg" name="image" disabled> <label
 										class="custom-file-label" for="image">Télécharger...</label>
 								</div>
 							</div>
