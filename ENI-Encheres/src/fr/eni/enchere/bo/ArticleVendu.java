@@ -15,6 +15,7 @@ public class ArticleVendu {
 	    private Enchere concerne;
 	    private Categorie categorieArticle;
 	    private String photo;
+	    private Boolean paye;
 	    
 	    public ArticleVendu() {
 	    	
@@ -145,6 +146,14 @@ public class ArticleVendu {
 
 		public void setPhoto(String photo) {
 			this.photo = photo;
+		}
+
+		public Boolean getPaye() {
+			return paye;
+		}
+
+		public void setPaye(Boolean paye) {
+			this.paye = paye;
 		}
 		
 		
