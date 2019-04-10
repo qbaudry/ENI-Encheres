@@ -28,9 +28,11 @@ public class ArticleVenduManager {
 		UtilisateurManager utilManager = new UtilisateurManager();
 		Retrait ret = retManager.select(article.getNo_article());
 		retManager.delete(ret);
-		Utilisateur util = article.getConcerne().getEncherit();
-		util.setCredit(util.getCredit()+article.getConcerne().getMontant_enchere());
-		utilManager.UpdateUtilisateurById(util);
+		if(article.getConcerne() != null) {
+			Utilisateur util = article.getConcerne().getEncherit();
+			util.setCredit(util.getCredit()+article.getConcerne().getMontant_enchere());
+			utilManager.UpdateUtilisateurCreditById(util);
+		}
 		this.articleDAO.delete(article);
 	}
 	
