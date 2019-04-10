@@ -91,16 +91,16 @@ public class detailEnchere extends HttpServlet {
 					{
 						if(util.getNoUtilisateur() == enchere.getEncherit().getNoUtilisateur())
 						{
-							request.setAttribute("message", "Bravo, vous avez remportÃ© l'enchÃ¨re !");
+							request.setAttribute("message", "Bravo, vous avez remporté l'enchère !");
 							article.setPrix_vente(enchere.getMontant_enchere());
 							articleManager.save(article);
 						}
 						else
 						{
-							request.setAttribute("message", enchere.getEncherit().getPseudo()+" a gagnÃ© l'enchÃ¨re !");
+							request.setAttribute("message", enchere.getEncherit().getPseudo()+" a gagné l'enchère !");
 						}
 					} else {
-						request.setAttribute("message", "Dommage, l'enchÃ¨re c'est terminÃ© sans aucune proposition !");
+						request.setAttribute("message", "Dommage, l'enchère c'est terminé sans aucune proposition !");
 					}
 				}
 
@@ -143,10 +143,28 @@ public class detailEnchere extends HttpServlet {
 
 		if(listeCodesErreur.size()>0)
 		{
-			System.out.println("erreur : " + listeCodesErreur);
-			request.setAttribute("listeCodesErreur", listeCodesErreur);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/detailEnchere.jsp");
+			try {
+				util = utilManager.selectionnerUtilisateur(pseudo, mdp);
+				article = articleManager.select(Integer.parseInt(art));		
+				retrait = retraitManager.select(Integer.parseInt(art));
+				request.setAttribute("formulaire", article);
+				request.setAttribute("retrait", retrait);
+				Enchere enchere = new Enchere();
+				enchere = enchereManager.selectMaxByArticle(article);
+				request.setAttribute("enchere", enchere);
+				System.out.println("erreur : " + listeCodesErreur);
+				request.setAttribute("listeCodesErreur", listeCodesErreur);	
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
 			rd.forward(request, response);
+
+				
+
+			
 		}
 		else
 		{
