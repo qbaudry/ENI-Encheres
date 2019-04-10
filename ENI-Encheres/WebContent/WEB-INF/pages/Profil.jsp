@@ -108,28 +108,44 @@
 					    </c:choose>
 					</div>
 				</div>
+				<hr>
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="motdepasse">Mot de passe :</label>
 				    	<c:choose>
     						<c:when test="${!empty formulaire}">
-								<input type="password" class="form-control" id="motdepasse" name="motdepasse" placeholder="Mot de passe" value="${formulaire.motDePasse}" required>
+								<input type="password" class="form-control" id="motdepasse" name="motdepasse" placeholder="Mot de passe" value="${formulaire.motDePasse}" readonly>
 							</c:when>
 					        <c:otherwise>
-					        	<input type="password" class="form-control" id="motdepasse" name="motdepasse" placeholder="Mot de passe" required>
+					        	<input type="password" class="form-control" id="motdepasse" name="motdepasse" placeholder="Mot de passe" readonly>
 					        </c:otherwise>
 					    </c:choose>
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-				    	<label for="motdepasse2">Crédit :</label>
-				    	<c:choose>
-    						<c:when test="${!empty formulaire}">
-								<input type="number" class="form-control" id="credit" name="credit" placeholder="Crédit" value="${formulaire.credit}" readonly> 
-							</c:when>
-					        <c:otherwise>
-					        	<input type="number" class="form-control" id="credit" name="credit" placeholder="Crédit" readonly>
-					        </c:otherwise>
-					    </c:choose>
+				    	<label for="motdepasse2a">Nouveau mot de passe :</label>
+				    	<input type="password" class="form-control" id="motdepasse2a" name="motdepasse2a">
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+						<label for="credit">Crédit :</label>
+						<div class="input-group">
+						  <div class="input-group-prepend">
+						    <span class="input-group-text" id="Crédit"><i class="far fa-credit-card"></i></span>
+						  </div>
+						  <c:choose>
+	    						<c:when test="${!empty formulaire}">
+									<input type="number" class="form-control" id="credit" name="credit" placeholder="Crédit" value="${formulaire.credit}" aria-describedby="Crédit" readonly>
+								</c:when>
+						        <c:otherwise>
+						        	<input type="number" class="form-control" id="credit" name="credit" placeholder="Crédit" aria-describedby="Crédit" readonly>
+						        </c:otherwise>
+					      </c:choose>
+						</div>
+					</div>
+					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+				    	<label for="motdepasse2b">Confirmation du nouveau mot de passe :</label>
+				    	<input type="password" class="form-control" id="motdepasse2b" name="motdepasse2b">
 					</div>
 				</div>
 				<hr>
