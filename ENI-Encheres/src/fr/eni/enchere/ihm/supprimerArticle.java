@@ -35,7 +35,6 @@ public class supprimerArticle extends HttpServlet {
 		HttpSession session = request.getSession();
 		int id = Integer.parseInt((String) session.getAttribute("id"));
 		
-		System.out.println(id);
 		ArticleVenduManager articleManager = new ArticleVenduManager();
 		ArticleVendu art;
 		try {

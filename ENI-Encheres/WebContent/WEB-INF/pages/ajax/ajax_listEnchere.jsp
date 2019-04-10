@@ -73,4 +73,17 @@
 			</div>
 		</div>
 	</c:forEach>
+	<nav class="col-12" id="pagination">
+	  <ul class="pagination btn-block">
+	    <li class="page-item btn-block disabled">
+	      <a class="page-link" href="#" tabindex="-1">Page précédente</a>
+	    </li>
+	    <li class="page-item"><a class="page-link" href="#">1</a></li>
+	    <li class="page-item active"><a class="page-link" href="#">2</a></li>
+	    <li class="page-item"><a class="page-link" href="#">3</a></li>
+	    <li class="page-item btn-block">
+	      <a class="page-link text-right" href="#">Page suivante</a>
+	    </li>
+	  </ul>
+	</nav>
 </c:if>
