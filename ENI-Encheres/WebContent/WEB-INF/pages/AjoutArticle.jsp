@@ -15,11 +15,11 @@
 				<hr>
 				<div class="row">
 					<div
-						class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 px-3 pb-3 mt-4 mb-auto">
+						class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 px-3 pb-3 pt-2 mb-auto">
 						<img src="https://via.placeholder.com/150" class="card-img"
 							alt="...">
 					</div>
-					<div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+					<div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
 						<div class="row">
 							<div class="form-group col-12">
 								<label for="identifiant">Article :</label>
