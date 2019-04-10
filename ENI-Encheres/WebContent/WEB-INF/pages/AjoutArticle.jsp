@@ -8,8 +8,8 @@
 <body>
 	<jsp:include page="../includes/Navbar.jsp"></jsp:include>
 	<div class="container">
-		<form method="post"
-			action="${pageContext.request.contextPath}/ajoutArticle">
+		<form method="post" action="${pageContext.request.contextPath}/ajoutArticle" 
+			enctype="multipart/form-data">
 			<div class="alert alert-dark mt-5" role="alert">
 				<h1>Nouvelle vente</h1>
 				<hr>
@@ -22,6 +22,7 @@
 					<div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
 						<div class="row">
 							<div class="form-group col-12">
+							
 								<label for="identifiant">Article :</label>
 								<c:choose>
 									<c:when test="${!empty art}">

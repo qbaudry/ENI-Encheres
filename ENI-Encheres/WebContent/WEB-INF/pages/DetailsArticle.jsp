@@ -32,6 +32,8 @@
 					<div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
 						<input type="hidden" class="form-control" id="id" name="id"
 							value="${formulaire.no_article}">
+							<input type="hidden" class="form-control" id="paye" name="paye"
+							value="${formulaire.paye}">
 						<div class="row">
 							<h3 class="col-12 mb-4">${formulaire.nom_article}</h3>
 						</div>

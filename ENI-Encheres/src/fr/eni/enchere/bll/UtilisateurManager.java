@@ -1,6 +1,8 @@
 package fr.eni.enchere.bll;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import fr.eni.enchere.BusinessException;
@@ -23,7 +25,18 @@ public class UtilisateurManager {
 	}
 	
 	public Utilisateur selectionnerUtilisateur(String pseudo, String mdp) throws BusinessException {
-		return this.utilDAO.selectByUser(pseudo, mdp);
+		Utilisateur util = this.utilDAO.selectByUser(pseudo, mdp);
+		ArticleVenduManager artManager = new ArticleVenduManager();
+		List<ArticleVendu> listArt = artManager.selectByVendeur(util);
+		for(ArticleVendu art : listArt) {
+			if(art.getDate_fin_encheres().after(new Date()) && !art.getPaye() && art.getConcerne() != null) {
+				Utilisateur acheteur = art.getConcerne().getEncherit();
+				acheteur.setCredit(acheteur.getCredit()+art.getConcerne().getMontant_enchere());
+				art.setPaye(true);
+				artManager.save(art);
+			}
+		}
+		return util;
 	}
 	
 	public Utilisateur selectionnerUtilisateurByEmailPseudo(String pseudo, String email) throws BusinessException {
