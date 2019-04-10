@@ -1,6 +1,8 @@
 package fr.eni.enchere.ihm;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.enchere.BusinessException;
+import fr.eni.enchere.bll.ArticleVenduManager;
+import fr.eni.enchere.bll.RetraitManager;
 import fr.eni.enchere.bll.UtilisateurManager;
+import fr.eni.enchere.bo.ArticleVendu;
+import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.bo.Utilisateur;
 
 /**
@@ -44,13 +50,42 @@ public class supprimerCompte extends HttpServlet {
 		}
 		else
 		{
+			//Méthode d'accès bdd
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
-
-
+			RetraitManager retraitManager = new RetraitManager();
+			ArticleVenduManager artManager = new ArticleVenduManager();
+			
+			//Création d'objet
+			List<Retrait> lstretrait = new ArrayList();
+			List<ArticleVendu> lstArticle = new ArrayList();
 			Utilisateur util = new Utilisateur();
 			try {
+				
 				util = utilisateurManager.selectionnerUtilisateur(pseudo, mdp);
-				utilisateurManager.deleteUser(util.getNoUtilisateur());
+				lstArticle = artManager.lister();
+				lstretrait = retraitManager.lister();
+				for(ArticleVendu artVendu: lstArticle)
+				{
+					if(util.getNoUtilisateur() == artVendu.getVendeur().getNoUtilisateur())
+					{
+						
+						for(Retrait retrait: lstretrait)
+						{
+							if(artVendu.getNo_article() == retrait.getNoArticle())
+							{
+								retraitManager.delete(retrait);
+								artManager.delete(artVendu);
+								utilisateurManager.deleteUser(util.getNoUtilisateur());
+							}
+							
+						}
+						
+						
+					}
+				}
+				
+				
+				
 
 				session.invalidate();
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
