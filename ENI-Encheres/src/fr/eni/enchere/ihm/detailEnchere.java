@@ -91,16 +91,16 @@ public class detailEnchere extends HttpServlet {
 					{
 						if(util.getNoUtilisateur() == enchere.getEncherit().getNoUtilisateur())
 						{
-							request.setAttribute("message", "Bravo, vous avez remporté l'enchère !");
+							request.setAttribute("succes", "Bravo, vous avez remportÃ© l'enchÃ¨re !");
 							article.setPrix_vente(enchere.getMontant_enchere());
 							articleManager.save(article);
 						}
 						else
 						{
-							request.setAttribute("message", enchere.getEncherit().getPseudo()+" a gagné l'enchère !");
+							request.setAttribute("echec", enchere.getEncherit().getPseudo()+" a gagnÃ© l'enchÃ¨re !");
 						}
 					} else {
-						request.setAttribute("message", "Dommage, l'enchère c'est terminé sans aucune proposition !");
+						request.setAttribute("echec", "Dommage, l'enchÃ¨re s'est terminÃ© sans aucune proposition !");
 					}
 				}
 
@@ -161,10 +161,6 @@ public class detailEnchere extends HttpServlet {
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
 			rd.forward(request, response);
-
-				
-
-			
 		}
 		else
 		{
