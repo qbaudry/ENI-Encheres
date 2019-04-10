@@ -60,10 +60,10 @@
 										<label for="prix" class="font-weight-bold">Mise à prix :</label>
 												<input type="number" class="form-control" id="prix"
 													name="prix" placeholder="Prix de l'article"
-													value="${article.prix_initial}" disabled>
+													value="${article.prix_initial}" readonly>
 									</div>
 									<div class="col-12 col-lg-6 col-xl-6">
-										<label for="prix" class="font-weight-bold">Meilleur offre :</label>
+										<label class="font-weight-bold">Meilleur offre :</label>
 										<c:choose>
 											<c:when test="${!empty article.concerne.montant_enchere}">
 												<input type="number" class="form-control"
