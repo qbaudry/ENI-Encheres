@@ -143,9 +143,23 @@ public class detailEnchere extends HttpServlet {
 
 		if(listeCodesErreur.size()>0)
 		{
-			System.out.println("erreur : " + listeCodesErreur);
-			request.setAttribute("listeCodesErreur", listeCodesErreur);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/detailEnchere.jsp");
+			try {
+				util = utilManager.selectionnerUtilisateur(pseudo, mdp);
+				article = articleManager.select(Integer.parseInt(art));		
+				retrait = retraitManager.select(Integer.parseInt(art));
+				request.setAttribute("formulaire", article);
+				request.setAttribute("retrait", retrait);
+				Enchere enchere = new Enchere();
+				enchere = enchereManager.selectMaxByArticle(article);
+				request.setAttribute("enchere", enchere);
+				System.out.println("erreur : " + listeCodesErreur);
+				request.setAttribute("listeCodesErreur", listeCodesErreur);	
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/DetailsArticle.jsp");
 			rd.forward(request, response);
 		}
 		else
