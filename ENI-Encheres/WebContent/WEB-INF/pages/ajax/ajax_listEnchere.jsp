@@ -16,11 +16,24 @@
 					</div>
 					<div class="col-8">
 						<div class="card-body">
-							<form method="get" id="art${article.no_article}" action="${pageContext.request.contextPath}/detailEnchere">
-								<input type="hidden" name="no_article" value="${article.no_article}">
-							</form>
-							<h5 class="card-title">
-								
+							<c:choose>
+								<c:when test="${identifiant != null && motdepasse != null && article.vendeur.pseudo == identifiant}">
+									<form method="get" id="art${article.no_article}"
+										action="${pageContext.request.contextPath}/editionArticle">
+										<input type="hidden" name="no_article"
+											value="${article.no_article}">
+									</form>
+								</c:when>
+								<c:otherwise>
+									<form method="get" id="art${article.no_article}"
+										action="${pageContext.request.contextPath}/detailEnchere">
+										<input type="hidden" name="no_article"
+											value="${article.no_article}">
+									</form>
+								</c:otherwise>
+							</c:choose>
+
+							<h5 class="card-title">								
 								<c:choose>
 								<c:when test="${identifiant != null && motdepasse != null}">
 									<a onclick="$('#art${article.no_article}').submit();" class="link">
