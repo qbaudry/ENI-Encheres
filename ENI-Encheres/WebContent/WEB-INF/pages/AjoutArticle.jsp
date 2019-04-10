@@ -8,8 +8,8 @@
 <body>
 	<jsp:include page="../includes/Navbar.jsp"></jsp:include>
 	<div class="container">
-		<form method="post"
-			action="${pageContext.request.contextPath}/ajoutArticle">
+		<form method="post" action="${pageContext.request.contextPath}/ajoutArticle" 
+			enctype="multipart/form-data">
 			<div class="alert alert-dark mt-5" role="alert">
 				<h1>Nouvelle vente</h1>
 				<hr>

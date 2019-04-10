@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,10 +19,12 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
@@ -42,6 +46,7 @@ import fr.eni.enchere.bo.Utilisateur;
 /**
  * Servlet implementation class ajoutArticle
  */
+@MultipartConfig
 public class ajoutArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -153,17 +158,33 @@ public class ajoutArticle extends HttpServlet {
 				String rue = (String) request.getParameter("rue");
 				String cp = (String) request.getParameter("codepostal");
 				String ville = (String) request.getParameter("ville");
+				
+				
+			    Part filePart = request.getPart("image");
+			    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+			    
+			    File fileUpload = new File("/img");
+			    File file = new File(fileUpload, fileName);
 
+			    try (InputStream fileContent = filePart.getInputStream();) {
+			        Files.copy(fileContent, file.toPath());
+			    }
+			    
+			    System.out.println(filePart);
+			    System.out.println(fileName);
+			    //System.out.println(fileContent);
+			    System.out.println(fileUpload);
+			    
 				Categorie categ = new Categorie();
 				categ = categManager.select(categorie);
 				ArticleVendu artVendus = new ArticleVendu(article, description, debut, fin, prix, 0, util, categ, "test");
 
-				articleManager.save(artVendus);
+				//articleManager.save(artVendus);
 
 
 				Retrait retrait = new Retrait(artVendus.getNo_article(), rue, cp, ville);
 
-				retraitManager.save(retrait);
+				//retraitManager.save(retrait);
 
 				RequestDispatcher rd = request.getRequestDispatcher("/listeEncheres");
 				rd.forward(request, response);
@@ -171,7 +192,7 @@ public class ajoutArticle extends HttpServlet {
 
 			} catch (BusinessException | ParseException e) {
 				// TODO Auto-generated catch block
-				request.setAttribute("error", "Problème d'enregistrement !");
+				request.setAttribute("error", "Problï¿½me d'enregistrement !");
 				e.printStackTrace();
 			}
 		}
