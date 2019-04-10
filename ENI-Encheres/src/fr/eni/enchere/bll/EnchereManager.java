@@ -35,4 +35,7 @@ public class EnchereManager {
 	public Enchere selectMaxByArticle(ArticleVendu art) throws BusinessException {
 		return this.enchereDAO.selectMaxByArticle(art);
 	}
+	public List<Enchere> selectByArticle(ArticleVendu art) throws BusinessException {
+		return this.enchereDAO.selectByArticle(art);
+	}
 }
