@@ -59,14 +59,14 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 			try{
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
-
-				if(r.getNoArticle()!=0 && r != null){
-					pstmt = cnx.prepareStatement(DELETE, PreparedStatement.RETURN_GENERATED_KEYS);
-					pstmt.setInt(1, r.getNoArticle());
-					pstmt.executeUpdate();
-					pstmt.close();
+				if(r != null) {
+					if(r.getNoArticle()!=0){
+						pstmt = cnx.prepareStatement(DELETE, PreparedStatement.RETURN_GENERATED_KEYS);
+						pstmt.setInt(1, r.getNoArticle());
+						pstmt.executeUpdate();
+						pstmt.close();
+					}
 				}
-
 
 
 				cnx.commit();

@@ -1,10 +1,12 @@
 package fr.eni.enchere.bll;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
+import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.DAOFactory;
@@ -26,11 +28,18 @@ public class ArticleVenduManager {
 	public void delete(ArticleVendu article) throws BusinessException {
 		RetraitManager retManager = new RetraitManager();
 		UtilisateurManager utilManager = new UtilisateurManager();
-		Retrait ret = retManager.select(article.getNo_article());
+		EnchereManager enchereMngr = new EnchereManager();
+		Retrait ret = retManager.select(article.getNo_article());		
 		retManager.delete(ret);
-		Utilisateur util = article.getConcerne().getEncherit();
-		util.setCredit(util.getCredit()+article.getConcerne().getMontant_enchere());
-		utilManager.UpdateUtilisateurById(util);
+		if(article.getConcerne() != null) {
+			Utilisateur util = article.getConcerne().getEncherit();
+			util.setCredit(util.getCredit()+article.getConcerne().getMontant_enchere());
+			utilManager.UpdateUtilisateurCreditById(util);
+		}
+		ArrayList<Enchere> listEncheres = (ArrayList<Enchere>) enchereMngr.selectByArticle(article);
+		for(Enchere e : listEncheres) {
+			enchereMngr.delete(e);
+		}
 		this.articleDAO.delete(article);
 	}
 	
