@@ -17,7 +17,7 @@ import fr.eni.enchere.bo.Utilisateur;
 public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private static final String INSERT = "insert into ENCHERES (no_utilisateur,no_article,date_enchere,montant_enchere) values(?,?,?,?)";
 	private static final String UPDATE = "update ENCHERES set date_enchere=?,montant_enchere=? where no_article = ? AND no_utilisateur=?";
-	private static final String DELETE = "delete from ENCHERES where no_article = ? AND no_utilisateur=?";
+	private static final String DELETE = "delete from ENCHERES where no_article=?";
 	private static final String SELECT = "select * from ENCHERES where no_article = ? AND no_utilisateur=?";
 	private static final String SELECTBYUSER = "select * from ENCHERES where no_utilisateur=?";
 	private static final String SELECTBYARTICLE = "select * from ENCHERES where no_article = ?";
@@ -76,10 +76,9 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			try{
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
-				if(this.select(ench.getEncherit(),ench.getConcerne()) == null){
+				if(this.select(ench.getEncherit(),ench.getConcerne()) != null){
 					pstmt = cnx.prepareStatement(DELETE);
 					pstmt.setInt(1, ench.getConcerne().getNo_article());
-					pstmt.setInt(2, ench.getEncherit().getNoUtilisateur());
 					pstmt.executeUpdate();
 					pstmt.close();
 				}
