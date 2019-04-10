@@ -94,6 +94,7 @@ public class seConnecter extends HttpServlet {
 				        session.setAttribute("motdepasse", util.getMotDePasse());
 				        session.setAttribute("credits", util.getCredit());
 				        session.setAttribute("admin", util.isAdministrateur());
+				        session.setMaxInactiveInterval(300);
 				        if(request.getParameter("sesouvenir") != null && request.getParameter("sesouvenir").equalsIgnoreCase("on")) {
 				        	Cookie sesouvenir = new Cookie("sesouvenir","true");
 				        	sesouvenir.setMaxAge(2147483647);
