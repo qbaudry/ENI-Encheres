@@ -196,8 +196,6 @@ public class ajoutArticle extends HttpServlet {
 	private void lireParametreFormulaire(HttpServletRequest request, List<Integer> listeCodesErreur) {
 		String article = request.getParameter("article");
 		String description = request.getParameter("description");
-		int categorie = Integer.valueOf(request.getParameter("categorie"));
-		String image = request.getParameter("image");
 		String prix = request.getParameter("prix");
 		String debut = request.getParameter("debut");
 		String fin = request.getParameter("fin");

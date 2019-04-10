@@ -74,7 +74,6 @@ public class editionArticle extends HttpServlet {
 
 			CategorieManager categorieManager = new CategorieManager();
 			
-
 			List<Categorie> listeCategories = new ArrayList<>();
 			
 			try {
@@ -85,14 +84,14 @@ public class editionArticle extends HttpServlet {
 				listeCategories = categorieManager.lister();
 				request.setAttribute("categories", listeCategories);
 				
-				//Date de début de l'enchère
+				//Date de dï¿½but de l'enchï¿½re
 				Timestamp timestamp = article.getDate_debut_encheres();
 				SimpleDateFormat yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
 				SimpleDateFormat HHmm = new SimpleDateFormat("HH:mm");
 				String debut = yyyyMMdd.format(timestamp).toString()+"T"+HHmm.format(timestamp).toString();
 				request.setAttribute("datedebut", debut);
 				
-				//Date de fin de l'enchère
+				//Date de fin de l'enchï¿½re
 				Timestamp timestampFin = article.getDate_fin_encheres();
 				SimpleDateFormat yyyyMMddFin = new SimpleDateFormat("yyyy-MM-dd");
 				SimpleDateFormat HHmmFin = new SimpleDateFormat("HH:mm");
@@ -125,8 +124,6 @@ public class editionArticle extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-
 		
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
 		ArticleVenduManager articleManager = new ArticleVenduManager();
@@ -166,7 +163,6 @@ public class editionArticle extends HttpServlet {
 		else
 		{
 			try {
-				
 				util = utilisateurManager.selectionnerUtilisateur(pseudo, mdp);
 				session.setAttribute("credits", util.getCredit());
 				article = articleManager.select(Integer.parseInt(art));		
@@ -176,8 +172,6 @@ public class editionArticle extends HttpServlet {
 				String Nomarticle = request.getParameter("article");
 				String description = request.getParameter("description");
 				int categorie = Integer.valueOf(request.getParameter("categorie"));
-				String image = request.getParameter("image");
-				int prix = Integer.valueOf(request.getParameter("prix"));
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 				Timestamp debut = getTimestamp(format.parse(request.getParameter("debut")));
 				Timestamp fin = getTimestamp(format.parse(request.getParameter("fin")));
@@ -192,7 +186,6 @@ public class editionArticle extends HttpServlet {
 				article.setDescription(description);
 				article.setDate_debut_encheres(debut);
 				article.setDate_fin_encheres(fin);
-				article.setPrix_initial(prix);
 				article.setCategorieArticle(categ);
 				retrait.setCode_postal(cp);
 				retrait.setRue(rue);
@@ -204,15 +197,13 @@ public class editionArticle extends HttpServlet {
 				
 			} catch (BusinessException | ParseException e) {
 				// TODO Auto-generated catch block
-				request.setAttribute("error", "Problème d'enregistrement !");
+				request.setAttribute("error", "Problï¿½me d'enregistrement !");
 				e.printStackTrace();
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/ListeEncheres.jsp");
 			rd.forward(request, response);
 			
 		}
-		
-	
 	}
 	
 	private void lireDatedeFin(HttpServletRequest request, List<Integer> listeCodesErreur) {
@@ -242,7 +233,6 @@ public class editionArticle extends HttpServlet {
 		{
 			listeCodesErreur.add(CodesResultatServlets.EMPECHER_JAVASCRIPT);
 		}
-		
 	}
 
 	private void lirePrixNonNegatif(HttpServletRequest request, List<Integer> listeCodesErreur) {
@@ -251,7 +241,6 @@ public class editionArticle extends HttpServlet {
 		{
 			listeCodesErreur.add(CodesResultatServlets.PRIX_NON_NEGATIF);
 		}
-		
 	}
 
 	public static Timestamp getTimestamp(java.util.Date date) {
@@ -261,20 +250,15 @@ public class editionArticle extends HttpServlet {
 	private void lireParametreFormulaire(HttpServletRequest request, List<Integer> listeCodesErreur) {
 		String article = request.getParameter("article");
 		String description = request.getParameter("description");
-		int categorie = Integer.valueOf(request.getParameter("categorie"));
-		String image = request.getParameter("image");
-		String prix = request.getParameter("prix");
 		String debut = request.getParameter("debut");
 		String fin = request.getParameter("fin");
 		String rue = (String) request.getParameter("rue");
 		String cp = (String) request.getParameter("codepostal");
 		String ville = (String) request.getParameter("ville");
 		
-		if (article.equals("") || description.equals("") || prix.equals("") || rue.equals("") || cp.equals("")
+		if (article.equals("") || description.equals("") || rue.equals("") || cp.equals("")
 				|| ville.equals("") || ville.equals("") || debut.equals("") || fin.equals("")) {
 			listeCodesErreur.add(CodesResultatServlets.FORMULAIRE_AJOUT_SAISIE_OBLIGATOIRE);
 		}
 	}
-
-
 }

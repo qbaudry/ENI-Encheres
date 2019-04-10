@@ -50,7 +50,7 @@
 								<label for="image">Photo de l'article :</label>
 								<div class="custom-file">
 									<input type="file" class="custom-file-input" id="image"
-										accept="image/png, image/jpeg" name="image"> <label
+										accept="image/png, image/jpeg" name="image" disabled> <label
 										class="custom-file-label" for="image">Télécharger...</label>
 								</div>
 							</div>
@@ -58,7 +58,7 @@
 								<label for="prix">Mise à prix :</label>
 										<input type="number" class="form-control" id="prix"
 											name="prix" placeholder="Prix de l'article"
-											value="${article.prix_initial}" required>
+											value="${article.prix_initial}" disabled>
 							</div>
 
 							<div class="form-group col-12 col-lg-6 col-xl-6">
