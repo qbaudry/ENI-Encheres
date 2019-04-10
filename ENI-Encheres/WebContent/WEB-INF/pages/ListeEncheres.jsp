@@ -14,14 +14,15 @@
 		<div class="alert alert-dark mt-5" role="alert">
 			<h1>Listes des encheres</h1>
 			<hr>
-			<label for="filtre">Filtre :</label>
 			<div class="row">
-				<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-					<input type="text" class="form-control" id="filtre" name="filtre"
+				<div class="input-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-3">
+					<div class="input-group-prepend">
+					    <span class="input-group-text" id="filtre"><i class="fas fa-search"></i></span>
+					</div>
+						<input type="text" class="form-control" id="filtre" name="filtre"
 						placeholder="Le nom de l'article contient...">
-				</div>
-				<div
-					class="input-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-3">
+					</div>
+				<div class="input-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-3">
 					<div class="input-group-prepend">
 						<label class="input-group-text" for="inputGroupSelect">Catégorie</label>
 					</div>

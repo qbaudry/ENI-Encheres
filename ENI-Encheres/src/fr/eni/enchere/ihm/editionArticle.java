@@ -237,6 +237,7 @@ public class editionArticle extends HttpServlet {
 
 	private void lirePrixNonNegatif(HttpServletRequest request, List<Integer> listeCodesErreur) {
 		String prix = request.getParameter("prix");
+		System.out.println(prix);
 		if(prix.startsWith("-"))
 		{
 			listeCodesErreur.add(CodesResultatServlets.PRIX_NON_NEGATIF);
