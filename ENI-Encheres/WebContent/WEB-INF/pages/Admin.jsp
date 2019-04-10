@@ -14,9 +14,8 @@
 		<div class="alert alert-dark mt-5" role="alert">
 			<h1>Administration</h1>
 			<hr>
-			<div class="">
 			<c:if test="${listUser.size()>0}">
-				<table id="tableUsers" class="table scroll" style="overflow: auto!important; display: inline-block!important;">
+				<table id="tableUsers" class="table" style="overflow: auto!important; display: inline-block!important; width: 100%;">
 					<thead class="thead-dark">
 						<tr>
 							<th>Pseudo</th>
@@ -51,7 +50,6 @@
 					</c:forEach>
 				</table>
 			</c:if>
-			</div>
 		</div>
 	</div>
 </body>

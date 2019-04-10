@@ -15,11 +15,6 @@
 			  	<span class="text-uppercase font-weight-bold mt-1 mr-1">${identifiant}</span>
 			  	<span class="badge badge-light mt-1 mr-auto">${credits}$</span>
 			    <ul class="navbar-nav">
-			    	<c:if test="${admin}">
-				    	<li class="nav-item">      
-				        	<a class="nav-link font-weight-bold" href="${pageContext.request.contextPath}/AdminPage">Administration</a>
-				      	</li>
-			      	</c:if>
 			      	<li class="nav-item">      
 			        	<a class="nav-link" href="${pageContext.request.contextPath}/listeEncheres">Enchères</a>
 			      	</li>
@@ -28,10 +23,30 @@
 			      	</li>
 			    	  <li class="nav-item">      
 			    	    <a class="nav-link" href="${pageContext.request.contextPath}/monProfil">Mon profil</a>
-			     	 </li>
-			      	<li class="nav-item">      
-			        	<a class="nav-link" href="${pageContext.request.contextPath}/seDeconnecter">Déconnexion</a>
+			     	</li>
+			      	<li class="nav-item">
+			        	<a class="nav-link my-1 ml-2" href="${pageContext.request.contextPath}/seDeconnecter">
+				        	<i class="fas fa-power-off"></i>
+				        	<span class="d-lg-none">Déconnection</span>
+			        	</a>
 			    	</li>
+			    	<c:if test="${admin}">
+				    	<li class="nav-item">      
+				        	<a class="nav-link my-1 ml-2" href="${pageContext.request.contextPath}/AdminPage">
+					        	<i class="fas fa-user-cog"></i>
+					        	<span class="d-lg-none">Administration</span>
+				        	</a>
+				        	<!--<div class="dropdown show">
+							  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuAdmin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    <i class="fas fa-user-cog"></i>
+							  </a>
+							
+							  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuAdmin">
+							    <a class="dropdown-item" href="${pageContext.request.contextPath}/AdminPage">Administration Utilisateur</a>
+							  </div>
+							</div>-->
+				      	</li>
+			      	</c:if>
 				</ul>
 			</div>
 		</c:when>
@@ -43,7 +58,7 @@
 		        	<a class="nav-link" href="${pageContext.request.contextPath}/listeEncheres">Enchères</a>
 		      	  </li>
 			      <li class="nav-item">      
-			        <a class="nav-link" href="${pageContext.request.contextPath}/seConnecter">S'inscire - Se connecter</a>
+			        <a class="nav-link font-weight-bold" href="${pageContext.request.contextPath}/seConnecter">S'inscire / Se connecter</a>
 			      </li>
 			    </ul>
 			  </div>
