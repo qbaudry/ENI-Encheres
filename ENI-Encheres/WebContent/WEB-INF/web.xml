@@ -54,4 +54,14 @@
     <servlet-name>editionArticle</servlet-name>
     <url-pattern>/editionArticle</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>supprimerArticle</display-name>
+    <servlet-name>supprimerArticle</servlet-name>
+    <servlet-class>fr.eni.enchere.ihm.supprimerArticle</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>supprimerArticle</servlet-name>
+    <url-pattern>/supprimerArticle</url-pattern>
+  </servlet-mapping>
 </web-app>

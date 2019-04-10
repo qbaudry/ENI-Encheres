@@ -124,7 +124,7 @@
 							</div>
 							<div class="col-6">
 								<a class="btn btn-block btn-danger font-weight-bold"
-									href="${pageContext.request.contextPath}/listeEncheres">Supprimer Article</a>
+									href="${pageContext.request.contextPath}/supprimerArticle">Supprimer Article</a>
 							</div>
 						</div>
 					</div>
