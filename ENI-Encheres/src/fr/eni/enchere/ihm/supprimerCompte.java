@@ -52,39 +52,15 @@ public class supprimerCompte extends HttpServlet {
 		{
 			//Méthode d'accès bdd
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
-			RetraitManager retraitManager = new RetraitManager();
-			ArticleVenduManager artManager = new ArticleVenduManager();
+
 			
-			//Création d'objet
-			List<Retrait> lstretrait = new ArrayList();
-			List<ArticleVendu> lstArticle = new ArrayList();
+
 			Utilisateur util = new Utilisateur();
 			try {
 				
 				util = utilisateurManager.selectionnerUtilisateur(pseudo, mdp);
-				lstArticle = artManager.lister();
-				lstretrait = retraitManager.lister();
-				for(ArticleVendu artVendu: lstArticle)
-				{
-					if(util.getNoUtilisateur() == artVendu.getVendeur().getNoUtilisateur())
-					{
-						
-						for(Retrait retrait: lstretrait)
-						{
-							if(artVendu.getNo_article() == retrait.getNoArticle())
-							{
-								retraitManager.delete(retrait);
-								artManager.delete(artVendu);
-								utilisateurManager.deleteUser(util.getNoUtilisateur());
-							}
-							
-						}
-						
-						
-					}
-				}
 				
-				
+				utilisateurManager.deleteUser(util.getNoUtilisateur());
 				
 
 				session.invalidate();

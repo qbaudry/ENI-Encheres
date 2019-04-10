@@ -38,7 +38,7 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 					pstmt.executeUpdate();
 					pstmt.close();
 				}
-				
+
 				cnx.commit();
 			}catch(Exception e){
 				e.printStackTrace();
@@ -59,13 +59,16 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 			try{
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
-				if(r.getNoArticle()!=0){
+
+				if(r.getNoArticle()!=0 && r != null){
 					pstmt = cnx.prepareStatement(DELETE, PreparedStatement.RETURN_GENERATED_KEYS);
 					pstmt.setInt(1, r.getNoArticle());
 					pstmt.executeUpdate();
 					pstmt.close();
 				}
-				
+
+
+
 				cnx.commit();
 			}catch(Exception e){
 				e.printStackTrace();
@@ -123,14 +126,14 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
 				ResultSet rs;
-					pstmt = cnx.prepareStatement(LISTER);
-					rs = pstmt.executeQuery();
-					while(rs.next())
-					{
-						listRetrait.add( new Retrait(rs.getInt("no_article"),rs.getString("rue"),rs.getString("code_postal"),rs.getString("ville")));
-					}
-					rs.close();
-					pstmt.close();
+				pstmt = cnx.prepareStatement(LISTER);
+				rs = pstmt.executeQuery();
+				while(rs.next())
+				{
+					listRetrait.add( new Retrait(rs.getInt("no_article"),rs.getString("rue"),rs.getString("code_postal"),rs.getString("ville")));
+				}
+				rs.close();
+				pstmt.close();
 			}catch(Exception e){
 				e.printStackTrace();
 				cnx.rollback();
