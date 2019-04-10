@@ -178,7 +178,7 @@ public class ajoutArticle extends HttpServlet {
 				Categorie categ = new Categorie();
 				categ = categManager.select(categorie);
 				ArticleVendu artVendus = new ArticleVendu(article, description, debut, fin, prix, 0, util, categ, "test");
-
+				artVendus.setPaye(false);
 				//articleManager.save(artVendus);
 
 
