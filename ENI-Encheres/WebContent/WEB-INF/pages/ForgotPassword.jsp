@@ -22,18 +22,18 @@
 				<br>
 				<div class="row">
 					<div class="form-group col-12">
-				    	<label for="identifiant">Email :</label>
+				    	<label for="identifiant" class="font-weight-bold">Email :</label>
 				    	<input type="text" class="form-control" name="mail" id="mail" placeholder="exemple@example.com">
 					</div>
 					<div class="form-group col-12">
-				    	<label for="identifiant">Pseudo :</label>
+				    	<label for="identifiant" class="font-weight-bold">Pseudo :</label>
 				    	<input type="text" class="form-control" name="pseudo" id="pseudo" placeholder="Pseudo">
 					</div>
 				</div>
 				<hr>
-				<div class="row pb-3">
-					<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-				    	<button type="submit" class="btn btn-block btn-success">Envoyer</button>
+				<div class="row">
+					<div class="col-12">
+				    	<button type="submit" class="btn btn-block btn-success font-weight-bold">Envoyer</button>
 					</div>
 				</div>
 			</div>

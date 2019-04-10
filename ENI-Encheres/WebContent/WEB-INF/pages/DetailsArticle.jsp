@@ -91,7 +91,7 @@
 							<hr>
 							<div class="row">
 								<div class="col-12">
-									<button type="submit" class="btn btn-block btn-success">Enchérir</button>
+									<button type="submit" class="btn btn-block btn-success font-weight-bold">Enchérir</button>
 								</div>
 							</div>
 						</c:if>

@@ -14,7 +14,7 @@
 				<hr>
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-				    	<label for="pseudo">Pseudo :</label>
+				    	<label for="pseudo" class="font-weight-bold">Pseudo :</label>
 				    	<c:choose>
     						<c:when test="${!empty formulaire}">
 								<input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="Pseudo" value="${formulaire.pseudo}" required>
@@ -25,7 +25,7 @@
 					    </c:choose>
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-				    	<label for="nom">Nom :</label>
+				    	<label for="nom" class="font-weight-bold">Nom :</label>
 				    	<c:choose>
     						<c:when test="${!empty formulaire}">
 								<input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" value="${formulaire.nom}" required>
@@ -38,7 +38,7 @@
 				</div>
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-				    	<label for="prenom">Prénom :</label>
+				    	<label for="prenom" class="font-weight-bold">Prénom :</label>
 				    	<c:choose>
     						<c:when test="${!empty formulaire}">
 								<input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom" value="${formulaire.prenom}" required>
@@ -49,7 +49,7 @@
 					    </c:choose>
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" >
-				    	<label for="nom">Email :</label>
+				    	<label for="nom" class="font-weight-bold">Email :</label>
 				    	<c:choose>
     						<c:when test="${!empty formulaire}">
 								<input type="email" class="form-control" id="email" name="email" placeholder="Email" value="${formulaire.email}" required>
@@ -62,7 +62,7 @@
 				</div>
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-				    	<label for="telephone">Téléphone :</label>				    	
+				    	<label for="telephone" class="font-weight-bold">Téléphone :</label>				    	
 				    	<c:choose>
     						<c:when test="${!empty formulaire}">
 								<input type="text" pattern="\d{10}" class="form-control" id="telephone" name="telephone" placeholder="Téléphone" value="${formulaire.telephone}" required>
@@ -73,7 +73,7 @@
 					    </c:choose>
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-				    	<label for="rue">Rue :</label>
+				    	<label for="rue" class="font-weight-bold">Rue :</label>
 				    	<c:choose>
     						<c:when test="${!empty formulaire}">
 								<input type="text" class="form-control" id="rue" name="rue" placeholder="Rue" value="${formulaire.rue}" required>
@@ -86,7 +86,7 @@
 				</div>
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-				    	<label for="codepostal">Code postal :</label>
+				    	<label for="codepostal" class="font-weight-bold">Code postal :</label>
 				    	<c:choose>
     						<c:when test="${!empty formulaire}">
 								<input type="text" pattern="\d{5}" class="form-control" id="codepostal" name="codepostal" placeholder="Code postal" value="${formulaire.codePostal}" required>
@@ -97,7 +97,7 @@
 					    </c:choose>
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-				    	<label for="ville">Ville :</label>
+				    	<label for="ville" class="font-weight-bold">Ville :</label>
 				    	<c:choose>
     						<c:when test="${!empty formulaire}">
 								<input type="text" class="form-control" id="ville" name="ville" placeholder="Ville" value="${formulaire.ville}" required>
@@ -111,7 +111,7 @@
 				<hr>
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-				    	<label for="motdepasse">Mot de passe :</label>
+				    	<label for="motdepasse" class="font-weight-bold">Mot de passe :</label>
 				    	<c:choose>
     						<c:when test="${!empty formulaire}">
 								<input type="password" class="form-control" id="motdepasse" name="motdepasse" placeholder="Mot de passe" value="${formulaire.motDePasse}" readonly>
@@ -122,13 +122,13 @@
 					    </c:choose>
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-				    	<label for="motdepasse2a">Nouveau mot de passe :</label>
+				    	<label for="motdepasse2a" class="font-weight-bold">Nouveau mot de passe :</label>
 				    	<input type="password" class="form-control" id="motdepasse2a" name="motdepasse2a">
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						<label for="credit">Crédit :</label>
+						<label for="credit" class="font-weight-bold">Crédit :</label>
 						<div class="input-group">
 						  <div class="input-group-prepend">
 						    <span class="input-group-text" id="Crédit"><i class="far fa-credit-card"></i></span>
@@ -144,17 +144,17 @@
 						</div>
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-				    	<label for="motdepasse2b">Confirmation du nouveau mot de passe :</label>
+				    	<label for="motdepasse2b" class="font-weight-bold">Confirmation du nouveau mot de passe :</label>
 				    	<input type="password" class="form-control" id="motdepasse2b" name="motdepasse2b">
 					</div>
 				</div>
 				<hr>
 				<div class="row">
 					<div class="col-6">
-				    	<button type="submit" class="btn btn-block btn-success">Modifier</button>
+				    	<button type="submit" class="btn btn-block btn-success font-weight-bold">Modifier</button>
 					</div>
 					<div class="col-6">
-						<a class="btn btn-block btn-danger" href="${pageContext.request.contextPath}/supprimerCompte">Supprimer</a>
+						<a class="btn btn-block btn-danger font-weight-bold" href="${pageContext.request.contextPath}/supprimerCompte">Supprimer</a>
 					</div>
 				</div>
 			</div>
