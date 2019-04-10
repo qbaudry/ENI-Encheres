@@ -124,7 +124,7 @@
 				    	<label for="motdepasse2">Crédit :</label>
 				    	<c:choose>
     						<c:when test="${!empty formulaire}">
-								<input type="number" class="form-control" id="credit" name="credit" placeholder="Crédit" value="${formulaire.credit}" readonly>
+								<input type="number" class="form-control" id="credit" name="credit" placeholder="Crédit" value="${formulaire.credit}" readonly> 
 							</c:when>
 					        <c:otherwise>
 					        	<input type="number" class="form-control" id="credit" name="credit" placeholder="Crédit" readonly>
