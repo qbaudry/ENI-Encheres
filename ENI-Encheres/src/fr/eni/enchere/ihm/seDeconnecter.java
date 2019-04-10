@@ -29,7 +29,7 @@ public class seDeconnecter extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.invalidate();
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/seConnecter");
 		rd.forward(request, response);
 		
 		
