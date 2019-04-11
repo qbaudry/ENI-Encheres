@@ -73,7 +73,7 @@ public class ajoutArticle extends HttpServlet {
 		}
 		else
 		{
-			
+
 			CategorieManager categorieManager = new CategorieManager();
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 
@@ -87,8 +87,8 @@ public class ajoutArticle extends HttpServlet {
 				util = utilisateurManager.selectionnerUtilisateur(pseudo, mdp);
 				if(util.getPseudo() == null || util.getBanni()) {
 					session.invalidate();
-    				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
-    				rd.forward(request, response);
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+					rd.forward(request, response);
 				}
 				request.setAttribute("utilisateur", util);
 
@@ -148,8 +148,8 @@ public class ajoutArticle extends HttpServlet {
 				util = utilisateurManager.selectionnerUtilisateur(pseudo, mdp);
 				if(util.getPseudo() == null || util.getBanni()) {
 					session.invalidate();
-    				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
-    				rd.forward(request, response);
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+					rd.forward(request, response);
 				}
 				session.setAttribute("credits", util.getCredit());
 
@@ -176,7 +176,15 @@ public class ajoutArticle extends HttpServlet {
 				String fileName = "";
 				for (Part part : request.getParts()) {
 					fileName = getFileName(part);
-					part.write(uploadPath + File.separator + fileName);
+					if(fileName.equals(""))
+					{
+						break;
+					}
+					else
+					{
+						part.write(uploadPath + File.separator + fileName);
+					}
+					
 				}
 				System.out.println(fileName);
 				System.out.println(uploadPath + File.separator + fileName);
@@ -187,8 +195,8 @@ public class ajoutArticle extends HttpServlet {
 				//Recupere categorie
 				Categorie categ = new Categorie();
 				categ = categManager.select(categorie);
-				
-				
+
+
 				ArticleVendu artVendus = new ArticleVendu(article, description, debut, fin, prix, 0, util, categ, fileName);
 				artVendus.setPaye(false);
 				articleManager.save(artVendus);
@@ -268,17 +276,18 @@ public class ajoutArticle extends HttpServlet {
 	}
 
 	private String getFileName(Part part) {
+		
 		for (String content : part.getHeader("content-disposition").split(";")) {
 			if (content.trim().startsWith("filename"))
 			{
 				System.out.println(content);
-				String tes = content.substring(content.indexOf("=") + 2, content.length() - 1);
-				return content.substring(content.indexOf("=") + 2, content.length() - 1);
+				String image = content.substring(content.indexOf("=") + 2, content.length() - 1);
+				return image;
 			}
-				
+
 		}
 		//return "newfile.file";
-		return null;
+		return "newfile.file";
 	}
 
 
