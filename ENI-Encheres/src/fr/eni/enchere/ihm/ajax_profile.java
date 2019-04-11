@@ -53,6 +53,11 @@ public class ajax_profile extends HttpServlet {
             Utilisateur util = new Utilisateur();
     		try {
     			util = utilisateurManager.selectionnerUtilisateur(login, mdp);
+    			if(util.getPseudo() == null || util.getBanni()) {
+    				session.invalidate();
+    				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+    				rd.forward(request, response);
+    			}
     			request.setAttribute("formulaire", util);
     			
     			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/Profil.jsp");
@@ -74,8 +79,12 @@ public class ajax_profile extends HttpServlet {
         Utilisateur user = new Utilisateur();
         try {
 			user = utilisateurManager.selectionnerUtilisateur(loginUser, mdpUser);
-			if(user == null) {
+			if(user.getPseudo() == null || user.getBanni()) {
+				session.invalidate();
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+				rd.forward(request, response);
+			} else {
+				request.setAttribute("admin", user.isAdministrateur());
 			}
 		} catch (BusinessException e1) {
 			e1.printStackTrace();

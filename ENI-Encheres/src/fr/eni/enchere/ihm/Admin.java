@@ -36,9 +36,9 @@ public class Admin extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String login = (String) session.getAttribute("identifiant");
-        String mdp = (String) session.getAttribute("motdepasse");
-        ArrayList<Utilisateur> listUser = new ArrayList<Utilisateur>();
-        
+		String mdp = (String) session.getAttribute("motdepasse");
+		ArrayList<Utilisateur> listUser = new ArrayList<Utilisateur>();
+
 		UtilisateurManager utilManager = new UtilisateurManager();
 		Utilisateur util = null;
 		try {
@@ -47,25 +47,26 @@ public class Admin extends HttpServlet {
 		} catch (BusinessException e1) {
 			e1.printStackTrace();
 		}
-		if(util==null || !util.isAdministrateur()) {
+		if(util.getPseudo()==null || !util.isAdministrateur() || util.getBanni()) {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+			session.invalidate();
+			rd.forward(request, response);
+		}else {
+			try {
+				listUser = utilManager.lister();
+				request.setAttribute("listUser", listUser);
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}	
+
+			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/Admin.jsp");
 			rd.forward(request, response);
 		}
-		try {
-			listUser = utilManager.lister();
-			request.setAttribute("listUser", listUser);
-		} catch (BusinessException e) {
-			e.printStackTrace();
-		}	
-
-		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/Admin.jsp");
-		rd.forward(request, response);
-		
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doGet(request, response);
-		
+
 	}
 }

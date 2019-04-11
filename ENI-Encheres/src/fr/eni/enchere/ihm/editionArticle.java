@@ -78,6 +78,11 @@ public class editionArticle extends HttpServlet {
 			
 			try {
 				util = utilManager.selectionnerUtilisateur(pseudo, mdp);
+				if(util.getPseudo() == null || util.getBanni()) {
+					session.invalidate();
+    				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+    				rd.forward(request, response);
+				}
 				session.setAttribute("credits", util.getCredit());
 				article = articleManager.select(Integer.parseInt(art));		
 				retrait = retraitManager.select(Integer.parseInt(art));
@@ -164,6 +169,11 @@ public class editionArticle extends HttpServlet {
 		{
 			try {
 				util = utilisateurManager.selectionnerUtilisateur(pseudo, mdp);
+				if(util.getPseudo() == null || util.getBanni()) {
+					session.invalidate();
+    				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+    				rd.forward(request, response);
+				}
 				session.setAttribute("credits", util.getCredit());
 				article = articleManager.select(Integer.parseInt(art));		
 				retrait = retraitManager.select(Integer.parseInt(art));
