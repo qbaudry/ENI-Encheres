@@ -48,30 +48,29 @@ public class Admin extends HttpServlet {
 		} catch (BusinessException e1) {
 			e1.printStackTrace();
 		}
-		if(util==null || !util.isAdministrateur()) {
+		if(util.getPseudo()==null || !util.isAdministrateur() || util.getBanni()) {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+			session.invalidate();
+			rd.forward(request, response);
+		} else {
+			try {
+				listUser = utilManager.lister();
+				request.setAttribute("listUser", listUser);
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}
+			
+			CategorieManager categManager = new CategorieManager();
+			try {
+				listCateg = categManager.lister();
+				request.setAttribute("listCateg", listCateg);
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}
+
+			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/Admin.jsp");
 			rd.forward(request, response);
 		}
-		
-		
-		try {
-			listUser = utilManager.lister();
-			request.setAttribute("listUser", listUser);
-		} catch (BusinessException e) {
-			e.printStackTrace();
-		}
-		
-		CategorieManager categManager = new CategorieManager();
-		try {
-			listCateg = categManager.lister();
-			request.setAttribute("listCateg", listCateg);
-		} catch (BusinessException e) {
-			e.printStackTrace();
-		}	
-
-		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/Admin.jsp");
-		rd.forward(request, response);
-		
 	}
 
 	@Override

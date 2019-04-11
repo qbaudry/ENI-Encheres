@@ -87,6 +87,7 @@ public class supprimerCompte extends HttpServlet {
 
 		if(pseudo == null && mdp == null)
 		{
+			session.invalidate();
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
 			rd.forward(request, response);
 		}
@@ -101,7 +102,11 @@ public class supprimerCompte extends HttpServlet {
 			try {
 				if(utilisateurManager.selectionnerUtilisateur(pseudo, mdp).isAdministrateur()) {
 					util = utilisateurManager.selectionnerUtilisateur(request.getParameter("login"), request.getParameter("mdp"));
-				
+
+					if(util.getPseudo() == null || util.getBanni() || !util.isAdministrateur()) {
+						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+						rd.forward(request, response);
+					}
 					utilisateurManager.deleteUser(util.getNoUtilisateur());
 				}
 

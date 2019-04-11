@@ -20,6 +20,7 @@ import fr.eni.enchere.bll.CategorieManager;
 import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
+import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.BusinessException;
 
 /**
@@ -55,7 +56,9 @@ public class listeEncheres extends HttpServlet {
 		List<Integer> listeCodesErreur = new ArrayList<>();
 		
 		try {
-			if(utilManager.selectionnerUtilisateur(login, mdp)==null) {
+			Utilisateur util = utilManager.selectionnerUtilisateur(login, mdp);
+			if(util.getPseudo() == null || util.getBanni()) {
+				session.invalidate();
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
 				rd.forward(request, response);
 			}

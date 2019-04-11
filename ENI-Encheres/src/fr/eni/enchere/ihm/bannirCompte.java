@@ -51,7 +51,13 @@ public class bannirCompte extends HttpServlet {
 		{
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			Utilisateur util = new Utilisateur();
-			if(util==null || !util.isAdministrateur()) {
+			try {
+				util = utilisateurManager.selectionnerUtilisateur(pseudo, mdp);
+			} catch (BusinessException e1) {
+				e1.printStackTrace();
+			}
+			if(util.getPseudo() == null || util.getBanni() || !util.isAdministrateur()) {
+				session.invalidate();
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
 				rd.forward(request, response);
 			}
