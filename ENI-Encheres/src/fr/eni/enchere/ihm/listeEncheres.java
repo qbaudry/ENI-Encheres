@@ -57,11 +57,11 @@ public class listeEncheres extends HttpServlet {
 		
 		try {
 			Utilisateur util = utilManager.selectionnerUtilisateur(login, mdp);
-			if(util.getPseudo() == null || util.getBanni()) {
+			/*if(util.getPseudo() == null || util.getBanni()) {
 				session.invalidate();
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
 				rd.forward(request, response);
-			}
+			}*/
 			session.setAttribute("credits", utilManager.selectionnerUtilisateur(login, mdp).getCredit());
 			listeCategories = categorieManager.lister();
 			request.setAttribute("categories", listeCategories);
