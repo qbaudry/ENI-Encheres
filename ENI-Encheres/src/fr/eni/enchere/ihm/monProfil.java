@@ -53,6 +53,10 @@ public class monProfil extends HttpServlet {
             Utilisateur util = new Utilisateur();
     		try {
     			util = utilisateurManager.selectionnerUtilisateur(login, mdp);
+    			if(util==null) {
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+					rd.forward(request, response);
+				}
     			session.setAttribute("credits", util.getCredit());
     			request.setAttribute("formulaire", util);
     			
@@ -90,6 +94,10 @@ public class monProfil extends HttpServlet {
 	    Utilisateur util = new Utilisateur();
 		try {
 			util = utilisateurManager.selectionnerUtilisateur(login, mdp);
+			if(util==null) {
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+				rd.forward(request, response);
+			}
 		} catch (BusinessException e1) {
 			e1.printStackTrace();
 		}

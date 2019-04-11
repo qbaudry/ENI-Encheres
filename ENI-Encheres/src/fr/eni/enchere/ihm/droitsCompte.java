@@ -52,6 +52,10 @@ public class droitsCompte extends HttpServlet {
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			Utilisateur util = new Utilisateur();
 			try {
+				if(util==null || !util.isAdministrateur()) {
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+					rd.forward(request, response);
+				}
 				if(utilisateurManager.selectionnerUtilisateur(pseudo, mdp).isAdministrateur()) {
 					util = utilisateurManager.selectionnerUtilisateur(request.getParameter("login"), request.getParameter("mdp"));
 					utilisateurManager.adminUser(util);
