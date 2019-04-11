@@ -68,7 +68,7 @@ public class Admin extends HttpServlet {
 			} catch (BusinessException e) {
 				e.printStackTrace();
 			}
-
+			
 			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/Admin.jsp");
 			rd.forward(request, response);
 		}
