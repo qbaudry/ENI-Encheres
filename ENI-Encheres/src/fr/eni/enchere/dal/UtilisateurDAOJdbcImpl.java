@@ -17,7 +17,7 @@ import fr.eni.enchere.dal.CodesResultatDAL;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
-	private static final String INSERT_UTILISATEUR = "insert into UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	private static final String INSERT_UTILISATEUR = "insert into UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur, banni) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,0);";
 	private static final String SELECT_ACCOUNT_EXIST = "select count (*) AS count FROM UTILISATEURS WHERE pseudo = (?)";
 	private static final String SELECT_ACCOUNT = "select * FROM UTILISATEURS WHERE pseudo = (?) AND mot_de_passe = (?) ;";
 	private static final String SELECT_ACCOUNT_BY_EMAIL = "select * FROM UTILISATEURS WHERE pseudo = (?) AND email = (?) ;";
@@ -104,6 +104,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				util.setVille(rs.getString("ville"));
 				util.setCredit(rs.getInt("credit"));
 				util.setAdministrateur(rs.getBoolean("administrateur"));
+				util.setBanni(rs.getBoolean("banni"));
 				
 
 				premiereLigne=false;
@@ -151,8 +152,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				util.setVille(rs.getString("ville"));
 				util.setCredit(rs.getInt("credit"));
 				util.setAdministrateur(rs.getBoolean("administrateur"));
-				
-
+				util.setBanni(rs.getBoolean("banni"));
 				premiereLigne=false;
 			}
 		}
@@ -197,8 +197,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				util.setVille(rs.getString("ville"));
 				util.setCredit(rs.getInt("credit"));
 				util.setAdministrateur(rs.getBoolean("administrateur"));
-				
-
+				util.setBanni(rs.getBoolean("banni"));
 				premiereLigne=false;
 			}
 		}
@@ -328,7 +327,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				util.setVille(rs.getString("ville"));
 				util.setCredit(rs.getInt("credit"));
 				util.setAdministrateur(rs.getBoolean("administrateur"));
-				
+				util.setBanni(rs.getBoolean("banni"));				
 				listUtil.add(util);
 			}
 		}
