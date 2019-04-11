@@ -176,10 +176,15 @@ public class ajoutArticle extends HttpServlet {
 				String fileName = "";
 				for (Part part : request.getParts()) {
 					fileName = getFileName(part);
-
-					part.write(uploadPath + File.separator + fileName);
-
-
+					if(fileName.equals(""))
+					{
+						break;
+					}
+					else
+					{
+						part.write(uploadPath + File.separator + fileName);
+					}
+					
 				}
 				System.out.println(fileName);
 				System.out.println(uploadPath + File.separator + fileName);
