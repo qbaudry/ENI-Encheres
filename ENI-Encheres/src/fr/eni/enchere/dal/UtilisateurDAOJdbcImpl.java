@@ -26,6 +26,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String UPDATE_ACCOUNT_CREDIT ="update UTILISATEURS SET credit = (?) where no_utilisateur = (?)";
 	private static final String DELETE_ACCOUNT = "DELETE FROM UTILISATEURS WHERE no_utilisateur = (?);";
 	private static final String LISTER = "SELECT * FROM UTILISATEURS";
+	private static final String ADMIN = "update UTILISATEURS SET administrateur = (?) where no_utilisateur = (?)";
+	private static final String BAN = "update UTILISATEURS SET banni = (?) where no_utilisateur = (?)";
+	
 	
 	@Override
 	public void insert(Utilisateur util) throws BusinessException {
@@ -380,5 +383,73 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			throw businessException;
 		}
 		
+	}
+
+	@Override
+	public void bannirUser(Utilisateur util) throws BusinessException {
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			try
+			{
+				cnx.setAutoCommit(false);
+				PreparedStatement pstmt;
+				if(util.getNoUtilisateur()!=0)
+				{
+					pstmt = cnx.prepareStatement(BAN);
+					pstmt.setBoolean(1, !util.getBanni());
+					pstmt.setInt(2, util.getNoUtilisateur());
+					pstmt.executeUpdate();					
+					pstmt.close();
+				}
+				cnx.commit();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				cnx.rollback();
+				throw e;
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
+			throw businessException;
+		}		
+	}
+
+	@Override
+	public void adminUser(Utilisateur util) throws BusinessException {
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			try
+			{
+				cnx.setAutoCommit(false);
+				PreparedStatement pstmt;
+				if(util.getNoUtilisateur()!=0)
+				{
+					pstmt = cnx.prepareStatement(ADMIN);
+					pstmt.setBoolean(1, !util.isAdministrateur());
+					pstmt.setInt(2, util.getNoUtilisateur());
+					pstmt.executeUpdate();					
+					pstmt.close();
+				}
+				cnx.commit();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				cnx.rollback();
+				throw e;
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
+			throw businessException;
+		}
 	}
 }

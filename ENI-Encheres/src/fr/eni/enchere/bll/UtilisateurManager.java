@@ -94,4 +94,11 @@ public class UtilisateurManager {
 		return this.utilDAO.countPseudo(pseudo);
 	}
 
+	public void bannirUser(Utilisateur util) throws BusinessException{
+		this.utilDAO.bannirUser(util);
+	}
+	public void adminUser(Utilisateur util) throws BusinessException{
+		this.utilDAO.adminUser(util);
+	}
+
 }

@@ -17,5 +17,7 @@ public interface UtilisateurDAO {
 	public void updateCreditByID(Utilisateur util) throws BusinessException;
 	public void deleteUser(int id) throws BusinessException;
 	public List<Utilisateur> lister() throws BusinessException;
-	boolean countPseudo(String pseudo) throws BusinessException;
+	public boolean countPseudo(String pseudo) throws BusinessException;
+	public void bannirUser(Utilisateur util) throws BusinessException;
+	public void adminUser(Utilisateur util) throws BusinessException;
 }
