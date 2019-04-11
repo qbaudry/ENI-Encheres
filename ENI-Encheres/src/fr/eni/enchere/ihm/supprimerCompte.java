@@ -79,8 +79,39 @@ public class supprimerCompte extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		HttpSession session = request.getSession();
+		String pseudo = (String) session.getAttribute("identifiant");
+		String mdp = (String) session.getAttribute("motdepasse");
+
+
+
+		if(pseudo == null && mdp == null)
+		{
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+			rd.forward(request, response);
+		}
+		else
+		{
+			//Méthode d'accès bdd
+			UtilisateurManager utilisateurManager = new UtilisateurManager();
+
+			
+
+			Utilisateur util = new Utilisateur();
+			try {
+				if(utilisateurManager.selectionnerUtilisateur(pseudo, mdp).isAdministrateur()) {
+					util = utilisateurManager.selectionnerUtilisateur(request.getParameter("login"), request.getParameter("mdp"));
+				
+					utilisateurManager.deleteUser(util.getNoUtilisateur());
+				
+//					RequestDispatcher rd = request.getRequestDispatcher("/AdminPage");
+//					rd.forward(request, response);
+				}
+
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

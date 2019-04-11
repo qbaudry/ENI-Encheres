@@ -31,7 +31,7 @@ public class ArticleVenduManager {
 		EnchereManager enchereMngr = new EnchereManager();
 		Retrait ret = retManager.select(article.getNo_article());		
 		retManager.delete(ret);
-		if(article.getConcerne() != null) {
+		if(article.getConcerne() != null && !article.getPaye()) {
 			Utilisateur util = article.getConcerne().getEncherit();
 			util.setCredit(util.getCredit()+article.getConcerne().getMontant_enchere());
 			utilManager.UpdateUtilisateurCreditById(util);

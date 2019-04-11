@@ -47,3 +47,14 @@ function modifUser(pseudo,mdp){
 			});
 	$("#modalProfil").modal();
 }
+function deleteUser(pseudo,mdp){
+	$.post( "/ENI-Encheres/supprimerCompte",
+			{ login:pseudo,
+		mdp:mdp
+			})
+			.done(function( data ) {
+				location.reload(true);
+			});
+	
+}
+

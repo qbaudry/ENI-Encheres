@@ -26,7 +26,7 @@ $(document).ready(function() {
 			if (distance < 0) {
 				clearInterval(x);
 				document.getElementById("demo").innerHTML = "Enchere terminée !";
-				location.reload(true)
+				location.reload(true);
 			}
 		}, 1000);
 	}
