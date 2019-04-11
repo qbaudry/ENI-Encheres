@@ -87,7 +87,7 @@ public class seConnecter extends HttpServlet {
 				}
 				else
 				{
-					if(util.getPseudo().equals(identifiant) && util.getMotDePasse().equals(mdp))
+					if(util.getPseudo().equals(identifiant) && util.getMotDePasse().equals(mdp) && !util.getBanni())
 					{
 						HttpSession session = request.getSession();
 				        session.setAttribute("identifiant", util.getPseudo());
