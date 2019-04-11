@@ -17,7 +17,7 @@ import fr.eni.enchere.dal.CodesResultatDAL;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
-	private static final String INSERT_UTILISATEUR = "insert into UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	private static final String INSERT_UTILISATEUR = "insert into UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur, banni) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,0);";
 	private static final String SELECT_ACCOUNT_EXIST = "select count (*) AS count FROM UTILISATEURS WHERE pseudo = (?)";
 	private static final String SELECT_ACCOUNT = "select * FROM UTILISATEURS WHERE pseudo = (?) AND mot_de_passe = (?) ;";
 	private static final String SELECT_ACCOUNT_BY_EMAIL = "select * FROM UTILISATEURS WHERE pseudo = (?) AND email = (?) ;";
@@ -26,6 +26,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String UPDATE_ACCOUNT_CREDIT ="update UTILISATEURS SET credit = (?) where no_utilisateur = (?)";
 	private static final String DELETE_ACCOUNT = "DELETE FROM UTILISATEURS WHERE no_utilisateur = (?);";
 	private static final String LISTER = "SELECT * FROM UTILISATEURS";
+	private static final String ADMIN = "update UTILISATEURS SET administrateur = (?) where no_utilisateur = (?)";
+	private static final String BAN = "update UTILISATEURS SET banni = (?) where no_utilisateur = (?)";
+	
 	
 	@Override
 	public void insert(Utilisateur util) throws BusinessException {
@@ -101,6 +104,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				util.setVille(rs.getString("ville"));
 				util.setCredit(rs.getInt("credit"));
 				util.setAdministrateur(rs.getBoolean("administrateur"));
+				util.setBanni(rs.getBoolean("banni"));
 				
 
 				premiereLigne=false;
@@ -148,8 +152,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				util.setVille(rs.getString("ville"));
 				util.setCredit(rs.getInt("credit"));
 				util.setAdministrateur(rs.getBoolean("administrateur"));
-				
-
+				util.setBanni(rs.getBoolean("banni"));
 				premiereLigne=false;
 			}
 		}
@@ -194,8 +197,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				util.setVille(rs.getString("ville"));
 				util.setCredit(rs.getInt("credit"));
 				util.setAdministrateur(rs.getBoolean("administrateur"));
-				
-
+				util.setBanni(rs.getBoolean("banni"));
 				premiereLigne=false;
 			}
 		}
@@ -325,7 +327,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				util.setVille(rs.getString("ville"));
 				util.setCredit(rs.getInt("credit"));
 				util.setAdministrateur(rs.getBoolean("administrateur"));
-				
+				util.setBanni(rs.getBoolean("banni"));				
 				listUtil.add(util);
 			}
 		}
@@ -380,5 +382,73 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			throw businessException;
 		}
 		
+	}
+
+	@Override
+	public void bannirUser(Utilisateur util) throws BusinessException {
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			try
+			{
+				cnx.setAutoCommit(false);
+				PreparedStatement pstmt;
+				if(util.getNoUtilisateur()!=0)
+				{
+					pstmt = cnx.prepareStatement(BAN);
+					pstmt.setBoolean(1, !util.getBanni());
+					pstmt.setInt(2, util.getNoUtilisateur());
+					pstmt.executeUpdate();					
+					pstmt.close();
+				}
+				cnx.commit();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				cnx.rollback();
+				throw e;
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
+			throw businessException;
+		}		
+	}
+
+	@Override
+	public void adminUser(Utilisateur util) throws BusinessException {
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			try
+			{
+				cnx.setAutoCommit(false);
+				PreparedStatement pstmt;
+				if(util.getNoUtilisateur()!=0)
+				{
+					pstmt = cnx.prepareStatement(ADMIN);
+					pstmt.setBoolean(1, !util.isAdministrateur());
+					pstmt.setInt(2, util.getNoUtilisateur());
+					pstmt.executeUpdate();					
+					pstmt.close();
+				}
+				cnx.commit();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				cnx.rollback();
+				throw e;
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
+			throw businessException;
+		}
 	}
 }
