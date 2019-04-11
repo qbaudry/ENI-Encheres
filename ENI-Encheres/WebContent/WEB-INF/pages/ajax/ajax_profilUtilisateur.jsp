@@ -38,10 +38,10 @@
     		<div class="col-4">
 				<c:choose>
 	 					<c:when test="${!util.administrateur}">
-						<a class="btn btn-block btn-success font-weight-bold" href="">Ajout droits</a>
+						<a class="btn btn-block btn-success font-weight-bold" href="" onclick="adminUser('${util.pseudo}','${util.motDePasse}')">Ajout droits</a>
 					</c:when>
 			        <c:otherwise>
-			        	<a class="btn btn-block btn-danger font-weight-bold" href="">Retirer droits</a>
+			        	<a class="btn btn-block btn-danger font-weight-bold" href="" onclick="adminUser('${util.pseudo}','${util.motDePasse}')">Retirer droits</a>
 			        </c:otherwise>
 			    </c:choose>
 		    </div>

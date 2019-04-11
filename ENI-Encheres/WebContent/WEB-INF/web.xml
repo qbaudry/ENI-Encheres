@@ -74,4 +74,14 @@
     <servlet-name>bannirCompte</servlet-name>
     <url-pattern>/bannirCompte</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>droitsCompte</display-name>
+    <servlet-name>droitsCompte</servlet-name>
+    <servlet-class>fr.eni.enchere.ihm.droitsCompte</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>droitsCompte</servlet-name>
+    <url-pattern>/droitsCompte</url-pattern>
+  </servlet-mapping>
 </web-app>

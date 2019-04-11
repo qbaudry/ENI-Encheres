@@ -67,3 +67,13 @@ function banUser(pseudo,mdp){
 				location.reload(true);
 			});
 }
+
+function adminUser(pseudo,mdp){
+	$.post( "/ENI-Encheres/droitsCompte",
+			{ login:pseudo,
+			  mdp:mdp
+			})
+			.done(function( data ) {
+				location.reload(true);
+			});
+}
