@@ -36,9 +36,10 @@ public class Admin extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String login = (String) session.getAttribute("identifiant");
-		String mdp = (String) session.getAttribute("motdepasse");
-		ArrayList<Utilisateur> listUser = new ArrayList<Utilisateur>();
-
+        String mdp = (String) session.getAttribute("motdepasse");
+        ArrayList<Utilisateur> listUser = new ArrayList<Utilisateur>();
+        List<Categorie> listCateg = new ArrayList<Categorie>();
+        
 		UtilisateurManager utilManager = new UtilisateurManager();
 		Utilisateur util = null;
 		try {
@@ -47,17 +48,26 @@ public class Admin extends HttpServlet {
 		} catch (BusinessException e1) {
 			e1.printStackTrace();
 		}
+		
 		if(util.getPseudo()==null || !util.isAdministrateur() || util.getBanni()) {
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
 			session.invalidate();
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
 			rd.forward(request, response);
-		}else {
+		} else {
 			try {
 				listUser = utilManager.lister();
 				request.setAttribute("listUser", listUser);
 			} catch (BusinessException e) {
 				e.printStackTrace();
-			}	
+			}
+			
+			CategorieManager categManager = new CategorieManager();
+			try {
+				listCateg = categManager.lister();
+				request.setAttribute("listCateg", listCateg);
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}
 
 			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/Admin.jsp");
 			rd.forward(request, response);
@@ -66,7 +76,17 @@ public class Admin extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		super.doGet(request, response);
-
+		
+		CategorieManager categorieManager = new CategorieManager();
+		Categorie categ = new Categorie(request.getParameter("categorie"));
+		
+		try {
+			categorieManager.save(categ);
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		doGet(request, response);
 	}
 }

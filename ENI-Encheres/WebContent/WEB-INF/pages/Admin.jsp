@@ -14,6 +14,7 @@
 		<div class="alert alert-dark mt-5" role="alert">
 			<h1>Administration</h1>
 			<hr>
+			<h4 class="pb-2">Utilisateurs</h4>
 			<c:if test="${listUser.size()>0}">
 				<table id="tableUsers" class="table" style="overflow: auto!important; display: inline-block!important; width: 100%;">
 					<thead class="thead-dark">
@@ -48,22 +49,57 @@
 					</c:forEach>
 				</table>
 			</c:if>
+			<hr>
+			<h4 class="pb-2">Catégories</h4>
+			<div class="row">
+				<div class="col-6">
+					<c:if test="${listCateg.size()>0}">
+						<table id="tableCategories" class="table" style="overflow: auto!important; width: 100%;">
+							<thead class="thead-dark">
+								<tr>
+									<th>Numéro</th>
+									<th>Libelle</th>
+								</tr>
+							</thead>
+							<c:forEach var="categorie" items="${listCateg}">
+								<tr>
+									<td>${categorie.noCategorie}</td>
+									<td>${categorie.libelle}</td>
+								</tr>
+							</c:forEach>
+						</table>
+					</c:if>
+				</div>
+				<div class="col-6">
+					<form method="post" action="${pageContext.request.contextPath}/AdminPage">
+						<h5 class="pb-2">Ajout d'une catégorie :</h5>
+						<hr>
+						<div class="form-group col-12">
+					    	<label for="categorie" class="font-weight-bold">Libelle de la catégorie :</label>
+							<input type="text" class="form-control" id=categorie name="categorie" placeholder="Libelle" required>
+						</div>
+						<div class="col-12 pb-3">
+					    	<button type="submit" class="btn btn-block btn-success font-weight-bold">Ajouter</button>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>
 <div class="modal" id="modalProfil">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="titreModal"></h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body" id="corpsModal">
-						
-					</div>
-				</div>
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="titreModal"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="corpsModal">
+				
 			</div>
 		</div>
+	</div>
+</div>
 </html>

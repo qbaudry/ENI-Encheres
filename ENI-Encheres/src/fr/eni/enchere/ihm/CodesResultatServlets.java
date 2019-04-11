@@ -11,6 +11,7 @@ public abstract class CodesResultatServlets {
 	public static final Integer CODE_POSTAL_INSCIPTION_SAISIE_OBLIGATOIRE = 30003;
 	public static final Integer MOT_DE_PASSE_INSCIPTION_SAISIE_OBLIGATOIRE = 30004;
 	public static final Integer PSEUDO_INSCIPTION_EXIST = 30009;
+	public static final Integer MOT_DE_PASSE_ACTUEL_INCORRECT = 30010;
 	
 	// Article
 	

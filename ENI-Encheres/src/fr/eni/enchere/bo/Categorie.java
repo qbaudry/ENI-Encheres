@@ -15,6 +15,9 @@ public class Categorie {
 		this.noCategorie = noCategorie;
 		this.libelle = libelle;
 	}
+	public Categorie(String libelle) {
+		this.libelle = libelle;
+	}
 	
 	public Categorie() {
 		
