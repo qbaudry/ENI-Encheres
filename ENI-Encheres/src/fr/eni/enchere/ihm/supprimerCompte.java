@@ -50,7 +50,7 @@ public class supprimerCompte extends HttpServlet {
 		}
 		else
 		{
-			//Méthode d'accès bdd
+			//Mï¿½thode d'accï¿½s bdd
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 
 			
@@ -62,7 +62,6 @@ public class supprimerCompte extends HttpServlet {
 				
 				utilisateurManager.deleteUser(util.getNoUtilisateur());
 				
-
 				session.invalidate();
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
 				rd.forward(request, response);
@@ -93,7 +92,7 @@ public class supprimerCompte extends HttpServlet {
 		}
 		else
 		{
-			//Méthode d'accès bdd
+			//Mï¿½thode d'accï¿½s bdd
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 
 			

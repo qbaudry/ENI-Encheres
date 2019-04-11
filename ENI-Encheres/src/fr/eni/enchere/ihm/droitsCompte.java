@@ -52,11 +52,18 @@ public class droitsCompte extends HttpServlet {
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			Utilisateur util = new Utilisateur();
 			try {
-				if(util.getPseudo() == null || util.getBanni() || !util.isAdministrateur()) {
-					session.invalidate();
-    				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
-    				rd.forward(request, response);
-				}
+				util = utilisateurManager.selectionnerUtilisateur(pseudo, mdp);
+			} catch (BusinessException e1) {
+				e1.printStackTrace();
+			}
+			
+			if(util.getPseudo() == null || util.getBanni() || !util.isAdministrateur()) {
+				session.invalidate();
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+				rd.forward(request, response);
+			}
+			
+			try {
 				if(utilisateurManager.selectionnerUtilisateur(pseudo, mdp).isAdministrateur()) {
 					util = utilisateurManager.selectionnerUtilisateur(request.getParameter("login"), request.getParameter("mdp"));
 					utilisateurManager.adminUser(util);
