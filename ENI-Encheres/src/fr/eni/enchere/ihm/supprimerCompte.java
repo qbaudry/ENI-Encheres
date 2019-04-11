@@ -103,9 +103,6 @@ public class supprimerCompte extends HttpServlet {
 					util = utilisateurManager.selectionnerUtilisateur(request.getParameter("login"), request.getParameter("mdp"));
 				
 					utilisateurManager.deleteUser(util.getNoUtilisateur());
-				
-//					RequestDispatcher rd = request.getRequestDispatcher("/AdminPage");
-//					rd.forward(request, response);
 				}
 
 			} catch (BusinessException e) {

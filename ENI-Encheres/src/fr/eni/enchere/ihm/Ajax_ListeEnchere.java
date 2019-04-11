@@ -44,6 +44,7 @@ public class Ajax_ListeEnchere extends HttpServlet {
 		HttpSession session = request.getSession();
 		String login = (String) session.getAttribute("identifiant");
 		String mdp = (String) session.getAttribute("motdepasse");
+		
 
 		CategorieManager categorieManager = new CategorieManager();
 		ArticleVenduManager articleManager = new ArticleVenduManager();

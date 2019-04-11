@@ -51,6 +51,10 @@ public class bannirCompte extends HttpServlet {
 		{
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			Utilisateur util = new Utilisateur();
+			if(util==null || !util.isAdministrateur()) {
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+				rd.forward(request, response);
+			}
 			try {
 				if(utilisateurManager.selectionnerUtilisateur(pseudo, mdp).isAdministrateur()) {
 					util = utilisateurManager.selectionnerUtilisateur(request.getParameter("login"), request.getParameter("mdp"));

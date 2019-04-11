@@ -55,6 +55,10 @@ public class listeEncheres extends HttpServlet {
 		List<Integer> listeCodesErreur = new ArrayList<>();
 		
 		try {
+			if(utilManager.selectionnerUtilisateur(login, mdp)==null) {
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+				rd.forward(request, response);
+			}
 			session.setAttribute("credits", utilManager.selectionnerUtilisateur(login, mdp).getCredit());
 			listeCategories = categorieManager.lister();
 			request.setAttribute("categories", listeCategories);
