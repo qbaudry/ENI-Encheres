@@ -1,19 +1,35 @@
 package fr.eni.enchere.ihm;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+
+import org.apache.commons.io.FilenameUtils;
+import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.apache.tomcat.util.http.fileupload.RequestContext;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
+
+import com.sun.xml.internal.txw2.Document;
 
 import fr.eni.enchere.BusinessException;
 import fr.eni.enchere.bll.ArticleVenduManager;
@@ -28,7 +44,9 @@ import fr.eni.enchere.bo.Utilisateur;
 /**
  * Servlet implementation class ajoutArticle
  */
-@MultipartConfig
+@MultipartConfig(fileSizeThreshold = 1024 * 1024,
+maxFileSize = 1024 * 1024 * 5, 
+maxRequestSize = 1024 * 1024 * 5 * 5)
 public class ajoutArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -78,7 +96,7 @@ public class ajoutArticle extends HttpServlet {
 				e.printStackTrace();
 				request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 			}
-			
+
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/AjoutArticle.jsp");
 			rd.forward(request, response); 
 		}
@@ -99,15 +117,15 @@ public class ajoutArticle extends HttpServlet {
 		lirePrixNonNegatif(request, listeCodesErreur);
 		lireJavaScript(request, listeCodesErreur);
 		lireDatedeFin(request, listeCodesErreur);
-		
+
 		HttpSession session = request.getSession();
 		String pseudo = (String) session.getAttribute("identifiant");
 		String mdp = (String) session.getAttribute("motdepasse");
 
 		Utilisateur util = new Utilisateur();
 		ArticleVendu art = new ArticleVendu(request.getParameter("article"), request.getParameter("description"), Integer.valueOf(request.getParameter("prix")));
-		
-		
+
+
 		if(listeCodesErreur.size()>0)
 		{
 			System.out.println("erreur : " + listeCodesErreur);
@@ -119,8 +137,12 @@ public class ajoutArticle extends HttpServlet {
 		else
 		{
 			try {
+
+				//Recupere utilisateur et ses infos
 				util = utilisateurManager.selectionnerUtilisateur(pseudo, mdp);
 				session.setAttribute("credits", util.getCredit());
+
+				//Recuere les infos de article
 				String article = request.getParameter("article");
 				String description = request.getParameter("description");
 				int categorie = Integer.valueOf(request.getParameter("categorie"));
@@ -131,22 +153,45 @@ public class ajoutArticle extends HttpServlet {
 				String rue = (String) request.getParameter("rue");
 				String cp = (String) request.getParameter("codepostal");
 				String ville = (String) request.getParameter("ville");
-				
+
+
+				//Gestion image
+				String uploadPath = getServletContext().getRealPath("") + File.separator + "images";
+				File uploadDir = new File(uploadPath);
+				if (!uploadDir.exists())
+					uploadDir.mkdir();
+
+
+				String fileName = "";
+				for (Part part : request.getParts()) {
+					fileName = getFileName(part);
+					part.write(uploadPath + File.separator + fileName);
+				}
+				request.setAttribute("message", "File " + fileName + " has uploaded successfully!");
+				System.out.println(uploadPath);
+				System.out.println("File " + fileName + " has uploaded successfully!");
+
+				//Recupere categorie
 				Categorie categ = new Categorie();
 				categ = categManager.select(categorie);
-				ArticleVendu artVendus = new ArticleVendu(article, description, debut, fin, prix, 0, util, categ, "test");
+				
+				
+				ArticleVendu artVendus = new ArticleVendu(article, description, debut, fin, prix, 0, util, categ, fileName);
 				artVendus.setPaye(false);
 				articleManager.save(artVendus);
 
 				Retrait retrait = new Retrait(artVendus.getNo_article(), rue, cp, ville);
 				retraitManager.save(retrait);
-				
+
 				RequestDispatcher rd = request.getRequestDispatcher("/listeEncheres");
 				rd.forward(request, response);
 
+
+
+
 			} catch (BusinessException | ParseException e) {
 				// TODO Auto-generated catch block
-				request.setAttribute("error", "Probl�me d'enregistrement !");
+				request.setAttribute("error", "Probleme d'enregistrement !");
 				e.printStackTrace();
 			}
 		}
@@ -177,7 +222,7 @@ public class ajoutArticle extends HttpServlet {
 		{
 			listeCodesErreur.add(CodesResultatServlets.EMPECHER_JAVASCRIPT);
 		}
-		
+
 	}
 
 	private void lirePrixNonNegatif(HttpServletRequest request, List<Integer> listeCodesErreur) {
@@ -186,7 +231,7 @@ public class ajoutArticle extends HttpServlet {
 		{
 			listeCodesErreur.add(CodesResultatServlets.PRIX_NON_NEGATIF);
 		}
-		
+
 	}
 
 	public static Timestamp getTimestamp(java.util.Date date) {
@@ -202,10 +247,20 @@ public class ajoutArticle extends HttpServlet {
 		String rue = (String) request.getParameter("rue");
 		String cp = (String) request.getParameter("codepostal");
 		String ville = (String) request.getParameter("ville");
-		
+
 		if (article.equals("") || description.equals("") || prix.equals("") || rue.equals("") || cp.equals("")
 				|| ville.equals("") || ville.equals("") || debut.equals("") || fin.equals("")) {
 			listeCodesErreur.add(CodesResultatServlets.FORMULAIRE_AJOUT_SAISIE_OBLIGATOIRE);
 		}
 	}
+
+	private String getFileName(Part part) {
+		for (String content : part.getHeader("content-disposition").split(";")) {
+			if (content.trim().startsWith("filename"))
+				return content.substring(content.indexOf("=") + 2, content.length() - 1);
+		}
+		return "default.file";
+	}
+
+
 }
