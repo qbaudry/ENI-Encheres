@@ -64,4 +64,14 @@
     <servlet-name>supprimerArticle</servlet-name>
     <url-pattern>/supprimerArticle</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>bannirCompte</display-name>
+    <servlet-name>bannirCompte</servlet-name>
+    <servlet-class>fr.eni.enchere.ihm.bannirCompte</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>bannirCompte</servlet-name>
+    <url-pattern>/bannirCompte</url-pattern>
+  </servlet-mapping>
 </web-app>

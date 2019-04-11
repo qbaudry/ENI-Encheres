@@ -76,6 +76,8 @@ public class ajax_profile extends HttpServlet {
 			user = utilisateurManager.selectionnerUtilisateur(loginUser, mdpUser);
 			if(user == null) {
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
+			} else {
+				request.setAttribute("admin", user.isAdministrateur());
 			}
 		} catch (BusinessException e1) {
 			e1.printStackTrace();
