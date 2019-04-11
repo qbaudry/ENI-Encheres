@@ -14,15 +14,15 @@ import fr.eni.enchere.bll.UtilisateurManager;
 import fr.eni.enchere.bo.Utilisateur;
 
 /**
- * Servlet implementation class bannirCompte
+ * Servlet implementation class droitsCompte
  */
-public class bannirCompte extends HttpServlet {
+public class droitsCompte extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public bannirCompte() {
+    public droitsCompte() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -54,7 +54,7 @@ public class bannirCompte extends HttpServlet {
 			try {
 				if(utilisateurManager.selectionnerUtilisateur(pseudo, mdp).isAdministrateur()) {
 					util = utilisateurManager.selectionnerUtilisateur(request.getParameter("login"), request.getParameter("mdp"));
-					utilisateurManager.bannirUser(util);
+					utilisateurManager.adminUser(util);
 				}
 			} catch (BusinessException e) {
 				e.printStackTrace();
