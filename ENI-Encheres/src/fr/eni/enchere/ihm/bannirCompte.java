@@ -54,7 +54,7 @@ public class bannirCompte extends HttpServlet {
 			try {
 				if(utilisateurManager.selectionnerUtilisateur(pseudo, mdp).isAdministrateur()) {
 					util = utilisateurManager.selectionnerUtilisateur(request.getParameter("login"), request.getParameter("mdp"));
-					//utilisateurManager.banUser(util.getNoUtilisateur());
+					utilisateurManager.bannirUser(util);
 				}
 
 			} catch (BusinessException e) {
