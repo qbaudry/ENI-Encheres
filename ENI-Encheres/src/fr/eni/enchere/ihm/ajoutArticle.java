@@ -167,17 +167,19 @@ public class ajoutArticle extends HttpServlet {
 
 
 				//Gestion image
-				String uploadPath = getServletContext().getRealPath("") + File.separator + "images";
+				String uploadPath = System.getProperty("user.home") + "\\git\\ENI-Encheres\\ENI-Encheres\\WebContent\\images";
 				File uploadDir = new File(uploadPath);
 				if (!uploadDir.exists())
 					uploadDir.mkdir();
 
-
+				System.out.println(uploadDir);
 				String fileName = "";
 				for (Part part : request.getParts()) {
 					fileName = getFileName(part);
 					part.write(uploadPath + File.separator + fileName);
 				}
+				System.out.println(fileName);
+				System.out.println(uploadPath + File.separator + fileName);
 				request.setAttribute("message", "File " + fileName + " has uploaded successfully!");
 				System.out.println(uploadPath);
 				System.out.println("File " + fileName + " has uploaded successfully!");
@@ -268,9 +270,15 @@ public class ajoutArticle extends HttpServlet {
 	private String getFileName(Part part) {
 		for (String content : part.getHeader("content-disposition").split(";")) {
 			if (content.trim().startsWith("filename"))
+			{
+				System.out.println(content);
+				String tes = content.substring(content.indexOf("=") + 2, content.length() - 1);
 				return content.substring(content.indexOf("=") + 2, content.length() - 1);
+			}
+				
 		}
-		return "default.file";
+		//return "newfile.file";
+		return null;
 	}
 
 
