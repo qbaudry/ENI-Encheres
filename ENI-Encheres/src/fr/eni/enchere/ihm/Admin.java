@@ -48,9 +48,10 @@ public class Admin extends HttpServlet {
 		} catch (BusinessException e1) {
 			e1.printStackTrace();
 		}
+		
 		if(util.getPseudo()==null || !util.isAdministrateur() || util.getBanni()) {
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
 			session.invalidate();
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
 			rd.forward(request, response);
 		} else {
 			try {
