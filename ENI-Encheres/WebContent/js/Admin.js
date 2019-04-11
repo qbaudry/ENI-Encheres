@@ -1,9 +1,9 @@
 $(document).ready(function() {
     $('#tableUsers').DataTable( {
         "language": {
-            "lengthMenu": "_MENU_ lignes par page",
+            "lengthMenu": "_MENU_ Lignes par page",
             "zeroRecords": "Aucun utilisateur",
-            "info": "page _PAGE_/_PAGES_",
+            "info": "Page _PAGE_/_PAGES_",
             "infoEmpty": "",
             "infoFiltered": "",
             "search": "Rechercher:",
@@ -13,7 +13,7 @@ $(document).ready(function() {
                 "next":       "Suivante",
                 "previous":   "Précédante"
             },
-            "infoEmpty":      "0 résultas",
+            "infoEmpty":      "0 Résultas",
             "infoPostFix":    "",
             "thousands":      " ",
         },
@@ -29,8 +29,7 @@ $(document).ready(function() {
         	{ "bSortable": true },
         	{ "visible":false },
         	{ "bSortable": true },
-        	{ "bSortable": true },
-        	{ "bSortable": false }
+        	{ "bSortable": true }
         	]
     
     });

@@ -9,3 +9,8 @@
     text-decoration: underline!important;
     cursor: pointer!important;
 }
+
+tr:hover {
+	background-color: #f8f9fa!important;
+	cursor: pointer;
+}
