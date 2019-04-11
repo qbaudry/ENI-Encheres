@@ -73,6 +73,7 @@
 			</div>
 		</div>
 	</c:forEach>
+	<!--
 	<nav class="col-12" id="pagination">
 	  <ul class="pagination btn-block">
 	    <li class="page-item btn-block disabled">
@@ -86,4 +87,5 @@
 	    </li>
 	  </ul>
 	</nav>
+	-->
 </c:if>

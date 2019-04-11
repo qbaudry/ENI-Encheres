@@ -18,7 +18,6 @@ $(document).ready(function() {
             "thousands":      " ",
         },
         "aoColumns": [
-
         	{ "bSortable": true },
         	{ "bSortable": true },
         	{ "bSortable": true },
@@ -30,8 +29,31 @@ $(document).ready(function() {
         	{ "visible":false },
         	{ "bSortable": true },
         	{ "bSortable": true }
-        	]
+        ]
+    });
     
+    $('#tableCategories').DataTable( {
+        "language": {
+            "lengthMenu": "_MENU_ Lignes par page",
+            "zeroRecords": "Aucune categorie",
+            "info": "Page _PAGE_/_PAGES_",
+            "infoEmpty": "",
+            "infoFiltered": "",
+            "search": "Rechercher:",
+            "paginate": {
+                "first":      "Première",
+                "last":       "Dernière",
+                "next":       "Suivante",
+                "previous":   "Précédante"
+            },
+            "infoEmpty":      "0 Résultas",
+            "infoPostFix":    "",
+            "thousands":      " ",
+        },
+        "aoColumns": [
+        	{ "bSortable": true },
+        	{ "bSortable": true }
+        ]
     });
 } );
 

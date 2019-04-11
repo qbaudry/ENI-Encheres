@@ -38,6 +38,7 @@ public class Admin extends HttpServlet {
 		String login = (String) session.getAttribute("identifiant");
         String mdp = (String) session.getAttribute("motdepasse");
         ArrayList<Utilisateur> listUser = new ArrayList<Utilisateur>();
+        List<Categorie> listCateg = new ArrayList<Categorie>();
         
 		UtilisateurManager utilManager = new UtilisateurManager();
 		Utilisateur util = null;
@@ -51,9 +52,19 @@ public class Admin extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/error.jsp");
 			rd.forward(request, response);
 		}
+		
+		
 		try {
 			listUser = utilManager.lister();
 			request.setAttribute("listUser", listUser);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+		
+		CategorieManager categManager = new CategorieManager();
+		try {
+			listCateg = categManager.lister();
+			request.setAttribute("listCateg", listCateg);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}	
@@ -65,7 +76,17 @@ public class Admin extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		super.doGet(request, response);
 		
+		CategorieManager categorieManager = new CategorieManager();
+		Categorie categ = new Categorie(request.getParameter("categorie"));
+		
+		try {
+			categorieManager.save(categ);
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		doGet(request, response);
 	}
 }

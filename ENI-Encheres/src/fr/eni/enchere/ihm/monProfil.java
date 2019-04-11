@@ -118,13 +118,11 @@ public class monProfil extends HttpServlet {
 				Utilisateur modifCompte;
 				
 				if (!motdepasse2a.equals("") || !motdepasse2b.equals("")) {
-					System.out.println("modif");
 					modifCompte = new Utilisateur(util.getNoUtilisateur(), request.getParameter("pseudo"),
 							request.getParameter("nom"), request.getParameter("prenom"), request.getParameter("email"),
 							request.getParameter("telephone"), request.getParameter("rue"), request.getParameter("codepostal"),
 							request.getParameter("ville"), motdepasse2a);
 				} else {
-					System.out.println("pas modif");
 					modifCompte = new Utilisateur(util.getNoUtilisateur(), request.getParameter("pseudo"),
 							request.getParameter("nom"), request.getParameter("prenom"), request.getParameter("email"),
 							request.getParameter("telephone"), request.getParameter("rue"), request.getParameter("codepostal"),
@@ -160,10 +158,9 @@ public class monProfil extends HttpServlet {
 		String rue = request.getParameter("rue");
 		String codepostal = request.getParameter("codepostal");
 		String ville = request.getParameter("ville");
-		String motdepasse = request.getParameter("motdepasse");
 		String credit = request.getParameter("credit");
 		if (pseudo.equals("") || nom.equals("") || prenom.equals("") || email.equals("") || telephone.equals("") || rue.equals("")
-				|| codepostal.equals("") || ville.equals("") || motdepasse.equals("") || credit.equals("")) {
+				|| codepostal.equals("") || ville.equals("") || credit.equals("")) {
 			listeCodesErreur.add(CodesResultatServlets.FORMULAIRE_INSCIPTION_SAISIE_OBLIGATOIRE);
 		}
 	}
@@ -211,9 +208,26 @@ public class monProfil extends HttpServlet {
 	}
 	
 	private void validerMotDePasseUtilisateur(HttpServletRequest request, List<Integer> listeCodesErreur) {
+		String motdepasse = request.getParameter("motdepasse");
 		String motdepasse2a = request.getParameter("motdepasse2a");
 		String motdepasse2b = request.getParameter("motdepasse2b");
 		if (!motdepasse2a.equals("") || !motdepasse2b.equals("")) {
+			UtilisateurManager utilisateurManager = new UtilisateurManager();
+			
+			HttpSession session = request.getSession();
+			String login = (String) session.getAttribute("identifiant");
+		    String mdp = (String) session.getAttribute("motdepasse");
+		    
+		    Utilisateur util = new Utilisateur();
+			try {
+				util = utilisateurManager.selectionnerUtilisateur(login, mdp);
+				if (!motdepasse.equals(util.getMotDePasse())) {
+					listeCodesErreur.add(CodesResultatServlets.MOT_DE_PASSE_ACTUEL_INCORRECT);
+				}
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if (!motdepasse2a.equals(motdepasse2b)) {
 				listeCodesErreur.add(CodesResultatServlets.MOT_DE_PASSE_INSCIPTION_SAISIE_OBLIGATOIRE);
 			}

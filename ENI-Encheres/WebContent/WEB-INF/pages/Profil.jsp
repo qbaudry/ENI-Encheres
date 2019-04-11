@@ -112,18 +112,11 @@
 				<div class="row">
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="motdepasse" class="font-weight-bold">Mot de passe :</label>
-				    	<c:choose>
-    						<c:when test="${!empty formulaire}">
-								<input type="password" class="form-control" id="motdepasse" name="motdepasse" placeholder="Mot de passe" value="${formulaire.motDePasse}" readonly>
-							</c:when>
-					        <c:otherwise>
-					        	<input type="password" class="form-control" id="motdepasse" name="motdepasse" placeholder="Mot de passe" readonly>
-					        </c:otherwise>
-					    </c:choose>
+				    	<input type="password" class="form-control" id="motdepasse" name="motdepasse" placeholder="Mot de passe actuel">
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="motdepasse2a" class="font-weight-bold">Nouveau mot de passe :</label>
-				    	<input type="password" class="form-control" id="motdepasse2a" name="motdepasse2a">
+				    	<input type="password" class="form-control" id="motdepasse2a" name="motdepasse2a" placeholder="Nouveau mot de passe">
 					</div>
 				</div>
 				<div class="row">
@@ -145,7 +138,7 @@
 					</div>
 					<div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				    	<label for="motdepasse2b" class="font-weight-bold">Confirmation du nouveau mot de passe :</label>
-				    	<input type="password" class="form-control" id="motdepasse2b" name="motdepasse2b">
+				    	<input type="password" class="form-control" id="motdepasse2b" name="motdepasse2b" placeholder="Confirmation du nouveau mot de passe">
 					</div>
 				</div>
 				<hr>
