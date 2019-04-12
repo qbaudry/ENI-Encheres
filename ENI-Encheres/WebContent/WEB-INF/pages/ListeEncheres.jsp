@@ -17,7 +17,7 @@
 			<div class="row">
 				<div class="input-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-3">
 					<div class="input-group-prepend">
-					    <span class="input-group-text" id="filtre"><i class="fas fa-search"></i></span>
+					    <span class="input-group-text" ><i class="fas fa-search"></i></span>
 					</div>
 						<input type="text" class="form-control" id="filtre" name="filtre"
 						placeholder="Le nom de l'article contient...">
