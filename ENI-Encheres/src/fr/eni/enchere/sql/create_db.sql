@@ -112,6 +112,100 @@ GO
 USE [TROCENCHERE]
 GO
 
+/****** Object:  Table [dbo].[CATEGORIES]    Script Date: 12/04/2019 11:26:30 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[CATEGORIES](
+	[no_categorie] [int] IDENTITY(1,1) NOT NULL,
+	[libelle] [varchar](30) NOT NULL,
+ CONSTRAINT [categorie_pk] PRIMARY KEY CLUSTERED 
+(
+	[no_categorie] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+/****** Object:  Table [dbo].[ENCHERES]    Script Date: 12/04/2019 11:26:35 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[ENCHERES](
+	[no_utilisateur] [int] NOT NULL,
+	[no_article] [int] NOT NULL,
+	[date_enchere] [datetime] NOT NULL,
+	[montant_enchere] [int] NOT NULL,
+ CONSTRAINT [enchere_pk] PRIMARY KEY CLUSTERED 
+(
+	[no_utilisateur] ASC,
+	[no_article] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[ENCHERES]  WITH CHECK ADD  CONSTRAINT [encheres_articles_vendus_fk] FOREIGN KEY([no_article])
+REFERENCES [dbo].[ARTICLES_VENDUS] ([no_article])
+GO
+
+ALTER TABLE [dbo].[ENCHERES] CHECK CONSTRAINT [encheres_articles_vendus_fk]
+GO
+
+
+USE [TROCENCHERE]
+GO
+
+/****** Object:  Table [dbo].[RETRAITS]    Script Date: 12/04/2019 11:26:40 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[RETRAITS](
+	[no_article] [int] NOT NULL,
+	[rue] [varchar](30) NOT NULL,
+	[code_postal] [varchar](15) NOT NULL,
+	[ville] [varchar](30) NOT NULL,
+ CONSTRAINT [retrait_pk] PRIMARY KEY CLUSTERED 
+(
+	[no_article] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[RETRAITS]  WITH CHECK ADD  CONSTRAINT [retraits_articles_vendus_fk] FOREIGN KEY([no_article])
+REFERENCES [dbo].[ARTICLES_VENDUS] ([no_article])
+GO
+
+ALTER TABLE [dbo].[RETRAITS] CHECK CONSTRAINT [retraits_articles_vendus_fk]
+GO
+
+
+USE [TROCENCHERE]
+GO
+
+
 /****** Object:  Table [dbo].[UTILISATEURS]    Script Date: 12/04/2019 11:26:44 ******/
 SET ANSI_NULLS ON
 GO
@@ -208,98 +302,9 @@ GO
 USE [TROCENCHERE]
 GO
 
-/****** Object:  Table [dbo].[RETRAITS]    Script Date: 12/04/2019 11:26:40 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-SET ANSI_PADDING ON
-GO
-
-CREATE TABLE [dbo].[RETRAITS](
-	[no_article] [int] NOT NULL,
-	[rue] [varchar](30) NOT NULL,
-	[code_postal] [varchar](15) NOT NULL,
-	[ville] [varchar](30) NOT NULL,
- CONSTRAINT [retrait_pk] PRIMARY KEY CLUSTERED 
-(
-	[no_article] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-
-SET ANSI_PADDING OFF
-GO
-
-ALTER TABLE [dbo].[RETRAITS]  WITH CHECK ADD  CONSTRAINT [retraits_articles_vendus_fk] FOREIGN KEY([no_article])
-REFERENCES [dbo].[ARTICLES_VENDUS] ([no_article])
-GO
-
-ALTER TABLE [dbo].[RETRAITS] CHECK CONSTRAINT [retraits_articles_vendus_fk]
-GO
 
 
-USE [TROCENCHERE]
-GO
 
-/****** Object:  Table [dbo].[ENCHERES]    Script Date: 12/04/2019 11:26:35 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE TABLE [dbo].[ENCHERES](
-	[no_utilisateur] [int] NOT NULL,
-	[no_article] [int] NOT NULL,
-	[date_enchere] [datetime] NOT NULL,
-	[montant_enchere] [int] NOT NULL,
- CONSTRAINT [enchere_pk] PRIMARY KEY CLUSTERED 
-(
-	[no_utilisateur] ASC,
-	[no_article] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-
-ALTER TABLE [dbo].[ENCHERES]  WITH CHECK ADD  CONSTRAINT [encheres_articles_vendus_fk] FOREIGN KEY([no_article])
-REFERENCES [dbo].[ARTICLES_VENDUS] ([no_article])
-GO
-
-ALTER TABLE [dbo].[ENCHERES] CHECK CONSTRAINT [encheres_articles_vendus_fk]
-GO
-
-
-USE [TROCENCHERE]
-GO
-
-/****** Object:  Table [dbo].[CATEGORIES]    Script Date: 12/04/2019 11:26:30 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-SET ANSI_PADDING ON
-GO
-
-CREATE TABLE [dbo].[CATEGORIES](
-	[no_categorie] [int] IDENTITY(1,1) NOT NULL,
-	[libelle] [varchar](30) NOT NULL,
- CONSTRAINT [categorie_pk] PRIMARY KEY CLUSTERED 
-(
-	[no_categorie] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-
-SET ANSI_PADDING OFF
-GO
 
 
 
