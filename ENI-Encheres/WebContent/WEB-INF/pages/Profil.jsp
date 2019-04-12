@@ -8,6 +8,16 @@
 <body>
 	<jsp:include page="../includes/Navbar.jsp"></jsp:include>
 	<div class="container">
+	<c:if test="${!empty listeCodesErreur}">
+			<div class="alert alert-danger" role="alert">
+			  <strong>Erreur !</strong>
+			  <ul>
+			  	<c:forEach var="code" items="${listeCodesErreur}">
+			  		<li>${LecteurMessage.getMessageErreur(code)}</li>
+			  	</c:forEach>
+			  </ul>
+			</div>
+		</c:if>
 		<form method="post" action="${pageContext.request.contextPath}/monProfil">
 			<div class="alert alert-dark mt-5" role="alert">
 				<h1>Mon Profil</h1>
@@ -152,16 +162,7 @@
 				</div>
 			</div>
 		</form>
-		<c:if test="${!empty listeCodesErreur}">
-			<div class="alert alert-danger" role="alert">
-			  <strong>Erreur !</strong>
-			  <ul>
-			  	<c:forEach var="code" items="${listeCodesErreur}">
-			  		<li>${LecteurMessage.getMessageErreur(code)}</li>
-			  	</c:forEach>
-			  </ul>
-			</div>
-		</c:if>
+		
 		<% if(request.getAttribute("congret") != null) {%>
  			<div class="alert alert-success"><%=request.getAttribute("congret")%></div>
 		<%}%>
