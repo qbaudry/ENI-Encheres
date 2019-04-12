@@ -157,14 +157,6 @@ CREATE TABLE [dbo].[ENCHERES](
 
 GO
 
-ALTER TABLE [dbo].[ENCHERES]  WITH CHECK ADD  CONSTRAINT [encheres_articles_vendus_fk] FOREIGN KEY([no_article])
-REFERENCES [dbo].[ARTICLES_VENDUS] ([no_article])
-GO
-
-ALTER TABLE [dbo].[ENCHERES] CHECK CONSTRAINT [encheres_articles_vendus_fk]
-GO
-
-
 USE [TROCENCHERE]
 GO
 
@@ -194,17 +186,8 @@ GO
 SET ANSI_PADDING OFF
 GO
 
-ALTER TABLE [dbo].[RETRAITS]  WITH CHECK ADD  CONSTRAINT [retraits_articles_vendus_fk] FOREIGN KEY([no_article])
-REFERENCES [dbo].[ARTICLES_VENDUS] ([no_article])
-GO
-
-ALTER TABLE [dbo].[RETRAITS] CHECK CONSTRAINT [retraits_articles_vendus_fk]
-GO
-
-
 USE [TROCENCHERE]
 GO
-
 
 /****** Object:  Table [dbo].[UTILISATEURS]    Script Date: 12/04/2019 11:26:44 ******/
 SET ANSI_NULLS ON
@@ -240,7 +223,6 @@ GO
 
 SET ANSI_PADDING OFF
 GO
-
 
 USE [TROCENCHERE]
 GO
@@ -278,6 +260,21 @@ GO
 SET ANSI_PADDING OFF
 GO
 
+
+ALTER TABLE [dbo].[ENCHERES]  WITH CHECK ADD  CONSTRAINT [encheres_articles_vendus_fk] FOREIGN KEY([no_article])
+REFERENCES [dbo].[ARTICLES_VENDUS] ([no_article])
+GO
+
+ALTER TABLE [dbo].[ENCHERES] CHECK CONSTRAINT [encheres_articles_vendus_fk]
+GO
+
+ALTER TABLE [dbo].[RETRAITS]  WITH CHECK ADD  CONSTRAINT [retraits_articles_vendus_fk] FOREIGN KEY([no_article])
+REFERENCES [dbo].[ARTICLES_VENDUS] ([no_article])
+GO
+
+ALTER TABLE [dbo].[RETRAITS] CHECK CONSTRAINT [retraits_articles_vendus_fk]
+GO
+
 ALTER TABLE [dbo].[ARTICLES_VENDUS]  WITH CHECK ADD  CONSTRAINT [articles_vendus_categories_fk] FOREIGN KEY([no_categorie])
 REFERENCES [dbo].[CATEGORIES] ([no_categorie])
 GO
@@ -301,11 +298,3 @@ GO
 
 USE [TROCENCHERE]
 GO
-
-
-
-
-
-
-
-
