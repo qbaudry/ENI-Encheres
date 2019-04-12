@@ -36,7 +36,8 @@ public class ajax_profile extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		String login = (String) session.getAttribute("identifiant");
         String mdp = (String) session.getAttribute("motdepasse");
@@ -72,6 +73,8 @@ public class ajax_profile extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
 		String loginUser = (String) session.getAttribute("identifiant");

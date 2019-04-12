@@ -36,7 +36,8 @@ public class monProfil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		String login = (String) session.getAttribute("identifiant");
         String mdp = (String) session.getAttribute("motdepasse");
@@ -73,7 +74,8 @@ public class monProfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 		List<Integer> listeCodesErreur = new ArrayList<>();
 		
 		lireParametreFormulaire(request, listeCodesErreur);

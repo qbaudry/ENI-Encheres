@@ -19,14 +19,14 @@ import fr.eni.enchere.bo.Utilisateur;
  */
 public class mdpOublie extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public mdpOublie() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public mdpOublie() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,19 +40,20 @@ public class mdpOublie extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-UtilisateurManager utilisateurManager = new UtilisateurManager();
-		
+		UtilisateurManager utilisateurManager = new UtilisateurManager();
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		if (request.getParameter("mail")!=null &&
-			request.getParameter("pseudo")!=null)
+				request.getParameter("pseudo")!=null)
 		{
 			String mail = request.getParameter("mail");
 			String pseudo = request.getParameter("pseudo");
-			
+
 			try
 			{
 				Utilisateur util = new Utilisateur();
 				util = utilisateurManager.selectionnerUtilisateurByEmailPseudo(pseudo, mail);
-				
+
 				if(util.getPseudo() == null || util.getEmail() == null)
 				{
 					request.setAttribute("error", "Pseudo ou mail incorrect !");
@@ -63,8 +64,8 @@ UtilisateurManager utilisateurManager = new UtilisateurManager();
 				{
 					if(util.getPseudo().equals(pseudo) && util.getEmail().equals(mail))
 					{						
-				        request.setAttribute("congret", "Votre mot de passe : " + util.getMotDePasse());
-				        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/ForgotPassword.jsp");
+						request.setAttribute("congret", "Votre mot de passe : " + util.getMotDePasse());
+						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/ForgotPassword.jsp");
 						rd.forward(request, response);
 					}
 					else
@@ -74,21 +75,21 @@ UtilisateurManager utilisateurManager = new UtilisateurManager();
 						rd.forward(request, response);
 					}
 				}
-				
-				
 
-				
-				
-				
+
+
+
+
+
 			} catch(BusinessException e)
 			{
-				
+
 				request.setAttribute("error", "Nom de compte ou mot de passe incorrect !");
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/SeConnecter.jsp");
 				rd.forward(request, response);
-				
+
 			}
-			
+
 		} else {
 			System.out.println("Formulaire non rempli entièrement");
 		}
