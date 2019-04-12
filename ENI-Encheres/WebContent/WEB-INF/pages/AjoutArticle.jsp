@@ -8,6 +8,16 @@
 <body>
 	<jsp:include page="../includes/Navbar.jsp"></jsp:include>
 	<div class="container">
+	<c:if test="${!empty listeCodesErreur}">
+			<div class="alert alert-danger" role="alert">
+				<strong>Erreur !</strong>
+				<ul>
+					<c:forEach var="code" items="${listeCodesErreur}">
+						<li>${LecteurMessage.getMessageErreur(code)}</li>
+					</c:forEach>
+				</ul>
+			</div>
+		</c:if>
 		<form method="post"
 			action="${pageContext.request.contextPath}/ajoutArticle"
 			enctype="multipart/form-data">
@@ -145,16 +155,7 @@
 				</div>
 			</div>
 		</form>
-		<c:if test="${!empty listeCodesErreur}">
-			<div class="alert alert-danger" role="alert">
-				<strong>Erreur !</strong>
-				<ul>
-					<c:forEach var="code" items="${listeCodesErreur}">
-						<li>${LecteurMessage.getMessageErreur(code)}</li>
-					</c:forEach>
-				</ul>
-			</div>
-		</c:if>
+		
 	</div>
 </body>
 </html>
