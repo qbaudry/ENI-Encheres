@@ -34,6 +34,8 @@ public class Admin extends HttpServlet {
 	}
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		String login = (String) session.getAttribute("identifiant");
         String mdp = (String) session.getAttribute("motdepasse");
@@ -68,7 +70,7 @@ public class Admin extends HttpServlet {
 			} catch (BusinessException e) {
 				e.printStackTrace();
 			}
-
+			
 			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/Admin.jsp");
 			rd.forward(request, response);
 		}
@@ -76,7 +78,8 @@ public class Admin extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 		CategorieManager categorieManager = new CategorieManager();
 		Categorie categ = new Categorie(request.getParameter("categorie"));
 		

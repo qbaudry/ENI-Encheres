@@ -40,7 +40,8 @@ public class Ajax_ListeEnchere extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		String login = (String) session.getAttribute("identifiant");
 		String mdp = (String) session.getAttribute("motdepasse");

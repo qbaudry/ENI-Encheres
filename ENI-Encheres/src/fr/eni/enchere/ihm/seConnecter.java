@@ -35,6 +35,8 @@ public class seConnecter extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		Cookie[] cookies = request.getCookies();
 		 Boolean souvenir = false;
@@ -63,7 +65,8 @@ public class seConnecter extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
 		
 		if (request.getParameter("identifiant")!=null &&
